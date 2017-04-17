@@ -1,0 +1,92 @@
+/* apply a natural box layout model to all elements, but allowing components to change */
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+/* Globale Styles für alles im Body */
+body {
+  display: flex;  /* Child-Elemente in Reihe */
+  flex-direction: column; /* Reihe als Säule anordnen */
+  min-height: 100vh;  /* Mindesthöhe Browswerfenster */
+  margin: 0;
+  padding: 0;
+  background-color: lightgrey;
+  font-family: "Calibri", Arial, Helvetica, sans-serif;
+}
+
+/* links formatieren*/
+a {
+  text-decoration: none;
+}
+/* Link Farbe wenn besucht*/
+a:visited {
+  color: inherit;
+}
+
+/* Link Farbe beim drüberfahren*/
+a:hover,
+a:focus {
+  color: blue;
+}
+
+/* Logo formatieren*/
+.logo {
+  width: 4rem;  /* Breite */
+  vertical-align: middle; /* Ausrichtung vertikal */
+}
+
+/* Topbar formatieren*/
+.topbar {
+  padding: 0.5rem;  /* Innenabstand */
+  background-color: #F5FFFA;  /* Hintergrundfarbe */
+  display: flex;  /* Child-Elemente in Reihe */
+  justify-content: space-between; /* Abstand Child-Elemente */
+  align-items: center;  /* Ausrichtung zentriert */
+}
+
+ /* Topbar Titel formatieren */
+.topbartitle {
+  color: green; /* Textfarbe */
+  display: inline;  /* Elemente nebeneinander */
+  margin-left: 2rem;  /* Abstand der Elemente */
+  vertical-align: middle; /* Ausrichtung vertikal */
+}
+.navi {
+}
+
+/* Navi Links formatieren */
+.navilink {
+  color: black; /* Textfarbe */
+  padding: 1rem;  /* Innenabstand */
+  font-size: 1.25rem; /* Schriftgröße */
+}
+
+/* Main formatieren */
+.main {
+  padding: 0 1rem 0 1rem;  /* Innenabstände */
+  flex-grow: 1; /* maximale Ausdehnung */
+  background-image: url("../img/logo-kjs.svg");
+  background-size: 1rem;
+  background-color: #FF0;
+  /*background-repeat: no-repeat;*/
+}
+
+.container {
+  background-color: #FFF;
+  max-width: 48rem;
+  padding: 1rem 2rem 1rem 2rem;
+  margin: 2rem auto 2rem auto;
+}
+ /* Footer formatieren */
+.footer {
+  color: grey;  /* Textfarbe */
+  background-color: #F5FFFA;  /* Hintergrundfarbe */
+  padding: 0 1rem 0 1rem;  /* Innenabstände */
+  font-size: 0.875rem;  /* Schriftgröße */
+  display: flex;  /* Child-Elemente in Reihe */
+  justify-content: space-between; /* Abstand Child-Elemente */
+  align-items: center;  /* Ausrichtung zentriert */
+}
