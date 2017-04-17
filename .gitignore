@@ -1,2 +1,7 @@
 _site
 Thumbs.db
+.DS_Store
+node_modules
+.gitignore
+npm-debug.log
+.sass-cache

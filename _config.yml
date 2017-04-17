@@ -1,0 +1,9 @@
+# Site settings
+encoding: utf-8
+title: Karl-Josef Schneider Elektronikprojekte
+baseurl: "" # the subpath of your site, e.g. /blog/
+url: "http://www.karljosefschneider.de" # the base hostname & protocol for your site
+
+permalink: pretty
+
+repository: karljosefschneider/karljosefschneider.de
