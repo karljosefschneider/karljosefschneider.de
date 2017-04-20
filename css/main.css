@@ -15,12 +15,14 @@ body {
   padding: 0;
   background-color: lightgrey;
   font-family: "Calibri", Arial, Helvetica, sans-serif;
+  font-size: 1.25rem; /* Schriftgröße */
 }
 
 /* links formatieren*/
 a {
   text-decoration: none;
 }
+
 /* Link Farbe wenn besucht*/
 a:visited {
   color: inherit;
@@ -74,12 +76,14 @@ a:focus {
   /*background-repeat: no-repeat;*/
 }
 
+/* Container formatieren */
 .container {
-  background-color: #FFF;
-  max-width: 48rem;
-  padding: 1rem 2rem 1rem 2rem;
-  margin: 2rem auto 2rem auto;
+  background-color: #FFF; /* Hintergrundfarbe */
+  max-width: 72rem; /* Breite */
+  padding: 1rem 2rem 1rem 2rem; /* Abstand zum Rand */
+  margin: 2rem auto 2rem auto;  /* Abstand zum nächsten Element */
 }
+
  /* Footer formatieren */
 .footer {
   color: grey;  /* Textfarbe */
