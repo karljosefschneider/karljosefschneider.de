@@ -94,3 +94,8 @@ a:focus {
   justify-content: space-between; /* Abstand Child-Elemente */
   align-items: center;  /* Ausrichtung zentriert */
 }
+
+/* Bilder */
+img {
+  max-width: 100%; /* verhindert, dass große Bilder über ihr Container-Element hinauswachsen. */
+}
