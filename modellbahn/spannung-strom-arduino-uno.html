@@ -9,50 +9,108 @@ title: 'Spannung und Strom messen mit dem Arduino Uno'
 
 <p>Inhalt</p>
 
-<p><span class=MsoHyperlink><a href="#_Toc480180621">   Projektbeschreibung
-</a></span></p>
+<ul>
+  <li>
+    <span class=MsoHyperlink>
+      <a href="#_Toc480180621">
+        Projektbeschreibung
+      </a>
+    </span>
+  </li>
 
-<p><span class=MsoHyperlink><a href="#_Toc480180622">   Spannungsmessung
-</a></span></p>
+  <li>
+    <span class=MsoHyperlink>
+      <a href="#_Toc480180622">
+        Spannungsmessung
+      </a>
+    </span>
+  </li>
 
-<p><span class=MsoHyperlink><a href="#_Toc480180623">   Gleichspannung
-</a></span></p>
+  <li>
+    <span class=MsoHyperlink>
+      <a href="#_Toc480180623">
+        Gleichspannung
+      </a>
+    </span>
+  </li>
 
-<p><span class=MsoHyperlink><a href="#_Toc480180624">   Wechselspannung
-</a></span></p>
+  <li>
+    <span class=MsoHyperlink>
+      <a href="#_Toc480180624">
+        Wechselspannung
+      </a>
+    </span>
+  </li>
 
-<p><span class=MsoHyperlink><a href="#_Toc480180625">   Strommessung
-</a></span></p>
+  <li>
+    <span class=MsoHyperlink>
+      <a href="#_Toc480180625">
+        Strommessung
+      </a>
+    </span>
+  </li>
 
-<p><span class=MsoHyperlink><a href="#_Toc480180626">   Gleich- und Wechselstrom
-</a></span></p>
+  <li>
+    <span class=MsoHyperlink>
+      <a href="#_Toc480180626">
+        Gleich- und Wechselstrom
+      </a>
+    </span>
+  </li>
 
-<p><span class=MsoHyperlink><a href="#_Toc480180627">   Hardware
-</a></span></p>
+  <li>
+    <span class=MsoHyperlink>
+      <a href="#_Toc480180627">
+        Hardware
+      </a>
+    </span>
+  </li>
 
-<p><span class=MsoHyperlink><a href="#_Toc480180628">   Schaltplan
-</a></span></p>
+  <li>
+    <span class=MsoHyperlink>
+      <a href="#_Toc480180628">
+        Schaltplan
+      </a>
+    </span>
+  </li>
 
-<p><span class=MsoHyperlink><a href="#_Toc480180629">   Software
-</a></span></p>
+  <li>
+    <span class=MsoHyperlink>
+      <a href="#_Toc480180629">
+        Software
+      </a>
+    </span>
+  </li>
 
-<p><span class=MsoHyperlink><a href="#_Toc480180630">   Quellcode Arduino
-</a></span></p>
+  <li>
+    <span class=MsoHyperlink>
+    <a href="#_Toc480180630">
+        Quellcode Arduino
+      </a>
+    </span>
+  </li>
 
-<p><span class=MsoHyperlink><a href="#_Toc480180631">   Quellcode Processing
-</a></span></p>
+  <li>
+    <span class=MsoHyperlink>
+      <a href="#_Toc480180631">
+        Quellcode Processing
+      </a>
+    </span>
+  </li>
+</ul>
 
 <h1><a name="_Toc480180621">Projektbeschreibung</a></h1>
 
 <p>
   Eine N-Spur (1:160) Modellbahnanlage wird über 3 separate Transformatoren
   betrieben:
-  <ul>
-    <li>18V/5A für die digitale Fahrspannung über eine Intellibox</li>
-    <li>18V/5A für die Magnetartikel</li>
-    <li>12V/5A für die Beleuchtung über Gleichrichter</li>
-  </ul>
 </p>
+
+<ul>
+  <li>18V/5A für die digitale Fahrspannung über eine Intellibox</li>
+  <li>18V/5A für die Magnetartikel</li>
+  <li>12V/5A für die Beleuchtung über Gleichrichter</li>
+</ul>
 
 <p align=justify>
   Die Steuerung der Anlage erfolgt über die Intellibox bzw. in Verbindung mit
@@ -80,7 +138,7 @@ title: 'Spannung und Strom messen mit dem Arduino Uno'
 </p>
 
 <p>
-  <b>Bild 1 </b>	Bildschirmlayout mit Win-Digipet und Fenster für xxxxx
+  <b>Bild 1</b> Bildschirmlayout mit Win-Digipet und Fenster für
   Messwertanzeige
 </p>
 
@@ -88,7 +146,7 @@ title: 'Spannung und Strom messen mit dem Arduino Uno'
 
 <h2><a name="_Toc480180623">Gleichspannung</a></h2>
 
-<p align=justyfy>
+<p align=justify>
   An den Analogeingängen des Arduino kann man per „analogRead(A0-5)“ Bit-Werte
   messen, die zwischen 0 und 1023 liegen.<br>
   Für 5 V werden am Arduino 1023 Bit ausgegeben, d.h.
@@ -100,7 +158,7 @@ title: 'Spannung und Strom messen mit dem Arduino Uno'
 </p>
 
 <p>
-  <b>Bild 2 </b> Prinzipieller Anschluss eines Zusatzverstärkers
+  <b>Bild 2</b> Prinzipieller Anschluss eines Zusatzverstärkers
 </p>
 
 <h2><a name="_Toc480180624">NF-Einspeisung</a></h2>
@@ -122,24 +180,25 @@ title: 'Spannung und Strom messen mit dem Arduino Uno'
 </p>
 
 <p>
-  <b>Bild 3 </b>	Adapter 3,5 mm Klinkenbuchse auf DIN-Steckverbindung
+  <b>Bild 3</b> Adapter 3,5 mm Klinkenbuchse auf DIN-Steckverbindung
 </p>
 
 <p>
   Die mit dieser Anordnung verbundene Musikübertragung hat jedoch zwei
   Nachteile:
-  <ul>
-    <li>Beim Wechsel zwischen Radiobetrieb und externer Einspeisung muss ständig
-    umgesteckt werden. Dies ist lästig und auch ein externer Schalter als Ersatz
-    für die Schaltbuchse schafft keine zufriedenstellende Lösung.</li>
-    <li>Die Verbindung zwischen Stereodecoder und Verstärker wird innerhalb des
-    Radios nicht sauber getrennt, der linke Kanal kommt immer noch sehr schwach
-    durch. Der Fehler liegt in der Schaltung des Radios und kann nur durch einen
-    ingriff ins Gerät beseitigt werden. Notlösung ist die Einstellung des Tuners
-    auf einen senderfreien Bereich (z.B. über die nicht benötigte LW-Taste),
-    dann ist aber meist immer noch ein Rauschen vorhanden!</li>
-  </ul>
 </p>
+
+<ul>
+  <li>Beim Wechsel zwischen Radiobetrieb und externer Einspeisung muss ständig
+  umgesteckt werden. Dies ist lästig und auch ein externer Schalter als Ersatz
+  für die Schaltbuchse schafft keine zufriedenstellende Lösung.</li>
+  <li>Die Verbindung zwischen Stereodecoder und Verstärker wird innerhalb des
+  Radios nicht sauber getrennt, der linke Kanal kommt immer noch sehr schwach
+  durch. Der Fehler liegt in der Schaltung des Radios und kann nur durch einen
+  ingriff ins Gerät beseitigt werden. Notlösung ist die Einstellung des Tuners
+  auf einen senderfreien Bereich (z.B. über die nicht benötigte LW-Taste),
+  dann ist aber meist immer noch ein Rauschen vorhanden!</li>
+</ul>
 
 <p align="justify">
   Als Alternative bietet sich eine wesentlich modernere Lösung über eine
@@ -157,7 +216,7 @@ title: 'Spannung und Strom messen mit dem Arduino Uno'
 </p>
 
 <p>
-  <b>Bild 4	</b> Bluetooth-Empfänger für Musikübertragung und
+  <b>Bild 4</b> Bluetooth-Empfänger für Musikübertragung und
   Anrufvermittlung
 </p>
 
@@ -176,7 +235,7 @@ title: 'Spannung und Strom messen mit dem Arduino Uno'
   vorgenommen werden kann.
 </p>
 
-<p align="justifyr">
+<p align="justify">
   Das Gerät kann über den gezeigten Klinken-Adapter oder das beiliegende
   Klinkenkabel mit Hilfe des oben beschriebenen Adapters Klinke/DIN mit dem
   Autoradio verbunden und betrieben werden. Ohne eine feste und gut erreichbare
@@ -194,7 +253,7 @@ title: 'Spannung und Strom messen mit dem Arduino Uno'
 </p>
 
 <p>
-  Die hier beschriebene Handyhalterung zeigen <b>Bild 5 </b>und <b>Bild 6</b>.
+  Die hier beschriebene Handyhalterung zeigen <b>Bild 5</b> und <b>Bild 6</b>.
 </p>
 
 <p align="center">
@@ -203,7 +262,7 @@ title: 'Spannung und Strom messen mit dem Arduino Uno'
 </p>
 
 <p>
-  <b>Bild 5	</b> Gesamtansicht der Handyhalterung
+  <b>Bild 5</b> Gesamtansicht der Handyhalterung
 </p>
 
 <p align="center">
@@ -212,7 +271,7 @@ title: 'Spannung und Strom messen mit dem Arduino Uno'
 </p>
 
 <p>
-  <b>Bild 6	</b>Bluetooth-Empfänger mit Bedientaste, Umschalter und LED-Schalter
+  <b>Bild 6</b> Bluetooth-Empfänger mit Bedientaste, Umschalter und LED-Schalter
   für 12 V-Versorgung
 </p>
 
@@ -229,7 +288,7 @@ title: 'Spannung und Strom messen mit dem Arduino Uno'
 
 <h2><a name="_Toc480180626">UKW-Stationstasten</a></h2>
 
-<p align="justyfy">
+<p align="justify">
   Wenn man schon das Autoradio öffnet um größere Änderungen vorzunehmen sollte
   man zunächst durch einen einfachen Handgriff das Radio an die neuen
   Gegebenheiten anpassen. Geräte der hier beschriebenen Bauart verfügen meist
@@ -253,8 +312,9 @@ title: 'Spannung und Strom messen mit dem Arduino Uno'
   Änderung ist natürlich reversibel, d.h. durch Zurückbiegen der
   Betätigungsstange kann der Originalzustand jederzeit wiederhergestellt werden.
 </p>
+
 <p>
-  Die hier beschriebene Maßnahme wird durch das Foto in <b>Bild 7 </b>deutlich
+  Die hier beschriebene Maßnahme wird durch das Foto in <b>Bild 7</b> deutlich
   gemacht.
 </p>
 
@@ -264,7 +324,7 @@ title: 'Spannung und Strom messen mit dem Arduino Uno'
 </p>
 
 <p>
-  <b>Bild 7	</b>Betätigungsstange vom Tastensatz aufgebogen zur Deaktivierung
+  <b>Bild 7</b> Betätigungsstange vom Tastensatz aufgebogen zur Deaktivierung
   des Wellenumschalters
 </p>
 
@@ -275,24 +335,20 @@ title: 'Spannung und Strom messen mit dem Arduino Uno'
   folgende Maßnahmen erforderlich:
 </p>
 
-<p>
-  <ul>
-    <li>Platz für den Einbau schaffen</li>
-    <li>Taster für die Betätigung des Empfängers bereitstellen </li>
-    <li>LED für den Bluetooth-Betrieb in den Frontbereich der Skala verlegen</li>
-    <li>Kondensatormikrofon in den Frontbereich der Skala verlegen</li>
-    <li>Komplette Einheit mechanisch einbauen und elektrisch anschließen</li>
-  </ul>
-</p>
+<ul>
+  <li>Platz für den Einbau schaffen</li>
+  <li>Taster für die Betätigung des Empfängers bereitstellen </li>
+  <li>LED für den Bluetooth-Betrieb in den Frontbereich der Skala verlegen</li>
+  <li>Kondensatormikrofon in den Frontbereich der Skala verlegen</li>
+  <li>Komplette Einheit mechanisch einbauen und elektrisch anschließen</li>
+</ul>
 
 <p>
   Wie oben aufgelistet sollen die erforderlichen Arbeitsschritte hier im
   Einzelnen beschrieben werden.
 </p>
 
-<p>
-  <b>Platz für den Einbau schaffen</b>
-</p>
+<h3>Platz für den Einbau schaffen</h3>
 
 <p align="justify">
   Obwohl die Abmessungen des Empfängers sehr gering sind, wird zusammen mit den
@@ -314,12 +370,10 @@ title: 'Spannung und Strom messen mit dem Arduino Uno'
 </p>
 
 <p>
-  <b>Bild 8	</b>Ausschnitt der Platine mit neuer Position der Bauteile L1 und G1
+  <b>Bild 8</b> Ausschnitt der Platine mit neuer Position der Bauteile L1 und G1
 </p>
 
-<p>
-  <b>Taster für die Betätigung des Empfängers bereitstellen</b>
-</p>
+<h3>Taster für die Betätigung des Empfängers bereitstellen</h3>
 
 <p align="justify">
   Durch das Abtrennen des gekennzeichneten Platinenabschnittes wurde nicht nur
@@ -330,11 +384,9 @@ title: 'Spannung und Strom messen mit dem Arduino Uno'
   Stereo-Position fixierte wird entfernt.
 </p>
 
-<p>
-  <b>Kondensatormikrofon in den Frontbereich der Skala verlegen</b>
-</p>
+<h3>Kondensatormikrofon in den Frontbereich der Skala verlegen</h3>
 
-<p align="justyfy">
+<p align="justify">
   Ebenso wie die LED muss das Mikrofon für die Freisprecheinrichtung in die
   Radiofront verlegt werden. Hierzu wird das auf der Bluetooth-Platine
   befindliche Kondensatormikrofon ausgelötet und mit entsprechenden
@@ -345,11 +397,9 @@ title: 'Spannung und Strom messen mit dem Arduino Uno'
   praktisch nicht auf.
 </p>
 
-<p>
-  <b>Komplette Einheit mechanisch einbauen und elektrisch anschließen</b>
-</p>
+<h3>Komplette Einheit mechanisch einbauen und elektrisch anschließen</h3>
 
-<p align="justyfy">
+<p align="justify">
   Die Platine des Bluetooth-Empfängers wird aus dem Originalgehäuse ausgebaut
   und auf einer neu angefertigten Träger-Platine befestigt. In einem ersten
   Versuch wurde auf dieser Platine auch der schon mehrfach angesprochenen
@@ -386,22 +436,19 @@ title: 'Spannung und Strom messen mit dem Arduino Uno'
   align="right" width="" height="">
 </p>
 
-<p>
-  <ul>
-    <br/>
-    <li>Befestigung der gesamten Einheit über einen Alu-Winkel mit dem Gehäuse
-     des <br/> Radiogerätes (rechte Außenwand)</li>
-    <li>Aufnahme der Bluetooth-Platine und des Akkus</li>
-    <li>Aufnahme des Tasters für die Bedienung der Einheit</li>
-    <li>Aufnahme der Anschlussstifte für die erforderlichen
-     Steckverbindungen</li>
-    <li>Aufnahme des Spannungswandlers 12V auf 5V, dieser wird realisiert über
-     einen <br/> 7805 Festspannungsregler mit Elko als Ladespannung für den Akku
-  </ul>
-</p>
+<ul>
+  <li>Befestigung der gesamten Einheit über einen Alu-Winkel mit dem Gehäuse
+   des Radiogerätes (rechte Außenwand)</li>
+  <li>Aufnahme der Bluetooth-Platine und des Akkus</li>
+  <li>Aufnahme des Tasters für die Bedienung der Einheit</li>
+  <li>Aufnahme der Anschlussstifte für die erforderlichen
+   Steckverbindungen</li>
+  <li>Aufnahme des Spannungswandlers 12V auf 5V, dieser wird realisiert über
+   einen 7805 Festspannungsregler mit Elko als Ladespannung für den Akku</li>
+</ul>
 
 <p align="left">
-  <b>Bild 10 </b> Layout der Trägerplatine
+  <b>Bild 10</b> Layout der Trägerplatine
 </p>
 
 <p align="justify">
@@ -412,7 +459,7 @@ title: 'Spannung und Strom messen mit dem Arduino Uno'
   doppelseitigen Schaumstoffklebeband auf der Lötseite der Trägerplatine
   befestigt. Vorher sind die beiden Anschlussdrähte für das NF-Signal sowie die
   Masse mitten auf der Träger-Platine anzulöten. Die weitere Verkabelung wird
-  dann aus dem Foto in <b>Bild 11 </b>ersichtlich.
+  dann aus dem Foto in <b>Bild 11</b> ersichtlich.
 </p>
 
 <p align="center">
@@ -421,7 +468,7 @@ title: 'Spannung und Strom messen mit dem Arduino Uno'
 </p>
 
 <p>
-  <b>Bild 11 </b>Anordnung der Bluetooth-Platine auf der Träger-Platine
+  <b>Bild 11</b> Anordnung der Bluetooth-Platine auf der Träger-Platine
 </p>
 
 <p align="justify">
@@ -432,7 +479,7 @@ title: 'Spannung und Strom messen mit dem Arduino Uno'
   Bildhälfte zeigen die blanken Drähte den Anschluss des Kondensatormikrofons,
   in der unteren Bildhälfte stellen die blanken Drähte die 5 V
   Spannungsversorgung dar. Der gesamte Aufbau des Moduls wird deutlich durch das
-  in <b>Bild 12 </b>gezeigte Foto der Rückseite der Trägerplatine. Hier ist
+  in <b>Bild 12</b> gezeigte Foto der Rückseite der Trägerplatine. Hier ist
   rechts der Spannungswandler mit den Anschlussstiften für Strom und NF-Signal
   zu erkennen, links unten befinden sich der Taster und die Anschlussstifte für
   LED und Mikrofon und in der Mitte der 3,7 V Akku.
@@ -444,11 +491,11 @@ title: 'Spannung und Strom messen mit dem Arduino Uno'
 </p>
 
 <p>
-  <b>Bild 12	</b>Rückseite der Träger-Platine mit den erforderlichen Bauteilen
+  <b>Bild 12</b> Rückseite der Träger-Platine mit den erforderlichen Bauteilen
 </p>
 
 <p>
-  Die folgenden <b>Bilder 13 – 15 </b> zeigen die verschiedenen Ansichten des
+  Die folgenden <b>Bilder 13 – 15</b> zeigen die verschiedenen Ansichten des
   Radios mit der eingebauten Bluetooth-Empfängerpatine.
 </p>
 
@@ -458,7 +505,7 @@ title: 'Spannung und Strom messen mit dem Arduino Uno'
 </p>
 
 <p>
-  <b>Bild 13	</b> Empfängerplatine in eingebautem Zustand
+  <b>Bild 13</b> Empfängerplatine in eingebautem Zustand
 </p>
 
 <p align="center">
@@ -467,7 +514,7 @@ title: 'Spannung und Strom messen mit dem Arduino Uno'
 </p>
 
 <p>
-  <b>Bild 14	</b> Ansicht von unten mit Verdrahtung für NF-Eingang und 12 V
+  <b>Bild 14</b> Ansicht von unten mit Verdrahtung für NF-Eingang und 12 V
   Versorgung
 </p>
 
@@ -477,7 +524,7 @@ title: 'Spannung und Strom messen mit dem Arduino Uno'
 </p>
 
 <p>
-  <b>Bild 15	</b>Frontansicht mit Kondensatormikrofon rechts unten in der Skala
+  <b>Bild 15</b> Frontansicht mit Kondensatormikrofon rechts unten in der Skala
 </p>
 
 <h2><a name="_Toc480180628">Ausblick</a></h2>
