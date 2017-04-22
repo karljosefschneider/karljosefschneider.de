@@ -82,6 +82,8 @@ a:focus {
   max-width: 72rem; /* Breite */
   padding: 1rem 2rem 1rem 2rem; /* Abstand zum Rand */
   margin: 2rem auto 2rem auto;  /* Abstand zum nächsten Element */
+  overflow: hidden;
+  min-height: calc(100vh - 14rem);
 }
 
  /* Footer formatieren */
