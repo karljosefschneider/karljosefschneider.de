@@ -1,0 +1,657 @@
+---
+layout: default
+title: 'Spannung und Strom messen mit dem Arduino Uno'
+---
+
+<h1>
+  Spannung und Strom messen mit dem Arduino Uno
+</h1>
+
+<p>Inhalt</p>
+
+<ul>
+  <li>
+    <span class=MsoHyperlink>
+      <a href="#_Toc480180621">
+        Projektbeschreibung
+      </a>
+    </span>
+  </li>
+
+  <li>
+    <span class=MsoHyperlink>
+      <a href="#_Toc480180622">
+        Spannungsmessung
+      </a>
+    </span>
+  </li>
+
+  <li>
+    <span class=MsoHyperlink>
+      <a href="#_Toc480180623">
+        Gleichspannung
+      </a>
+    </span>
+  </li>
+
+  <li>
+    <span class=MsoHyperlink>
+      <a href="#_Toc480180624">
+        Wechselspannung
+      </a>
+    </span>
+  </li>
+
+  <li>
+    <span class=MsoHyperlink>
+      <a href="#_Toc480180625">
+        Strommessung
+      </a>
+    </span>
+  </li>
+
+  <li>
+    <span class=MsoHyperlink>
+      <a href="#_Toc480180626">
+        Gleich- und Wechselstrom
+      </a>
+    </span>
+  </li>
+
+  <li>
+    <span class=MsoHyperlink>
+      <a href="#_Toc480180627">
+        Hardware
+      </a>
+    </span>
+  </li>
+
+  <li>
+    <span class=MsoHyperlink>
+      <a href="#_Toc480180628">
+        Schaltplan
+      </a>
+    </span>
+  </li>
+
+  <li>
+    <span class=MsoHyperlink>
+      <a href="#_Toc480180629">
+        Software
+      </a>
+    </span>
+  </li>
+
+  <li>
+    <span class=MsoHyperlink>
+    <a href="#_Toc480180630">
+        Quellcode Arduino
+      </a>
+    </span>
+  </li>
+
+  <li>
+    <span class=MsoHyperlink>
+      <a href="#_Toc480180631">
+        Quellcode Processing
+      </a>
+    </span>
+  </li>
+</ul>
+
+<h1><a name="_Toc480180621">Projektbeschreibung</a></h1>
+
+<p>
+  Eine N-Spur (1:160) Modellbahnanlage wird über 3 separate Transformatoren
+  betrieben:
+</p>
+
+<ul>
+  <li>18V/5A für die digitale Fahrspannung über eine Intellibox</li>
+  <li>18V/5A für die Magnetartikel</li>
+  <li>12V/5A für die Beleuchtung über Gleichrichter</li>
+</ul>
+
+<p align=justify>
+  Die Steuerung der Anlage erfolgt über die Intellibox bzw. in Verbindung mit
+  der WinDigipet Software über den PC. Der angeschlossene Flachbildschirm bietet
+  die Möglichkeit, neben der Steuerung über WinDigipet weitere Daten anzuzeigen.
+</p>
+
+<p align=justify>
+  Ziel des vorliegenden Projektes ist, den Bildschirm auch für die Anzeige der
+  Stromversorgungswerte zu nutzen, d.h. einen Überblick über die aktuellen
+  Spannungen, Ströme und Leistungen der Netzgeräte zu geben.
+</p>
+
+<p align=justify>
+  Diese Aufgabe wurde auf der Hardwareseite durch einen Arduino Uno sowie 3
+  Stromsensoren ACS711 realisiert. Neben der Arduino Software für die
+  Datenerfassung wurde für die Visualisierung auf dem Bildschirm die Processing
+  Software eingesetzt. <b>Bild 1 </b> zeigt die Bildschirmansicht mit dem
+  Fenster für die Messdaten.
+</p>
+
+<p align="center">
+  <img src="/img/moba/strom/strom_01.jpg" alt="Strom_01" width="" height="">
+</p>
+
+<p>
+  <b>Bild 1</b> Bildschirmlayout mit Win-Digipet und Fenster für
+  Messwertanzeige
+</p>
+
+<h1><a name="_Toc480180622">Spannungsmessung</a></h1>
+
+<h2><a name="_Toc480180623">Gleichspannung</a></h2>
+
+<p align=justify>
+  An den Analogeingängen des Arduino kann man per „analogRead(A0-5)“ Bit-Werte
+  messen, die zwischen 0 und 1023 liegen. Für 5 V werden am Arduino 1023 Bit
+  ausgegeben, d.h.
+</p>
+
+<p align="center">
+  <img src="/img/moba/strom/strom_02.jpg" alt="Strom_02" width="" height="">
+</p>
+
+<p align="justify">
+  Die tatsächliche Spannung liegt beim Arduino meist etwas unterhalb der
+  theoretischen Spannung von 5 Volt, daher muss dieser tatsächliche Wert
+  (Messung) in die Gleichung oben einfließen.
+</p>
+
+<p align="justify">
+  Bei höheren Spannungen muss also grundsätzlich zunächst durch einen
+  Spannungsteiler (R1 und R2) die zu messende Spannung auf Arduino-verträgliche
+  5 V runterteilt werden:
+</p>
+
+<p align="center">
+  <img src="/img/moba/strom/strom_03.jpg" alt="Strom_03" width="" height="">
+</p>
+
+<p align="justify">
+  Mit R1 = 15 kΩ und R2 = 5 KΩ, d.h. einem Teiler-Verhältnis von 3:1 kann z. B.
+  eine Eingangsspannung von max. 20 V gemessen werden.
+</p>
+
+<p align="justify">
+  Wenn mehrere Spannungen gleichzeitig gemessen werden sollen, sollten diese
+  galvanisch voneinander getrennt sein. Hier bietet sich als einfache Lösung
+  sowohl für die Trennung wie auch für die Spannungsteilung ein Optokoppler wie
+  folgt an.
+</p>
+
+<p align="center">
+  <img src="/img/moba/strom/strom_04.jpg" alt="Strom_04"
+  width="" height="">
+</p>
+
+<p align="justify">
+  Die maximale Spannung beträgt 5 Volt am Eingang des Arduino, mit dem
+  Trimm-Poti kann diese eingestellt werden. Damit nicht jede Spitze das
+  Messergebnis beeinflusst sind die Kondensatoren vorgesehen. Mit 100 nF fängt
+  man kurze Spitzen ab, 4,7 µF dienen zum Glätten.
+</p>
+
+<p align="justify">
+  Da eine genaue Übertragung der Messspannung mit Optokopplern nur bedingt
+  möglich ist, wird eine Eichung der Schaltung erforderlich. Hierzu wird die
+  Messspannung im Rahmen des Messbereiches variiert und mit einem
+  Digitalvoltmeter (Genauigkeit des Instrumentes beachten!) gemessen.
+  Gleichzeitig wird die am Arduino anfallende Spannung per Digitalvoltmeter
+  gemessen. Diese Messreihe wird in eine EXCEL-Tabelle eingetragen und die
+  entsprechende Grafik gezeichnet. Es ergibt sich eine lineare Abhängigkeit der
+  Funktion y = a*x + b. Die Funktionsgleichung sowie das Bestimmtheitsmaß werden
+  von EXCEL berechnet und im Diagramm dargestellt. Mit den Werten dieser
+  Funktion kann dann eine entsprechende Anpassung für die Ausgabe der gemessenen
+  Spannung erfolgen:
+</p>
+
+<p align="center">
+  <img src="/img/moba/strom/strom_05.jpg" alt="Strom_05"
+  width="" height="">
+</p>
+
+<p align="justify">
+  Für das Netzteil der Beleuchtung der Modellbahnanlage (12 V / 5 A Gleichstrom)
+  ergaben sich folgende Abhängigkeiten:
+</p>
+
+<p align="center">
+  <img src="/img/moba/strom/strom_06.jpg" alt="Strom_06"
+  width="" height="">
+</p>
+
+<p align="justify">
+  Die Gleichung für die Messspannung als Funktion der Spannung am
+  Arduino-Eingang A1 ergibt sich somit zu:
+</p>
+
+<p align="center">
+  <img src="/img/moba/strom/strom_07.jpg" alt="Strom_07"
+  width="" height="">
+</p>
+
+<h2><a name="_Toc480180624">Wechselspannung</a></h2>
+
+<p align="justify">
+  Wenn man die Messwerte einer Wechselspannung über eine oder mehrere Perioden
+  summiert erhält man null (der positive Teil entspricht dem negativen Teil).
+  Daher muss man die absoluten Werte (bzw. die Differenz zum Offset)
+  vorzeichenlos summieren.
+</p>
+
+<p align="justify">
+  Es bietet sich aber auch an, über einen Gleichrichter die Wechselspannung nach
+  oben genannter Methode zu messen. Über die Aufzeichnung der Messreihe ergibt
+  sich wieder eine lineare Funktion, somit kann die zu messende Wechselspannung
+  zu der am Arduino anfallenden Spannung ins Verhältnis gesetzt werden.
+</p>
+
+<p align="center">
+  <img src="/img/moba/strom/strom_08.jpg" alt="Strom_08"
+  width="" height="">
+</p>
+
+<p align="justify">
+  Für das Netzteil der Magnetartikel der Modellbahnanlage (18 V / 5 A
+  Wechselstrom) ergaben sich folgende Abhängigkeiten:
+</p>
+
+<p align="center">
+  <img src="/img/moba/strom/strom_09.jpg" alt="Strom_09"
+  width="" height="">
+</p>
+
+<p align="justify">
+  Die Gleichung für die Messspannung als Funktion der Spannung am
+  Arduino-Eingang A3 ergibt sich somit zu:
+</p>
+
+<p align="center">
+  <img src="/img/moba/strom/strom_10.jpg" alt="Strom_10"
+  width="" height="">
+</p>
+
+<p align="justify">
+  Für das Netzteil der Fahrspannung der Modellbahnanlage (18 V / 5 A
+  Wechselstrom) ergaben sich folgende Abhängigkeiten:
+</p>
+
+<p align="center">
+  <img src="/img/moba/strom/strom_11.jpg" alt="Strom_11"
+  width="" height="">
+</p>
+
+<p align="justify">
+  Die Gleichung für die Messspannung als Funktion der Spannung am
+  Arduino-Eingang A5 ergibt sich somit zu:
+</p>
+
+<p align="center">
+  <img src="/img/moba/strom/strom_12.jpg" alt="Strom_12"
+  width="" height="">
+</p>
+
+<h1><a name="_Toc480180625">Strommessung</a></h1>
+
+<p align="justify">
+  Für die Messung des Stromes bietet sich der Allegro ACS711-Stromsensor an.
+  Dieser besteht aus einem linearen Hall-Sensor-Schaltkreis mit einem Kupfer
+  Leitungspfad welcher in der Nähe der Oberfläche der Pressform angeordnet ist.
+  Der durch diesen Kupferpfad fließende Strom erzeugt ein Magnetfeld, das durch
+  das integrierte Hall-IC erfasst und in eine proportionale Spannung umgewandelt
+  wird.
+</p>
+
+<p align="justify">
+  Die Ausgangsspannung des Sensors hat eine positive Steigung proportional zum
+  Stromfluss von IP+ (Pins 1 und 2) nach IP- (Pins 3 und 4). Der Innenwiderstand
+  dieser Verbindung beträgt 1,2 mΩ.
+</p>
+
+<p align="justify">
+  Der ACS711 ist eine für Low-Side-Strommessung optimierte Anwendungen, wobei
+  die Anschlüsse der Leiterbahn elektrisch von dem Sensor-IC isoliert sind.
+  Hierdurch ergeben sich ausreichende interne Kriech- und Luft Abmessungen für
+  niedrige AC- oder DC-Betriebsspannungs-Anwendungen.
+</p>
+
+<p>
+  <img src="/img/moba/strom/strom_13.jpg" alt="Strom_13"
+  align="right" width="" height="">
+  Der Sensor ist ein Stromsensor, der Wechselstrom messen kann. Die eine der
+  beiden Stromrichtungen bekommt dabei ein Minuszeichen, die andere ein
+  Pluszeichen. Wenn der Sensor z.B. einen Messbereich von -12,5A bis +12,5A hat,
+  dann bedeutet das, dass der Strom mit 12,5A in die eine oder in die andere
+  Richtung fließen kann.
+</p>
+
+<p align="justify">
+  Per „analogRead“ kann man am Arduino aber nur Werte messen, die zwischen 0 und
+  1023 liegen, es handelt sich um 10-Bit ADC Messungen. Der Sensor ist nun so
+  konstruiert, dass sein Nullpunkt in der Mitte liegt, also z.B. "Null Strom"
+  bedeutet ADC-Messwert 511 (oder 510 oder 512, die Sensoren rauschen immer ein
+  bisschen, genau wie die Messwerte).
+</p>
+
+<p align="justify">
+  Die Ausgangsspannung des Sensors verhält sich proportional zum Eingangsstrom.
+  Die Werte sind über die Sensivity miteinander verknüpft, dieser Wert beträgt
+  laut Datenblatt für den ACS711LC mit ± 12,5A 110 mV/A bei Vcc = 3,3 V. Der
+  Stromfluss durch den Sensor liefert somit eine Ausgangsspannung entsprechend
+  folgender Formel:
+</p>
+
+<p align="center">
+  <img src="/img/moba/strom/strom_14.jpg" alt="Strom_14"
+  width="" height="">
+</p>
+
+<p align="justify">
+  Mit dieser Formel ergeben sich z.B. für	+12,5 A	  >	4,5833 V   und    938 Bits
+  Nach Auflösen der Gleichung ergibt sich hieraus für die Sensivity bei Vcc =
+  5 Volt:
+</p>
+
+<p align="center">
+  <img src="/img/moba/strom/strom_15.jpg" alt="Strom_15"
+  width="" height="">
+</p>
+
+<p>
+  Für die Berechnung der Spannung bei Vcc = 5 V lautet die Formel dann
+</p>
+
+<p align="center">
+  <img src="/img/moba/strom/strom_16.jpg" alt="Strom_16"
+  width="" height="">
+</p>
+
+<p>
+  Im Umkehrschluss errechnet sich aus der gemessenen Spannung der Strom zu:
+</p>
+
+<p align="center">
+  <img src="/img/moba/strom/strom_17.jpg" alt="Strom_17"
+  width="" height="">
+</p>
+
+<p>
+  <img src="/img/moba/strom/strom_18.jpg" alt="Strom_18"
+  align="right" width="" height="">
+  Für den ACS711 ergibt sich somit die nebenstehende Wertetabelle. Mit diesen
+  Abhängigkeiten können über den Sensor gemessene Ströme angezeigt werden.
+  Bei der Messung von Wechselströmen ist jedoch zu beachten, dass der
+  Effektivwert gemessen wird. Hierunter versteht sich der quadratische
+  Mittelwert des Stromes über einen definierten Zeitraum.
+  Für die Messung bedeutet das, dass über einen bestimmten Zeitraum
+  (z.B. 500 – 1000 Millisekunden) die Differenz von Mittelwert (im Normalfall
+  512 Bit) und Wert am Analog-Messeingang quadriert und aufsummiert wird.
+  Anschließend wird die Wurzel aus dem Durchschnitt der Quadrate gezogen. Dieser
+  Zusammenhang ist in der folgenden Formel dargestellt und muss bei der
+  Berechnung des Wechselstromes entsprechend berücksichtigt werden (siehe
+  Quellcode).
+</p>
+
+<p align="center">
+  <img src="/img/moba/strom/strom_19.jpg" alt="Strom_19"
+  width="" height="">
+</p>
+
+<p>
+  Der Strom ergibt sich daraus wie folgt:
+</p>
+
+<p align="center">
+  <img src="/img/moba/strom/strom_20.jpg" alt="Strom_20"
+  width="" height="">
+</p>
+
+<h2><a name="_Toc480180626">Gleichstrom und Wechselstrom</a></h2>
+
+<p align="justify">
+  Die Messung des Gleich- und des Wechselstromes wurde nach den oben
+  aufgeführten Formeln durchgeführt. Der theoretische Mittelwert des
+  Stromsensors beträgt 512, die tatsächlichen Mittelwerte wurden für
+  jeden Sensor ermittelt und entsprechend berücksichtigt.
+  Die Abweichungen der Arduino Messwerte vom berechneten Strom I = U / R sind
+  in den oben aufgeführten Tabellen der Spannungsmessungen dargestellt.
+</p>
+
+<h1><a name="_Toc480180627">Hardware</a></h1>
+
+<h2><a name="_Toc480180628">Schaltplan</a></h2>
+
+<p align="center">
+  <img src="/img/moba/strom/strom_21.jpg" alt="Strom_21"
+  width="" height="">
+</p>
+
+<p align="center">
+  <img src="/img/moba/strom/strom_22.jpg" alt="Strom_22"
+  width="" height="">
+</p>
+
+<h1><a name="_Toc480180629">Software</a></h1>
+
+<p align="justify">
+  Die Erfassung der Messwerte erfolgte mit dem Arduino Sketch
+  „MoBa_Strom_und_Spannung_02“:
+</p>
+
+<h2><a name="_Toc480180630">Quellcode Arduino</a></h2>
+
+<p>
+// Strom und Spannung messen für 3 getrennte Netzteile einer Modellbahn N-Spur 1:160
+// Arduino Uno mit Stromsensor ACS711 (-12,5A 0 + 12,5A) an 3 Meßstellen
+// Die Messergebnisse werden durch Kommata getrennt als Gesamtstring an die serielle
+// Schnittstelle übergeben. Die Ausgabe der Werte erfolgt mit Processing, hier
+// können die Daten für die Bildschirmanzeige individuell zusammengestellt werden.
+// Karl-Josef Schneider Version 0.2 vom 22.03.2017
+//..!....1....!....2....!....3....!....4....!....5....!....6....!....7....!....8....!
+
+// Librarys einbinden
+#include "floatToString.h"                      // "floatToString" einbinden
+
+// Variablen deklarieren
+int Bit0 = 0;                                   // Bit-Wert Strom1
+float Strom1 = 0;                               // Stromwert Strom1
+int Bit1 = 0;                                   // Bit-Wert Volt1
+float Volt1 = 0;                                // Spannungswert Volt1
+float P1;                                       // Leistung Meßstelle 1
+int Bit2 = 0;                                   // Bit-Wert Strom2
+float Strom2 = 0;                               // Stromwert Strom2
+int Bit3 = 0;                                   // Bit-Wert Volt2
+float Volt2 = 0;                                // Spannungswert Volt2
+float P2;                                       // Leistung Meßstelle 2
+int Bit4 = 0;                                   // Bit-Wert Strom3
+float Strom3 = 0;                               // Stromwert Strom3
+int Bit5 = 0;                                   // Bit-Wert Volt3
+float Volt3 = 0;                                // Spannungswert Volt3
+float P3;                                       // Leistung Meßstelle 3
+int Messzeit = 500;                             // Messzeit in Millisekunden
+float Sensivity = 0.16667;                      // für 12,5 A Version
+
+//****Programm**********************************************************************
+
+void setup() {
+  Serial.begin(9600);                           // Schnittstelle öffnen
+}
+
+void loop() {
+
+  // Meßstelle 1 Beleuchtung                    Netzteil 12 V, 5 A max. Gleichstrom
+  // Strom an Analogeingang A0
+  uint32_t sum2 = 0;                            // -2,147,483,648 to 2,147,483,647
+  uint16_t n = 0;                               // 0 to 65,535
+  uint32_t StartTime, StopTime;                 // -2,147,483,648 to 2,147,483,647
+  int16_t adc;                                  // 0 to 65,535
+  uint32_t avrg = 0xFFFF;                       // -2,147,483,648 to 2,147,483,647
+  StartTime=millis()+1;
+  StopTime=StartTime+Messzeit;
+  while(StartTime>millis());                    // Warten bis neue Millisekunde
+  while(StopTime>millis())                      // Summieren wir bis zur StopTime
+  {
+    adc=(511-analogRead(A0));                   // Differenz zum Mittelwert wird
+    sum2+=(uint32_t)adc*adc;                    // quadriert und aufsummiert
+    n++;
+  }
+  if (n>0)
+  {
+    avrg=sqrt(sum2/n);                          // Wurzel aus dem Durchschnitt
+  }
+  Strom1=(float)avrg*5/(Sensivity*1024);
+  Serial.print(floatToString(buffer,Strom1,2)); // Teil 1 des Ausgabestrings
+  Serial.print(",");
+  // Spannung an Analogeingang A1
+  Bit1 = analogRead(A1);                        // Bit-Wert (0-1023) aus A1 lesen
+  Volt1=(float)Bit1*5/1023;                     // Umrechnung Bit auf Volt (0-5 V)
+  Volt1=(float)5.1123*Volt1 - 0.8076;           // Umrechnung lineare Regression
+  Serial.print(floatToString(buffer,Volt1,2));  // Teil 2 des Ausgabestrings
+  Serial.print(",");
+  P1=(float)Strom1*Volt1;
+  Serial.print(floatToString(buffer,P1,2));     // Teil 3 des Ausgabestrings
+  Serial.print(",");
+
+  // Meßstelle 2 Magnetartikel                  Netzteil 18 V, 5 A max. Wechselstrom
+  // Strom an Analogeingang A2
+  sum2 = 0;                                     // Variablen zurücksetzen
+  n = 0;                                        // Variablen zurücksetzen
+  avrg = 0xFFFF;                                // Variablen zurücksetzen
+  StartTime=millis()+1;
+  StopTime=StartTime+Messzeit;
+  while(StartTime>millis());                    // Warten bis neue Millisekunde
+  while(StopTime>millis())                      // Summieren wir bis zur StopTime
+  {
+    adc=(519-analogRead(A2));                   // Differenz zum Mittelwert wird
+    sum2+=(uint32_t)adc*adc;                    // quadriert und aufsummiert
+    n++;
+  }
+  if (n>0)
+  {
+    avrg=sqrt(sum2/n);                          // Wurzel aus dem Durchschnitt
+  }
+  Strom2=(float)avrg*5/(Sensivity*1024);
+  Serial.print(floatToString(buffer,Strom2,2)); // Teil 4 des Ausgabestrings
+  Serial.print(",");
+  // Spannung an Analogeingang A3
+  Bit3 = analogRead(A3);                        // Bit-Wert (0-1023) aus A3 lesen
+  Volt2=(float)Bit3*5/1023;                     // Umrechnung Bit auf Volt (0-5 V)
+  Volt2 =(float)3.9889*Volt2 + 1.9511;          // Umrechnung lineare Regression
+  Serial.print(floatToString(buffer,Volt2,2));  // Teil 5 des Ausgabestrings
+  Serial.print(",");
+  P2=(float)Strom2*Volt2;
+  Serial.print(floatToString(buffer,P2,2));     // Teil 6 des Ausgabestrings
+  Serial.print(",");
+
+  // Meßstelle 3                                Netzteil 18 V, 5 A max. Wechselstrom
+  // Strom an Analogeingang A4
+  sum2 = 0;                                     // Variablen zurücksetzen
+  n = 0;                                        // Variablen zurücksetzen
+  avrg = 0xFFFF;                                // Variablen zurücksetzen
+  StartTime=millis()+1;
+  StopTime=StartTime+Messzeit;
+  while(StartTime>millis());                    // Warten bis neue Millisekunde anfängt
+  while(StopTime>millis())                      // Summieren wir bis zur StopTime
+  {
+    adc=(528-analogRead(A4));                   // Differenz zum Mittelwert wird
+    sum2+=(uint32_t)adc*adc;                    // quadriert und aufsummiert
+    n++;
+  }
+  if (n>0)
+  {
+    avrg=sqrt(sum2/n);                          // Wurzel aus dem Durchschnitt
+  }
+  Strom3=(float)avrg*5/(Sensivity*1024);
+  Serial.print(floatToString(buffer,Strom3,2)); // Teil 7 desAusgabestrings
+  Serial.print(",");
+  // Spannung an Analogeingang A5
+  Bit5 = analogRead(A5);                        // Bit-Wert (0-1023) aus A5 lesen
+  Volt3=(float)Bit5*5/1023;                     // Umrechnung Bit auf Volt (0-5 V)
+  Volt3 =(float)4.2032*Volt3 + 1.4157;          // Umrechnung lineare Regression
+  Serial.print(floatToString(buffer,Volt3,2));  // Teil 8 des Ausgabestrings
+  Serial.print(",");
+  P3=(float)Strom3*Volt3;
+  Serial.print(floatToString(buffer,P3,2));     // Teil 9 des Ausgabestrings
+  Serial.print(",");
+  Serial.println();                             // Zeilenvorschub und String ausgeben
+
+  delay(500);                                   // 500 Millisekunden warten
+}
+</p>
+
+<p align="justify">
+  Die Visualisierung der Messwerte auf dem Bildschirm erfolgte mit dem folgenden
+  Processing Sketch „sketch_Strom_und_Spannung_02“:
+</p>
+
+<h2><a name="_Toc480180631">Quellcode Processing</a></h2>
+
+<p>
+// Textausgabe der Strom-, Spannungs- und Leistungswerte der Seriellen Schnittstelle
+// Der Datenstring wird in die Einzeldaten aufgesplittet und diese in einer Tabelle
+// auf dem Bildschirm mit entsprechenden typischen Bildern dargestellt
+//
+// Karl-Josef Schneider Version 0.2 vom 22.03.2017
+//..!....1....!....2....!....3....!....4....!....5....!....6....!....7....!....8....!
+
+import processing.serial.*;                    // Serielle Library importieren
+Serial myPort;                                 // Serielle Schnittstelle definieren
+String Port = Serial.list()[1];                // Nummer COM-Port festlegen 1 = COM7
+String inBuffer;                               // Input String definieren
+
+void setup() {
+  size(240,280);                               // Fenstergröße festlegen
+  surface.setResizable(true);                  // Fenster mit Maus skalierbar machen
+  surface.setTitle("Power Supply");            // Fenstertitel festlegen
+  myPort = new Serial(this, Port, 9600);       // Seriellen Port öffnen
+}
+
+void draw() {
+  while (myPort.available() > 0) {             // warten bis Daten vorliegen
+    inBuffer = myPort.readStringUntil('\n');   // Daten lesen bis Zeilenvorschub
+    if (inBuffer != null) {
+
+      fill(192);                               // Fensterfarbe
+      rect(0,0,280,290);                       // Fenstergröße
+      textSize(18);                            // Textgröße festlegen
+      PImage B1 = loadImage("Intellibox.jpg"); // Bilder einfügen
+      image (B1,120,5);
+      PImage B2 = loadImage("Magnet.jpg");
+      image (B2,120,95);
+      PImage B3 = loadImage("Lampen.jpg");
+      image (B3,120,185);
+      String[] data = split(inBuffer,',');     // Kommaseparierte Daten splitten
+      // Daten für Power Supply Digital
+      fill(255,51,51);                         // Textfarbe
+      String V1= (data[7]+" V");
+      text(V1, 15,30);                         // Spannung
+      String A1= (data[6]+" A");
+      text(A1, 15, 55);                        // Strom
+      String P1= (data[8]+" W");
+      text(P1, 15, 80);                        // Leistung
+      // Daten für Power Supply Magnetartikel
+      fill(0,102,204);                         // Textfarbe
+      String V2= (data[4]+" V");
+      text(V2, 15, 120);                       // Spannung
+      String A2= (data[3]+" A");
+      text(A2, 15, 145);                       // Strom
+      String P2= (data[5]+" W");
+      text(P2, 15, 170);                       // Leistung
+      // Daten für Power Supply Beleuchtung
+      fill(102,102,0);                         // Textfarbe
+      String V3= (data[1]+" V");
+      text(V3, 15, 210);                       // Spannung
+      String A3= (data[0]+" A");
+      text(A3, 15, 235);                       // Strom
+      String P3= (data[2]+" W");
+      text(P3, 15, 260);                       // Leistung
+    }
+    }
+  }
+</p>
+
+  
