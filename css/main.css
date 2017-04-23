@@ -31,7 +31,7 @@ a:visited {
 /* Link Farbe beim drüberfahren*/
 a:hover,
 a:focus {
-  color: blue;
+  color: green;
 }
 
 /* Logo formatieren*/
@@ -55,8 +55,6 @@ a:focus {
   display: inline;  /* Elemente nebeneinander */
   margin-left: 2rem;  /* Abstand der Elemente */
   vertical-align: middle; /* Ausrichtung vertikal */
-}
-.navi {
 }
 
 /* Navi Links formatieren */
@@ -100,4 +98,43 @@ a:focus {
 /* Bilder */
 img {
   max-width: 100%; /* verhindert, dass große Bilder über ihr Container-Element hinauswachsen. */
+}
+
+/* Inhaltsverzeichnis ------------------------------------------------------- */
+
+/* toc ist eine gängige Abkürzung, steht für "Table of Contents" = Inhaltsverzeichnis */
+.toc {
+
+}
+
+/* Ein Link in einem Inhaltsverzeichnis */
+.toc-link {
+  display: block;
+  overflow: hidden;
+  margin-bottom: .5rem;
+  padding-top: .5rem;
+  padding-bottom: .5rem;
+}
+
+.toc-link {
+  color: black;
+}
+
+.toc-link:hover,
+.toc-link:focus {
+  color: green;
+}
+
+/* Das Bild in einem Inhaltsverzeichnislink */
+.toc-img {
+  display: block;
+  width: 3rem;
+  float: left;
+  margin-right: 1rem;
+}
+
+.toc-title {
+  display: block;
+  float: left;
+  padding-top: .65rem;
 }
