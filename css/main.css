@@ -138,3 +138,25 @@ img {
   float: left;
   padding-top: .65rem;
 }
+
+/* Styles für Codebeispiele */
+
+pre, code {
+  font-family: Monaco, monospace;
+  font-size: .8rem;
+}
+
+code {
+  background-color: #eaeaea;
+  padding: .2rem .3rem;
+}
+
+pre {
+  background-color: #eaeaea;
+  padding: 1rem;
+  overflow: auto;
+}
+
+pre code {
+  background-color: transparent;
+}
