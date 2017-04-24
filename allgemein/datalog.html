@@ -29,7 +29,7 @@ title: 'Energiedatenlogger mit C-Control Mega 128'
   <li>
     <span class=MsoHyperlink>
       <a href="#_Toc480180623">
-        Hardware
+        Digitaler EMH eHZ Zweirichtungs-Stromzähler
       </a>
     </span>
   </li>
@@ -37,10 +37,68 @@ title: 'Energiedatenlogger mit C-Control Mega 128'
   <li>
     <span class=MsoHyperlink>
       <a href="#_Toc480180624">
-        Software
+        Siemens Drehstromzähler mit Ferraris-Scheibe
       </a>
     </span>
   </li>
+
+  <li>
+    <span class=MsoHyperlink>
+      <a href="#_Toc480180625">
+        Füllstandsanzeige für Öltank
+      </a>
+    </span>
+  </li>
+
+  <li>
+    <span class=MsoHyperlink>
+      <a href="#_Toc480180626">
+        Betriebstundenzähler für Ölheizung
+      </a>
+    </span>
+  </li>
+
+  <li>
+    <span class=MsoHyperlink>
+      <a href="#_Toc480180627">
+        Temperaturmessung
+      </a>
+    </span>
+  </li>
+
+  <li>
+    <span class=MsoHyperlink>
+      <a href="#_Toc480180628">
+        Hardware
+      </a>
+    </span>
+  </li>
+
+  <li>
+    <span class=MsoHyperlink>
+      <a href="#_Toc480180629">
+        Microcontroller C-Control Pro MEGA 128 Application Board
+      </a>
+    </span>
+  </li>
+
+  <li>
+    <span class=MsoHyperlink>
+      <a href="#_Toc480180630">
+        LCD Display 4 x 20
+      </a>
+    </span>
+  </li>
+
+  <li>
+    <span class=MsoHyperlink>
+      <a href="#_Toc480180631">
+        Zeituhr
+      </a>
+    </span>
+  </li>
+
+
 </ul>
 
 <h1><a name="_Toc480180621">Projektbeschreibung</a></h1>
@@ -76,98 +134,458 @@ title: 'Energiedatenlogger mit C-Control Mega 128'
   soll dann am PC mit Hilfe von EXCEL durchgeführt werden.
 </p>
 
-
-
-<ul>
-  <li>drahtgebundene Alarmkontakte über Bewegungsmelder in verschiedenen
-   Räumen</li>
-  <li>Abschaltung einzelner Schleifen bei Bedarf</li>
-  <li>Sabotage- und Panikkontakte</li>
-  <li>Optischer und akustischer Alarm über Dachsirene und interne
-  Meldeeinheit</li>
-  <li>Netz- und Batteriebetrieb</li>
-  <li>Einstellung von Alarmzeit, Alarmverzögerung und Scharfschaltverzögerung
-  </li>
-  <li>Aktivierung und Stoppen der Anlage von verschiedenen Standorten</li>
-  <br>
-</ul>
-
-<p align=justify>
-  Die vorliegende Aufgabe wurde durch den Einsatz eines C-Control Mega 128
-  gelöst. Die Ansteuerung der Eingänge über Optokoppler fand auf der
-  Entwicklungsboard-Platine der C-Control Einheit Platz. Das Board wurde auf
-  eine größere Basisplatine aufgesetzt, diese enthielt die Stromversorgung und
-  die erweiterten Anschlüsse für die Ein- und Ausgänge der Anlage.
-</p>
-
-<p align=justify>
-  Die komplette Basisplatine sowie ein separates Bedienpanel konnten in den
-  vorhandenen Bedienschrank eingebaut werden. Eine externe Steuerung der Anlage
-  erfolgte je nach Standort über Taster oder vom Handy über die App eines
-  Homematic-Systems.
-</p>
-
-<p align=justify>
-  Die Programmierung des Mega128 erfolgte über einen entsprechend
-  zugeschnittenen Basic-Code.
-</p>
-
-<h1><a name="_Toc480180622">Hardware</a></h1>
-
-<p align=justify>
-  Die gesamte Anlage wurde auf 3 Platinen aufgebaut:
-</p>
-
-<ul>
-  <li>C-Control Entwicklungsbord mit den Ein- und Ausgängen über Optokoppler
-  </li>
-  <li>Basisplatine mit Stromversorgung und Ansteuerung der Ein- und Ausgänge
-  sowie als Trägerplatine für das Entwicklungsboard</li>
-  <li>Platine für das Bedienpanel im Schrank</li>
-</ul>
-
 <p align="justify">
-  Die Schaltung und der Aufbau der Anlage werden aus den folgenden Bildern
-  ersichtlich:
-</p>
-
-<p align="center">
-  <img src="/img/allgemein/alarm/alarm_02.png" alt="Alarm_02"
-  width="" height="">
-</p>
-
-<p align="center">
-  <img src="/img/allgemein/alarm/alarm_03.png" alt="Alarm_03"
-  width="" height="">
-</p>
-
-<p align="center">
-  <img src="/img/allgemein/alarm/alarm_04.png" alt="Alarm_04"
-  width="" height="">
-</p>
-
-<p align="center">
-  <img src="/img/allgemein/alarm/alarm_05.jpg" alt="Alarm_05"
-  width="" height="">
-</p>
-
-<p align="center">
-  <img src="/img/allgemein/alarm/alarm_06.jpg" alt="Alarm_06"
-  width="" height="">
+  Als Microcontroller wurde ein C-Control Pro Mega 128 ausgewählt, da mit diesem
+  System schon Erfahrungen aus einem anderen Projekt vorlagen. Ziel hier war nun
+  das Auslesen zwei unterschiedlicher Stromzähler incl. Anzeige und Speicherung
+  der Daten. Da das SolarLog 100 Gerät nach Auskunft des Herstellers nicht
+  extern ausgelesen werden kann, mussten die erforderlichen Daten vom
+  offiziellen Zähler der Solaranlage abgegriffen werden. Der vom RWE eingebaute
+  Zweirichtungszähler verfügt über eine Infrarot-Schnittstelle, hierüber waren
+  Verbrauch und Einspeisung zu erfassen. Weiterhin sollten die Temperatur, der
+  Füllstand des Öltanks der Heizung sowie die Betriebsstunden der Heizung
+  erfasst werden.
 </p>
 
 <p align="justify">
-  Eine detaillierte Beschreibung der Schaltung dürfte sich erübrigen, da die
-  Funktion aus den vorgelegten Schaltplänen hervorgeht. Bei den externen
-  Eingängen ist folgende Besonderheit zu beachten:
+  In den folgenden Kapiteln werden die verwendete Hardware und Software
+  beschrieben und es wird auf die Erfahrungen und Probleme beim Aufbau und
+  Betrieb eingegangen.
+</p>
+
+<h1><a name="_Toc480180622">Messgeräte und Schnittstellen</a></h1>
+
+<h2><a name="_Toc480180623">Digitaler EMH eHZ Zweirichtungs-Stromzähler</a></h2>
+
+<p align="justify">
+  Zur Erfassung des Strombezuges sowie der Stromeinspeisung in das öffentliche
+  Netz wurde vom RWE im November 2011 der elektronische Zweirichtungszähler
+  <b> EMH eHz-HW8E2A5LOEQ2P </b> eingebaut.
+</p>
+
+<div>
+  <img src="/img/allgemein/datalog/datalog_01.jpg" alt="datalog_01"
+  align="left" width="350" height="" style="margin:8px">
+
+  <img src="/img/allgemein/datalog/datalog_02.jpg" alt="datalog_02"
+  align="left" width="700" height="" style="margin:8px">
+</div>
+
+<h2>&nbsp;</h2>  <!-- Leerzeile -->
+
+<p align="justify">
+  Der EMH-Zähler verfügt auf der Vorderseite über einen IR-Port. Der
+  Datenaustausch erfolgt über einen entsprechenden Schreib-/Lesekopf, dieser ist
+  von den max. Abmessungen nach DIN-EN 62056-21 genormt:
 </p>
 
 <p align="center">
-  <img src="/img/allgemein/alarm/alarm_07.jpg" alt="Alarm_07"
+  <img src="/img/allgemein/datalog/datalog_03.jpg" alt="datalog_03"
+  width="800" height="">
+</p>
+
+<p align="justify">
+  Die Datenübertragung erfolgt asynchron seriell ohne zusätzlichen Taktimpuls.
+  Der EMH eHz arbeitet mit 9600 Baud, 8 Bit, keine Parität und einem Stopbit.
+  Für die vorliegende Aufgabe muss die Schnittstelle nur als Lesekopf ausgeführt
+  werden, da der Zähler keine Eingaben erwartet. Der Zähler sendet ein
+  Datenprotokoll als Smart Message Language (SML), die Sendung des Datensatzes
+  erfolgt lastabhängig alle 1...4 Sekunden.
+</p>
+
+<p align="justify">
+  Die Impulse der IR-Sendediode können über eine Photodiode oder einen
+  Phototransistor erfasst werden. Für Versuchszwecke wurde mit vorhandenen
+  Bauteilen folgende Schaltung aufgebaut:
+</p>
+
+<p align="center">
+  <img src="/img/allgemein/datalog/datalog_04.jpg" alt="datalog_04"
+  width="800" height="">
+</p>
+
+<p align="justify">
+  Der Phototransistor BPW40 erfasst die Blinksignale der IR-Diode im Zähler,
+  d.h. bei auftretendem Licht schaltet der Transistor durch und es gelangen
+  positive Impulse auf den nachfolgenden Komparator LM 393. Durch Nachschalten
+  eines invertierenden Schmitt-Triggers hinter den Komparator wird das Signal
+  invertiert und die Flanken zusätzlich geschärft. Der zweite Komparator im
+  LM 393 wird genutzt, um das Blinksignal der IR-Diode durch eine LED anzuzeigen.
+</p>
+
+<p align="justify">
+  Der Schaltungsausgang wurde zu Testzwecken mit dem Eingangsport RXD einer
+  seriellen Schnittstelle (RS232) eines PCs verbunden. Über ein Terminalprogramm
+  (HTerm.exe, http://www.der-hammer.info/terminal/) konnten HEX-Daten sichtbar
+  gemacht werden und der strukturelle Aufbau einer SML-Nachricht war zu
+  erkennen. Leider war aus den Daten jedoch nicht die gewünschte Information
+  über den Zählerstand ablesbar.
+</p>
+
+<p align="justify">
+  Da weitere Experimente mit der oben aufgeführten Anordnung erfolglos blieben,
+  wurde auf eine in
+  http://wiki.volkszaehler.org/hardware/controllers/ir-schreib-lesekopf
+  veröffentliche Schaltung zurückgegriffen:
+</p>
+
+<p align="center">
+  <img src="/img/allgemein/datalog/datalog_05.jpg" alt="datalog_05"
+  width="600" height="">
+</p>
+
+<p align="justify">
+  Die Schaltung enthält einen Schreib- und einen Lesekopf und wird als Bausatz
+  mit Platine und Gehäuse für gut 10,- € zuzüglich Versand angeboten
+  (udo1@gmx.net). Da die IR-Schnittstelle auf der Frontseite der eHZ-Zähler per
+  DIN-Definition nur die Empfangsrichtung zulässt, braucht man nur die
+  IR-Lesevorrichtung. Man muss die Platine daher nur mit den Bauteilen der
+  Lesevorrichtung bestücken, in jedem Falle erhält man nach Einbau in das
+  genormte Gehäuse mit Magnetring eine fast perfekte Lösung zum Anbau an den
+  Zähler. Die Einschränkung bezieht sich auf die minimal hervorstehenden
+  Wölbungen der Dioden am Zähler sowie am Schreib-/Lesekopf. Um hier ein Wippen
+  zu vermeiden muss man z.B. mit einem Schaumstoffring leicht ausgleichen.
+</p>
+
+<p align="justify">
+  Die Datenübertragung erfolgt seriell und es werden Logic-Pegel geliefert. Um
+  sowohl das Eingangssignal, als auch das Ausgangssignal invertieren zu können,
+  wurde beiden Stufen ein Exklusiv-Oder-Glied vorgeschaltet bzw. nachgeschaltet.
+  Dieses ermöglicht durch einfaches Umschalten eines seiner Eingänge auf High
+  oder Low das Ausgangs-Signal entweder zu invertieren oder nicht. D2 dient als
+  Verpolungsschutz.
+</p>
+
+<p align="justify">
+  Der nichtinvertierte Ausgang des Lesekopfes wurde nun wieder mit dem
+  Eingangsport RXD einer seriellen Schnittstelle (RS232) eines PCs verbunden.
+  Über das oben erwähnte Terminalprogramm war nun nicht nur die Struktur der
+  SML-Nachricht erkennbar, sondern die empfangenen HEX-Daten konnten auch
+  ausgewertet werden.
+</p>
+
+<p align="justify">
+  Das HEX-Datentelegramm enthält insgesamt 356 Zeichen, von denen aber zur
+  Ablesung der Zählerstände nur einige wenige benötigt werden. Wie die
+  nachfolgende Tabelle zeigt, enthalten die Zeichen 143 – 147 die Information
+  für Bezug und die Zeichen 166 – 170 die Information für Einspeisung.
+</p>
+
+<p align="justify">
+  Für den Bezugswert ist die Hexadezimalzahl 00007D362E in das Dezimalsystem
+  umzuwandeln. Jede Stelle der Zahl hat den Wert der entsprechenden Potenz von
+  16, die rechte Ziffer entspricht 16º=1, die zweite von rechts 16¹=16 usw.
+  Jede Ziffer bzw. ihr Zahlenwert (A=10, B=11, ...) wird mit der entsprechenden
+  Potenz multipliziert und anschließend summiert:
+</p>
+
+<p align="center">
+  <img src="/img/allgemein/datalog/datalog_06.jpg" alt="datalog_06"
+  width="600" height="">
+</p>
+
+<p align="justify">
+    Unter Berücksichtigung der Kommastelle ergibt sich somit der Zählerstand für
+    Bezug zu 820,5870 kWh. Den Zählerstand für Einspeisen wird analog ermittelt.
+</p>
+
+<p align="center">
+  <img src="/img/allgemein/datalog/datalog_07.png" alt="datalog_07"
+  width="800" height="">
+</p>
+
+<h2><a name="_Toc480180624">Siemens Drehstromzähler mit Ferraris-Scheibe</a></h2>
+
+<p align="justify">
+    Im Rahmen der Installation der Photovoltaik-Anlage wurde zur Erfassung der
+    erzeugten Energie ein Siemens Drehstromzähler eingebaut. Da zu dieser Zeit
+    kein elektronischer Zähler verfügbar war, arbeitet der eingebaute Zähler
+    nach dem alten Prinzip mit Ferraris-Drehscheibe und verfügt somit auch über
+    keine Schnittstelle.
+</p>
+
+<div align="center">
+  <img src="/img/allgemein/datalog/datalog_08.jpg" alt="datalog_08"
+  align="center" width="250" height="" style="margin:20px">
+
+  <img src="/img/allgemein/datalog/datalog_09.jpg" alt="datalog_09"
+  align="center" width="400" height="" style="margin:8px">
+  <br> Grundsätzlicher Aufbau eines mechanischen Wechselstromzählers
+</div>
+
+<p align="justify">
+  Bei den üblichen Wechselstromzählern, auch bekannt als Ferraris- bzw.
+  Induktionszähler, werden die Spannungen und Ströme mit Spulen, Bremsmagneten
+  und Läuferscheibe über Magnetfelder und Ströme analog multipliziert. Dieses
+  Produkt aus Spannung mal Strom entspricht dann in Form der Drehgeschwindigkeit
+  der Drehscheibe der elektrischen Leistung. Die Drehbewegung der Drehscheibe
+  entsteht durch die mittels der Spannungs- und Stromspule erzeugten
+  Wirbelströme in der Aluminiumscheibe. Dazu erzeugen die am Stromnetz
+  angeschlossene Spannungsspule mit ihrem Eisenkern sowie die vom Laststrom
+  durchflossene Stromspule mit ihrem Kern einen um exakt 90 Grad
+  phasenverschobenen Wechselfluss, der zu eben diesem Wirbelstrom in der Scheibe
+  führt. Das Prinzip des Ferrariszählers berücksichtigt, bedingt durch den
+  Aufbau, sogar den Leistungsfaktor cos ρ und bringt somit nur den Wirkstrom zur
+  Anzeige. Die Umdrehungen der Scheibe, die mit einem Rollenzählwerk registriert
+  werden, sind ein Maß für die geleistete Arbeit. Das Verhältnis von Umdrehung
+  zu kWh wird als Zählerkonstante bezeichnet. Diese Zählerkonstante ist auf dem
+  Zähler (beispielsweise 75 U/kWh beim abgebildeten Siemes-Zähler) angegeben.
+  Dies bedeutet, dass 75 Umdrehungen eine verbrauchte kWh widerspiegeln.
+  Zusätzlich lassen sich auch Daten aus der Geschwindigkeit der Drehscheibe
+  gewinnen. Die Umdrehungszeit (von Rot bis Rot) wird gemessen und ergibt
+  beispielsweise zehn Sekunden. Wenn nun die Anzahl der Umdrehungen auf eine
+  Stunde hochgerechnet (= 360 Umdrehungen pro Stunde) und dann durch die
+  Zählerkonstante geteilt wird, so lässt sich die aktuell verbrauchte Leistung
+  ermitteln:
+</p>
+
+<p align="center">
+  <img src="/img/allgemein/datalog/datalog_10.jpg" alt="datalog_10"
   width="" height="">
 </p>
 
-<h1><a name="_Toc480180623">Software</a></h1>
+<p align="justify">
+  Damit nun aber nicht die einmal beschleunigte Scheibe nachläuft, wenn der
+  Stromverbrauch geringer wird oder gar ausbleibt, ist ein Bremsmagnet
+  installiert, der die Beschleunigung kompensiert und so die Umdrehungszahl der
+  Scheibe genau proportional zum Stromfluss hält. Er sorgt z. B. auch für einen
+  sofortigen Stopp der Scheibe, wenn kein Stromfluss mehr vorhanden ist.
+</p>
+
+<p align="justify">
+  Die Ferraris-Scheibe des Solarzählers wird mit einer Reflex-Lichtschranke
+  abgetastet. Die silberne Scheibe reflektiert gut, d.h. am Ausgang liegen +5V
+  an. Bei Durchlauf der roten Markierung ist die Reflektion schlecht, es
+  entsteht eine negative Flanke, der Optokoppler sperrt. Diese Impulse müssen
+  gezählt werden und als Verbrauchswert aufsummiert werden.
+</p>
+
+<p align="justify">
+  75 Impulse entsprechen 1 kWh. Es darf bei jedem Durchlauf nur ein Impuls
+  gezählt werden, dies muss durch entsprechende Ausführung der Software
+  sichergestellt werden.
+</p>
+
+<p align="justify">
+  Beim elektronischen Zähler werden die Zählerstände im Zähler gespeichert und
+  dort bei Bedarf abgerufen, es steht also immer der genaue Zählerstand zur
+  Erfassung im Datenlogger zur Verfügung. Im Gegensatz dazu sind beim
+  Drehscheibenzähler die einzelnen Impulse zu erfassen und müssen aufsummiert
+  werden. Falls einzelne Impulse verlorengehen ist es nicht mehr möglich einen
+  genauen Zählerstand zu ermitteln. Genau dieser Fehler aber trat bei meinem
+  Datenlogger auf, da der Datentransfer über die serielle Schnittstelle offenbar
+  so zeitintensiv war, dass während dieser Übertragung immer wieder Impulse des
+  Drehscheibenzählers verschluckt wurden. Der erfasste Zählerstand lag permanent
+  unter dem tatsächlichen Zählerstand. Es lag also der Gedanke nahe, die Impulse
+  in einem externen Baustein zu summieren und dann bei Bedarf abzufragen, ohne
+  einen einzigen Impuls zu verlieren. Zu diesem Zweck wählte ich einen
+  CCTools-Bausatz (CCTools I2C-CNT2 HS Nr. 1828), der zwei 8Bit-Counter enthält.
+  Mit jedem Impuls wird der Zähler um Eins erhöht. Die Zählerstände können über
+  den I2C-Bus abgefragt werden.
+</p>
+
+<p align="justify">
+  Die folgende Schaltung zeigt die Ausführung mit dem Reflexkoppler
+  CNY70 und dem Zählerbaustein:
+</p>
+
+<p align="center">
+  <img src="/img/allgemein/datalog/datalog_11.jpg" alt="datalog_11"
+  width="" height="">
+</p>
+
+<p>
+  <img src="/img/allgemein/datalog/datalog_12.jpg" alt="datalog_12"
+  align="right" width="300" height="">
+  Der Reflexkoppler muss auf der Glasscheibe des Zählers so angebracht werden,
+  dass die Linie Fotodiode / IR-LED senkrecht verläuft. Die optimale Position
+  auch in horizontaler Richtung ist durch Versuche zu ermitteln.
+  Befestigungsversuche mit Klebeband oder Gummiband sind gescheitert, da sich
+  die Platine auf Dauer verschoben hat und keine saubere Messung mehr möglich
+  war. Die Platine wurde daher in ein selbstgefertigtes Gehäuse eingebaut. Als
+  Basis hierfür diente der Einbaurahmen eines defekten digitalen Messgerätes.
+  Auf dem Zählergehäuse wurden mit 2-Komponenten Kleber entsprechende
+  Gewinde¬bolzen (4 mm) aufgeklebt. Das Gehäuse konnte so sicher angeschraubt
+  werden, durch Schlitzlöcher war eine genaue Justierung möglich.
+</p>
+
+<p align="justify">
+  Für die Übertragung von Steuerungssignalen innerhalb eines Gebäudes ist die
+  Länge des reinen I²C-Busses jedoch zu gering. Hier wurde auf den Baustein
+  P82B715, ein I²C Bus Buffer des Herstellers Philips, zurückgreifen. Somit sind
+  Leitungslängen bis zu 50 Meter kein Problem mehr – eine Länge, die durchaus
+  ausreichend erscheint, selbst wenn man auf jedem Stockwerk im Haus I²C-Slaves
+  unterbringen möchte. Das folgende Datenblatt zeigt die technischen Details
+  sowie die Bezugsquelle für die I²C-Verstärkerplatine.
+</p>
+
+<p align="center">
+  <img src="/img/allgemein/datalog/datalog_13.jpg" alt="datalog_13"
+  width="800" height="">
+</p>
+
+<p align="justify">
+  Trotz Einsatz der vorgenannten Verstärkerplatine kam es auf dem I²C-Bus immer
+  wieder zu Störungen und die Signale wurden nicht sauber übertragen. Abhilfe
+  wurde hier dadurch geschaffen, dass der Zählerbaustein direkt auf der
+  Zusatzplatine im Gehäuse des Datenloggers platziert wurde. Hierzu musste der
+  Baustein entsprechend bearbeitet werden, d.h. durch Entfernen der Klemmleisten
+  konnte die gewünschte Verkleinerung erreicht werden und die Platine nun
+  mittels Stiftsockeln aufgedockt werden. Der Impuls vom Ferraris-Zähler wurde
+  nun über eine separate Leitung zum Zählerbaustein geführt und dort über eine
+  LED angezeigt, die I²C-Verstärkereinheit konnte für diesen Zweck entfallen.
+  Mit dieser Anordnung nun eine genaue Erfassung der Impulse und somit des
+  Zählerstandes möglich.
+</p>
+
+<h2><a name="_Toc480180625">Füllstandsanzeige für den Öltank</a></h2>
+
+<p align=justify>
+  Zur Visualisierung des Füllstandes des Tanks der Ölheizung und damit auch zu
+  einer langfristigen Verbrauchsübersicht wurde im Stutzen für die mechanische
+  Messuhr zusätzlich zur Uhr ein Ultraschallsensor installiert. Hierbei wurde
+  auf ein Fertigmodul mit dem Ultraschall Entfernungsmesser SRF02
+  zurückgegriffen, ein Modul welches zur Entfernungsmessung zwischen 15 cm und
+  6 Metern geeignet ist.
+</p>
+
+<p>
+  Das Modul weist folgende technischen Eigenschaften auf:
+</p>
+
+<ul>
+  <li>Betriebsspannung 5V (stabilisiert) </li>
+  <li>Stromaufnahme nur 4mA (typisch) </li>
+  <li>Ultraschallfrequenz 40khz </li>
+  <li>Reichweite 15cm bis 6 Meter </li>
+  <li>Schnittstelle RS232 (TTL) und I2C-Bus </li>
+  <li>Ausgabeeinheit wahlweise mm, inch oder uS </li>
+  <li>Einfachste Verwendung, keine Kalibration/Justierung notwendig, einfach
+     Spannung anlegen und schon kann gemessen werden. </li>
+  <li>Gewicht nur 4,6 g  </li>
+  <li>Größe 24mm x 20mm x 17mm  </li>
+  <li>Hersteller: Devantech Ltd  </li>
+  <li>Distributer: Robotikhardware.de </li>
+</ul>
+
+<p align="center">
+  <img src="/img/allgemein/datalog/datalog_14.jpg" alt="datalog_14"
+  width="800" height="">
+</p>
+
+<p align=justify>
+  Im I²C-Modus wird der Pin Mode nicht beschaltet. Das Modul wurde über die
+  oben beschriebene I²C-Verstärkerplatine an das C-Control Pro Mega 128
+  Application Board angeschlossen.
+</p>
+
+<h2><a name="_Toc480180626">Betriebstundenzähler für die Ölheizung</a></h2>
+
+<p align=justify>
+  Die Heizungsanlage liefert bei eingeschaltetem Brenner ein 12 V – Signal.
+  Dieses wurde über einen Optokoppler auf den 5 V- Level der C-Control Hardware
+  umgesetzt und mit Port F.4 verbunden. Hier brauchte dann nur noch die
+  Einschaltzeit des Brenners über eine Timer hochgezählt werden.
+</p>
+
+<h2><a name="_Toc480180627">Temperaturmessung</a></h2>
+
+<p align=justify>
+  Für die Messung der Temperatur bietet sich der DS1820 Temperatursensor über
+  den OneWire-Anschluß an. Zunächst wurde ein Sensor zur Erfassung der
+  Außentemperatur installiert.
+</p>
+
+<p>
+  Auszug aus dem Datenblatt des DS1820:
+</p>
+
+<p align="center">
+  <img src="/img/allgemein/datalog/datalog_15.jpg" alt="datalog_15"
+  width="600" height="">
+</p>
+
+<p>
+  Anschlussbelegung:
+</p>
+
+<p align="center">
+  <img src="/img/allgemein/datalog/datalog_16.jpg" alt="datalog_16"
+  width="400" height="">
+</p>
+
+<h1><a name="_Toc480180628">Hardware</a></h1>
+
+<h2><a name="_Toc480180629">Microcontroller C-Control Pro MEGA 128 Application
+   Board </a></h2>
+
+<p align="justify">
+  Als Microcontroller wurde die C-Control Pro MEGA 128 mit Application Board von
+  Conrad eingesetzt. Der Grund hierfür waren vorliegende Erfahrungen aus einem
+  anderen Projekt, sicherlich sind hier auch andere Lösungen möglich. Auf der
+  rechten Seite der Platine wurden im Lochraster¬bereich die Speichereinheit
+  für SD-Karten, der Uhrenbaustein sowie ein SubD Stecker für die Eingangsports
+  installiert. Wichtig ist hier das Entfernen der kaum sichtbaren Verbindungen
+  der äußeren Lochreihen auf der Platine.
+</p>
+
+<p align="center">
+  <img src="/img/allgemein/datalog/datalog_17.jpg" alt="datalog_17"
+  width="" height="">
+</p>
+
+<p align="center">
+  C-Control Bestückungsseite
+</p>
+
+<p align="center">
+  <img src="/img/allgemein/datalog/datalog_18.jpg" alt="datalog_18"
+  width="" height="">
+</p>
+
+<p align="center">
+  C-Control Lötseite
+</p>
+
+<p align="justify">
+Die vier Taster wurden von der Platine entfernt und durch Digitast-Taster
+ersetzt. Diese wurden auf einer kleinen Lochrasterplatine installiert und im
+Winkel von 90° an die Basisplatine gelötet. Zur besseren Stabilität wurden die
+Platinen zusätzlich mit 2-Komponenten Kleber verbunden. Dieser Umbau war
+erforderlich damit die Bedienbarkeit der Taster beim späteren Einbau in ein
+Gehäuse gegeben war.
+</p>
+
+<p align="justify">
+Für die Aufnahme des 4 x 20 LCD-Displays sowie des I²C-Speicherbausteines und
+des I²C-Verstärkerbausteines wurde eine gedruckte Platine angefertigt. Auf
+dieser Platine sind auch 6 LEDs angeordnet, hierüber werden z.B. der Impuls des
+Solarzählers, der Einschaltzustand der Heizung, der Zugriff auf die SD-Card und
+die Auswahl von 3 möglichen Temperatursensoren angezeigt. Diese Trägerplatine
+wurde mit Abstandsschrauben auf der Basisplatine der C-Control befestigt.
+</p>
+
+<p align="justify">
+Die gesamte Elektronik wurde in ein Kunststoffgehäuse mit Klarsichtdeckel
+eingebaut. Das Gehäuse wurde auf der linken Seite mit einer Aussparung für die
+Bedien- und Anschlusselemente des Application Board versehen. Im unteren Bereich
+erfolgte eine Aussparung für die Digitaster und Auf der rechten Seite für den
+Zugang zur SD-Karte sowie den Stecker der Eingangssignale.
+</p>
+
+<p align="center">
+  <img src="/img/allgemein/datalog/datalog_19.jpg" alt="datalog_19"
+  width="" height="">
+</p>
+
+
+
+
+
+
+
+
+
 
 <p align="justify">
   Das Basic-Programm für die C-Control Mega 128 sieht wie folgt aus:
