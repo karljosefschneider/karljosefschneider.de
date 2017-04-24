@@ -13,6 +13,7 @@ body {
   min-height: 100vh;  /* Mindesthöhe Browswerfenster */
   margin: 0;
   padding: 0;
+  color: black;
   background-color: lightgrey;
   font-family: "Calibri", Arial, Helvetica, sans-serif;
   font-size: 1.25rem; /* Schriftgröße */
@@ -31,7 +32,7 @@ a:visited {
 /* Link Farbe beim drüberfahren*/
 a:hover,
 a:focus {
-  color: green;
+  color: red;
 }
 
 /* Logo formatieren*/
@@ -97,12 +98,14 @@ a:focus {
 
 /* Bilder */
 img {
-  max-width: 100%; /* verhindert, dass große Bilder über ihr Container-Element hinauswachsen. */
+  max-width: 100%; /* verhindert, dass große Bilder über ihr Container-Element
+  hinauswachsen. */
 }
 
 /* Inhaltsverzeichnis ------------------------------------------------------- */
 
-/* toc ist eine gängige Abkürzung, steht für "Table of Contents" = Inhaltsverzeichnis */
+/* toc ist eine gängige Abkürzung, steht für "Table of Contents" =
+Inhaltsverzeichnis */
 .toc {
 
 }

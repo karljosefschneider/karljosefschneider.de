@@ -444,7 +444,8 @@ title: 'Spannung und Strom messen mit dem Arduino Uno'
 
 <h2><a name="_Toc480180630">Quellcode Arduino</a></h2>
 
-<p>
+<pre>
+  <code>
 // Strom und Spannung messen für 3 getrennte Netzteile einer Modellbahn N-Spur 1:160
 // Arduino Uno mit Stromsensor ACS711 (-12,5A 0 + 12,5A) an 3 Meßstellen
 // Die Messergebnisse werden durch Kommata getrennt als Gesamtstring an die serielle
@@ -581,16 +582,18 @@ void loop() {
 
   delay(500);                                   // 500 Millisekunden warten
 }
-</p>
+  </code>
+</pre>
 
-<p align="justify">
+<p>
   Die Visualisierung der Messwerte auf dem Bildschirm erfolgte mit dem folgenden
   Processing Sketch „sketch_Strom_und_Spannung_02“:
 </p>
 
 <h2><a name="_Toc480180631">Quellcode Processing</a></h2>
 
-<p>
+<pre>
+  <code>
 // Textausgabe der Strom-, Spannungs- und Leistungswerte der Seriellen Schnittstelle
 // Der Datenstring wird in die Einzeldaten aufgesplittet und diese in einer Tabelle
 // auf dem Bildschirm mit entsprechenden typischen Bildern dargestellt
@@ -652,6 +655,5 @@ void draw() {
     }
     }
   }
-</p>
-
-  
+  </code>
+</pre>
