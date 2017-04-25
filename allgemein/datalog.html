@@ -98,7 +98,21 @@ title: 'Energiedatenlogger mit C-Control Mega 128'
     </span>
   </li>
 
+  <li>
+    <span class=MsoHyperlink>
+      <a href="#_Toc480180632">
+        SD-Card Interface für C-Control Pro
+      </a>
+    </span>
+  </li>
 
+  <li>
+    <span class=MsoHyperlink>
+      <a href="#_Toc480180633">
+        Software
+      </a>
+    </span>
+  </li>
 </ul>
 
 <h1><a name="_Toc480180621">Projektbeschreibung</a></h1>
@@ -213,10 +227,12 @@ title: 'Energiedatenlogger mit C-Control Mega 128'
   LM 393 wird genutzt, um das Blinksignal der IR-Diode durch eine LED anzuzeigen.
 </p>
 
-<p align="justify">
+<p>
   Der Schaltungsausgang wurde zu Testzwecken mit dem Eingangsport RXD einer
   seriellen Schnittstelle (RS232) eines PCs verbunden. Über ein Terminalprogramm
-  (HTerm.exe, http://www.der-hammer.info/terminal/) konnten HEX-Daten sichtbar
+  (HTerm.exe, <a href="http://www.der-hammer.info/terminal/"
+  style="text-decoration: underline; color: blue;">
+  http://www.der-hammer.info/terminal/</a>) konnten HEX-Daten sichtbar
   gemacht werden und der strukturelle Aufbau einer SML-Nachricht war zu
   erkennen. Leider war aus den Daten jedoch nicht die gewünschte Information
   über den Zählerstand ablesbar.
@@ -225,7 +241,9 @@ title: 'Energiedatenlogger mit C-Control Mega 128'
 <p align="justify">
   Da weitere Experimente mit der oben aufgeführten Anordnung erfolglos blieben,
   wurde auf eine in
-  http://wiki.volkszaehler.org/hardware/controllers/ir-schreib-lesekopf
+  <a href="http://wiki.volkszaehler.org/hardware/controllers/ir-schreib-lesekopf"
+  style="text-decoration: underline; color: blue;">
+  http://wiki.volkszaehler.org/hardware/controllers/ir-schreib-lesekopf</a>
   veröffentliche Schaltung zurückgegriffen:
 </p>
 
@@ -531,7 +549,7 @@ title: 'Energiedatenlogger mit C-Control Mega 128'
 
 <p align="center">
   <img src="/img/allgemein/datalog/datalog_17.jpg" alt="datalog_17"
-  width="" height="">
+  width="800" height="">
 </p>
 
 <p align="center">
@@ -540,7 +558,7 @@ title: 'Energiedatenlogger mit C-Control Mega 128'
 
 <p align="center">
   <img src="/img/allgemein/datalog/datalog_18.jpg" alt="datalog_18"
-  width="" height="">
+  width="800" height="">
 </p>
 
 <p align="center">
@@ -575,300 +593,824 @@ Zugang zur SD-Karte sowie den Stecker der Eingangssignale.
 
 <p align="center">
   <img src="/img/allgemein/datalog/datalog_19.jpg" alt="datalog_19"
-  width="" height="">
+  width="800" height="">
 </p>
 
-
-
-
-
-
-
-
-
+<h2><a name="_Toc480180630">LCD Display 4 x 20 </a></h2>
 
 <p align="justify">
-  Das Basic-Programm für die C-Control Mega 128 sieht wie folgt aus:
+  Der Austausch des LCD-Displays gegen einen Typ mit 4 Zeilen und 20 Zeichen pro
+  Zeile konnte bei gleicher Anschlussbelegung problemlos erfolgen. Hier die
+  Spezifikation des verwendeten Displays:
 </p>
+
+<p align="center">
+  <img src="/img/allgemein/datalog/datalog_20.jpg" alt="datalog_20"
+  width="600" height="">
+</p>
+
+<h2><a name="_Toc480180631">Zeituhr</a></h2>
+
+<p>
+  <b> Funkuhrmodul DCF77 </b>
+</p>
+
+<p align="justify">
+  Für eine genaue Zeitsteuerung wird von Conrad ein DCF77-Funkuhrmodul
+  angeboten. Gegenüber der internen Uhr wäre eine höhere Genauigkeit bei
+  gleichzeitiger automatischer Neujustierung nach einem Stromausfall gegeben.
+</p>
+
+<div align="center">
+  <img src="/img/allgemein/datalog/datalog_21.jpg" alt="datalog_21"
+  align="center" width="400" height="" style="margin:20px">
+
+  <img src="/img/allgemein/datalog/datalog_22.jpg" alt="datalog_22"
+  align="center" width="400" height="" style="margin:8px">
+</div>
+
+<p align="center">
+  <img src="/img/allgemein/datalog/datalog_23.jpg" alt="datalog_30"
+  width="800" height="">
+</p>
+
+<p align="justify">
+  Die Anschlussbelegung sowie der Schaltplan des DCF77-Funkuhrmoduls gehen aus
+  den vorstehenden Abbildungen hervor. Das Modul wird mit dem
+  nichtinvertierenden Ausgang 3 an den Eingang des Ports angeschlossen. Über
+  eine LED am invertierten Ausgang 4 kann der Impuls des DCF-Signals sichtbar
+  gemacht werden.
+</p>
+
+<p align="justify">
+  Die Inbetriebnahme des DCF-Moduls erwies sich als äußerst problematisch.
+  Hierfür stellten sich letztlich zwei Ursachen heraus:
+</p>
+
+<ul>
+  <li>Zunächst war es falsch das DCF-Modul direkt auf dem Application Board zu
+     installieren. Das Modul reagiert sehr empfindlich auf sämtliche Störungen
+     z.B. von PCs, Telefonen und auch wie sich auch zeigte vom Application Board
+     selbst. Abhilfe schafften hier nur der Einbau in einem externen Gehäuse und
+     ein Abstand von mindestens 20 cm zum Application Board.</li>
+  <li>Ebenso wichtig war die Auswahl des Eingangsports für den Anschluss des
+     DCF-Moduls. Standardmäßig ist in der DCF_Lib.cc zwar Port F.0 vorgesehen
+     doch ich hatte mich wegen der günstigeren Lage auf dem Board auf die Ports
+     C.0 – C.7 für meine Eingangsdaten konzentriert. Diese Ports sind jedoch
+     alle noch mit Speicheraufgaben belegt was zwangsläufig zu Störungen führte
+     und kein DCF-Signal detektiert werden konnte. Die Ports F.0 – F.7 erwiesen
+     sich jedoch als sauber und somit konnte der Empfang mit den verfügbaren
+     Beispieldateien hergestellt werden.  </li>
+</ul>
+
+<p align="justify">
+  Im Zusammenhang mit dem Gesamtprogramm des Datenloggers erwies sich die
+  Funkuhr jedoch nicht als stabil. Offenbar war die Erfassung der
+  Eingangssignale so zeitintensiv, dass es zu Konflikten mit der Software für
+  die Uhr kam. Der Einsatz des DCF-Modules wurde daher wieder verworfen und
+  zunächst auf die interne Uhr zurückgegriffen.
+</p>
+
+<p>
+  <b>Interne Uhr </b>
+</p>
+
+<p align="justify">
+  Mit dem Einsatz der internen Uhr konnte ein stabiler Betrieb erreicht werden.
+  Das Programm zur Datenerfassung nahm zwar so viel Zeit in Anspruch, dass die
+  Zeit teilweise nur in Sprüngen von mehreren Sekunden angezeigt wurde,
+  insgesamt blieb die Uhr aber im Takt. Die Genauigkeit der internen Uhr wäre
+  somit ausreichend, es war jedoch kein Schutz bei Stromausfall gegeben und die
+  Zeit musste bei jedem Programmstart neu eingegeben werden. Dies war besonders
+  in der Entwicklungsphase sehr lästig und als Dauerlösung war der Einsatz der
+  internen Uhr daher unzureichend. Eine Lösung des Uhrenproblems konnte daher
+  nur in einem externen System liegen, welches neben absoluter Genauigkeit auch
+  batteriegepuffert die Überbrückung eines Stromausfalls gewährleistete.
+</p>
+
+<p>
+  <b>DS3232 Uhr über I2C-Bus </b>
+</p>
+
+<p>
+  <img src="/img/allgemein/datalog/datalog_24.jpg" alt="datalog_24"
+  align="right" width="300" height="">
+  Für eine genaue Kontrolle der Uhrzeit bietet sich der Mini DS3232 Uhrenchip
+  an. Neben der absoluten Genauigkeit bietet der Chip eine Batteriepufferung
+  über eine 3 V Knopfzelle an. Der Chip ist als SMD-Bauteil für ca. 10,- €
+  erhältlich, erfordert dann jedoch einen entsprechenden Lötaufwand. Hinzu
+  kommen Kosten für die Knopfzelle und einen entsprechenden Halter. Später habe
+  ich das Ganze als Komplettbaustein fertig montiert auf Platine für 12,90 USD $
+  im Netz gefunden:
+</p>
+
+  <a href="http://www.futurlec.com/Mini_DS3232.shtml"
+  style="text-decoration: underline; color: blue;"
+  >http://www.futurlec.com/Mini_DS3232.shtml</a>
+
+<p align="justify">
+  Diese Option ist nicht nur preisgünstiger, sondern stellt auch die bessere
+  Lösung im Hinblick auf den Einbau dar. Die wesentlichen Merkmale des Chips
+  sind in den folgenden Bildern wiedergegeben:
+</p>
+
+<p align="center">
+  <img src="/img/allgemein/datalog/datalog_25.jpg" alt="datalog_25"
+  align="center" width="600" height="">
+</p>
+
+<p align="justify">
+  Wie die Abbildungen zeigen ist der Aufwand relativ gering. Das Stellen der Uhr
+  sowie die Abfrage der Uhrzeit erfolgt über den I2C-Bus, die entsprechende
+  Schnittstelle ist auf dem Application Board vorhanden. Aus dem Datenblatt des
+  DS3232 geht das Protokoll für die Ansteuerung hervor, das entsprechende
+  Beispiel ist im Kapitel Software wiedergegeben. Die Uhr wird wie auch die
+  einzelnen Eingangssignale im Rahmen einer Endlosschleife abgefragt, die Uhr
+  selbst belastet somit nicht den Microcontroller und kann unabhängig davon
+  arbeiten.
+</p>
+
+<h2><a name="_Toc480180632">SD-Card Interface für C-Control Pro</a></h2>
+
+<p>
+  <img src="/img/allgemein/datalog/datalog_26.jpg" alt="datalog_26"
+  align="right" width="200" height="">
+  Das SD-Card Interface von Conrad für die C-Control Pro wird als Massenspeicher
+  für die aufgezeichneten Daten eingesetzt. Die kleine Platine wurde direkt auf
+  dem Applikation Board installiert und gemäß der mitgelieferten Beschreibung
+  angeschlossen. Die Anschlussbelegung geht aus der folgenden Beschreibung
+  hervor.
+</p>
+
+<p align="center"
+  <img src="/img/allgemein/datalog/datalog_27.jpg" alt="datalog_27"
+  align="center" width="400" height="">
+</p>
+
+<p align="justify">
+  Achtung! Der Port B.7 für die LED auf der SD-Card Platine wird auch für das
+  LCD-Display benutzt und kann zu Konflikten führen. Daher wird der Port B.7
+  nicht für das SD-Card Interface beschaltet, der Zugriff auf die SD-Card kann
+  auch über den Port B.6 und die Power-LED auf der SD-Card Platine oder eine
+  externe LED angezeigt werden.
+</p>
+
+<h1><a name="_Toc480180633">Software</a></h1>
 
 <pre>
 <code>
-  '---------2---------3---------4----------5----------6---------7---------8---------9
+  '      1---------2---------3---------4----------5----------6---------7---------8---------9
+  '      Datenlogger für Strom- und Energieverbrauch mit C-Control Pro Mega 128
+  '      ======================================================================
   '
-  '      Programm für C-Control Mega 128 zur Steuerung der Alarmanlage
-  '      =============================================================
+  '      Das Gesamtprojekt beinhaltet die Erfassung, Visualisierung und Aufzeichnug von
+  '      elektrischen Energieverbräuchen, Temperaturen und Verbrauchsdaten der Ölheizung.
   '
-  '      Projektname:         KJS_Alarmanlage.cprj
-  '      Funktionen:          - Anlagen Reset
-  '                           - Anlage scharfschalten
-  '                           - Eingänge auslesen und auswerten
-  '                           - Anzeige aller Aktionen auf dem LCD Display
-  '                           - Alarm auslösen
-  '                           - Alarmdaten speichern
-  '      Benötigte Libs:      IntFunc_lib.cc, LCD_Lib.cc
+  '      Projektname:         KJS_DataLog.cprj
+  '      Aufgabe:             Visualisierung (LCD) und Aufzeichnung (SD-Card) von:
+  '                           1. Datum                  DS3232 über I2C-Bus
+  '                           2. Uhrzeit                DS3232 über I2C-Bus
+  '                           3. Solarenergiezähler     Max7311 über I2C-Bus mit Verstärker
+  '                           4. Strombezugszähler      über RS232-Schnittstelle
+  '                           5. Stromeinspeisezähler   über RS232-Schnittstelle
+  '                           6. Brennerbetriebszeit    über Port F.4
+  '                           7. Ölstandsmessung Tank   über I2C-Bus
+  '                           8. Temperaturen auslesen  über One Wire Port
+  '      Benötigte Libs:      LCD_Lib.cc, IntFunc_Lib.cc
   '      Autor:               Karl-Josef Schneider
-  '      Erstelldatum:        06.01.2015
-  '      Letzte Bearbeitung:  08.12.2015
-  '                           Paniktaste integriert
-  '                           individuelle Alarm-Verzögerungszeiten festgelegt
-  '---------2---------3---------4----------5----------6---------7---------8---------9
+  '      Erstelldatum:        12.06.2012
+  '      Letzte Bearbeitung:  06.12.2012
+  '      Programmtest:        26.11.2012  Programm (Pos.1-5) läuft problemlos ohne Abstürze
+  '                           06.12.2012  Pos.6 ergänzt, Datenerfassung und Speicherung OK
+  '                           20.12.2012  Pos.7 ergänzt, wenn der Lesebefehl parallel zum
+  '                                       Schreiben auf SD-Card erfolgt bleibt das Programm
+  '                                       nach dem Schreiben manchmal hängen, daher
+  '                           24.12.2012  Lesebefehl bei 15 und 45 min eingefügt
+  '                           10.01.2023  Pos.7 Rücksetzbefehl auf 23 Uhr gesetzt
+  '                           24.01.2013  Außentemperaturmessung eingefügt
+  '      1---------2---------3---------4----------5----------6---------7---------8---------9
 
-  '   Zuordnung der Ports für Input und Output
-  '   -------------------------------------------------------------------------------
-  '
-  '          Port    Port    Zuordnung   Zuordnung           I / O   Portzustand
-  '                  Bit     original    hier                        Passiv  Aktiv
-  '          ---------------------------------------------------------------------
-  '          D.0     24      I2C         Alarm akustisch     Output  High    Low
-  '          D.1     25      I2C         Alarm optisch       Output  High    Low
-  '          E.0     32      RS232       Input Paniktaste    Input   High    Low
-  '          E.1     33      RS232       Input 1. Etage      Input   High    Low
-  '          E.4     36      SW1         Anlage RESET        Input   High    Low
-  '          E.6     38      SW2         Anlage SCHARF       Input   High    Low
-  '          F.0     40                  Input Garten        Input   High    Low
-  '          F.1     41                  Input Keller        Input   High    Low
-  '          F.2     42                  Input frei unten    Input   High    Low
-  '          F.3     43                  Input Sabotage      Input   High    Low
-  '          F.4     44                  Input Terasse       Input   High    Low
-  '          F.5     45                  Input frei oben     Input   High    Low
-  '          F.6     46                  Input Hausflur      Input   High    Low
-  '          F.7     47                  Input Wohnzimmer    Input   High    Low
-  '          G.3     51      LED1        Alarm AUS           Output  High    Low
-  '          G.4     52      LED2        Alarm EIN           Output  High    Low
+  '      Variablen für die DS3232 Uhr
+  '      -----------------------------------------------------------------------------------
+         Dim Stunde, Minute, Sekunde As Byte          'Zeit definieren
+         Dim DoW, Jahr, Monat, Tag As Byte            'Datum definieren
+         Dim DaZt(20) As Char                         'Datensatz für Uhr definieren
 
-  '   Variablendeklaration
-  '   -------------------------------------------------------------------------------
-      Dim SCHARF As Integer                        'Wert = 1 wenn Scharf, sonst = 0
-      Dim Zeile1(10) As Char                       'Display variablen definieren
-      Dim Zeile2(10) As Char                       'Display variablen definieren
-      Dim Zeit As Word                             'Zeit in Sekunden für Countdown
-      Dim Timer_Scharf As Integer                  'Verzögerungszeit für SCHARF [sec]
-      Dim Timer_Alarm As Integer                   'Verzögerungszeit für ALARM [sec]
-      Dim Timer_Dauer As Integer                   'Dauer des Alarmsignals in Sec
-      Dim i As Integer                             'Zählvariable
+  '      Variablen für den Max7311 Solarzähler über I2C-Bus
+  '      -----------------------------------------------------------------------------------
+         Dim MAX7311_SlaveID As Byte                  'Standard I2C-Adresse für MAX7311
+         Dim MAX7311_SlaveID_read As Byte             'Leseadresse für MAX 7311
+         Dim Code As Byte                             'Code für I2C-Status
+         Dim CountHex1 As Byte                        'Wert von Zähler 1 Hexadezimal
+         Dim CountDez1 As Byte                        'Wert von Zähler 1 Dezimal
+         Dim CountHex2 As Byte                        'Wert von Zähler 2 Hexadezimal
+         Dim CountDez2 As Byte                        'Wert von Zähler 2 Dezimal
+         Dim Counter As Word                          'Gesamtzähler
 
-  '   Hauptprogramm
-  '   ===============================================================================
-      Sub main()
+  '      Variablen für die Auswertung und Anzeige des Solarzählers
+  '      -----------------------------------------------------------------------------------
+         Dim Stand As Single                          'tatsächlicher Stand des Solarzählers
+         Dim Start As Single                          'ausgelesener Startwert des Zählers
+         Dim Zahl As Single                           'ausgelesener aktueller Zählerwert
+         Dim Sol As Single                            'aktueller Wert des Solarzählers
+         Dim Solges As Single                         'aktueller Gesamtwert des Solarzählers
+         Dim Solar(12) As Char                        'Textstring für LCD-Ausgabe Solar
+         Dim SolText2(12) As Char                     'Text für Solar, 2 Nachkommastellen
+         Dim Solarges(12) As Char                     'Textstring für Solar-Gesamtzähler
+         Dim SolSD(10) As Char                        'Textstring Solar gesamt für SD-Card
+         Dim SolgesText2(12) As Char                  'Text für Solar-Gesamt, 2 Nachkommast.
 
-  '   Ports als Input oder Output definieren und Pull-Up setzen
-  '   Syntax: Port_DataDirBit(portbit,val);(val=0=in, val=1=out)
-  '   -------------------------------------------------------------------------------
-      Port_DataDirBit(24,1)                        'PortD.0 = Output  Alarm AUS
-      Port_WriteBit(24,1)                          'Pull-Up für PortD.0 setzen
-      Port_DataDirBit(25,1)                        'PortD.1 = Output  Alarm EIN
-      Port_WriteBit(25,1)                          'Pull-Up für PortD.1 setzen
-      Port_DataDirBit(32,0)                        'PortE.0 = Input Paniktaste
-      Port_WriteBit(32,1)                          'Pull-Up für PortE.0 setzen
-      Port_DataDirBit(33,0)                        'PortE.1 = Input 1. Etage
-      Port_WriteBit(33,1)                          'Pull-Up für PortE.1 setzen
-      Port_DataDirBit(36,0)                        'PortE.4 = SW1 = Eingang RESET
-      Port_WriteBit(36,1)                          'Pull-Up für SW1 setzen
-      Port_DataDirBit(38,0)                        'PortE.6 = SW2 = Eingang SCHARF
-      Port_WriteBit(38,1)                          'Pull-Up für SW2 setzen
-      Port_DataDirBit(40,0)                        'PortF.0 = Input Garten
-      Port_WriteBit(40,1)                          'Pull-Up für PortF.0 setzen
-      Port_DataDirBit(41,0)                        'PortF.1 = Input Keller
-      Port_WriteBit(41,1)                          'Pull-Up für PortF.1 setzen
-      Port_DataDirBit(42,0)                        'PortF.2 = Input frei unten
-      Port_WriteBit(42,1)                          'Pull-Up für PortF.2 setzen
-      Port_DataDirBit(43,0)                        'PortF.3 = Input Sabotageschalter
-      Port_WriteBit(43,1)                          'Pull-Up für PortF.3 setzen
-      Port_DataDirBit(44,0)                        'PortF.4 = Input Terasse
-      Port_WriteBit(44,1)                          'Pull-Up für PortF.4 setzen
-      Port_DataDirBit(45,0)                        'PortF.5 = Input frei oben
-      Port_WriteBit(45,1)                          'Pull-Up für PortF.5 setzen
-      Port_DataDirBit(46,0)                        'PortF.6 = Input Hausflur
-      Port_WriteBit(46,1)                          'Pull-Up für PortF.6 setzen
-      Port_DataDirBit(47,0)                        'PortF.7 = Input Wohnzimmer
-      Port_WriteBit(47,1)                          'Pull-Up für PortF.7 setzen
-      Port_DataDirBit(51,1)                        'PortG.3 = Output  LED Alarm AUS
-      Port_DataDirBit(52,1)                        'PortG.4 = Output  LED Alarm EIN
+  '      Variablen für die Auswertung der IR-Schnittstelle und Anzeige des Stromzählers
+  '      -----------------------------------------------------------------------------------
+         Dim ser As Byte                              'Nummer der Schnittstelle
+         Dim i As Long                                'i als Long definieren
+         Dim n As Integer                             'n als Integer definieren
+         Dim Bez1 As Single                           'Variable für Bezug 1. Stelle
+         Dim Bez2 As Single                           'Variable für Bezug 2. Stelle
+         Dim Bez3 As Single                           'Variable für Bezug 3. Stelle
+         Dim Bez4 As Single                           'Variable für Bezug 4. Stelle
+         Dim Bez5 As Single                           'Variable für Bezug 5. Stelle
+         Dim Bez As Single                            'Gesamtvariable für Bezug
+         Dim BezText2(10) As Char                     'Text für Bezug, 2 Nachkommastellen
+         Dim Bezug(12) As Char                        'Textstring Bezug für LCD-Ausgabeg
+         Dim BezSD(10) As Char                        'Textstring Bezug für SD-Card
+         Dim Ein1 As Single                           'Variable für Einspeisen 1. Stelle
+         Dim Ein2 As Single                           'Variable für Einspeisen 2. Stelle
+         Dim Ein3 As Single                           'Variable für Einspeisen 3. Stelle
+         Dim Ein4 As Single                           'Variable für Einspeisen 4. Stelle
+         Dim Ein5 As Single                           'Variable für Einspeisen 5. Stelle
+         Dim Ein As Single                            'Gesamtvariable für Einspeisen
+         Dim EinText2(10) As Char                     'Text für Einsp., 2 Nachkommastellen
+         Dim Einspeisen(12) As Char                   'Textstring Einspeisen für LCD-Ausgabe
+         Dim EinSD(10) As Char                        'Textstring Einspeisen für SD-Card
+         Dim Leer(5) As Char                          'Text für Leerzeichen
 
-  '   Initialisierung des LCD
-  '   -------------------------------------------------------------------------------
-      LCD_Init()                                   'LCD Initialisieren
-      LCD_ClearLCD()                               'Display löschen
-      LCD_CursorOff()                              'Display Cursor ausschalten
+  '      Variablen für den Betriebsstundenzähler
+  '      -----------------------------------------------------------------------------------
+         Dim Brennerzustand As Byte                   'Variable für Brennerzustand
+         Dim BrDa As Single                           'Brenndauer für 1 Periode [min]
+         Dim BrZt As Single                           'Brenner-Einschaltzeit/Tag [h]
+         Dim BZ(20) As Char                           'String für Betriebszeit definieren
+         Dim BrZtSD(10) As Char                       'Textstring Brennzeit für SD-Card
 
-  '   Startwerte für Timer [sec] festlegen und Anlagen-Reset durchführen
-  '   -------------------------------------------------------------------------------
-      Timer_Scharf = 300                           'Verzögerungszeit Scharfstellung
-      Timer_Alarm = 300                            'Verzögerungszeit für Alarmsignal
-      Timer_Dauer = 60                             'Dauer des Alarmsignals
-      Reset()                                      'Reset wird durchgeführt
+  '      Variablen für den SFR02 Entfernungsmesser
+  '      -----------------------------------------------------------------------------------
+         Dim SFR02_SlaveID As Byte                    'Standard I2C-Adresse für SFR02
+         Dim SFR02_SlaveID_read As Byte               'Leseadresse für SFR02
+         Dim HighByte As Byte                         'High Byte (Register 2)
+         Dim LowByte As Byte                          'Low Byte (Register 3)
+         Dim Entfernung As Word                       'Entfernung [cm]
+         Dim Hoehe As Integer 'Single                          'Füllstand [cm]
+         Dim x1,x2,x3,x4 As Single                    'Variablen für Volumenberechnung
+         Dim Inhalt As Word                           'Tankinhalt [Liter]
+         Dim DaLit(20) As Char                        'Datensatz für Tank definieren
+         Dim LitSD(10) As Char                        'Textstring Tankinhalt für SD-Card
 
-  '   Endlosschleife
-  '   -------------------------------------------------------------------------------
-      Do While (1)
-         If Port_ReadBit(36) = 0 Then              'SW1 erkannt
-            Reset()                                'Reset der Anlage
-         End If
-         If Port_ReadBit(38) = 0 Then              'SW2 erkannt
-            Scharf()                               'Anlage scharfstellen
-         End If
-         If Port_ReadBit(32) = 0 Then              'Paniktaste erkannt
-            Zeile2 = " Panik  "
-            Timer_Alarm = 0                        'ohne Verzögerung für Alarmsignal
-            Alarm()                                'Alarm auslösen
-         End If
-         If SCHARF = 1 Then                        'Wenn Anlage scharf
-            Abfrage()                              'Input-Ports lesen
-         End If
-         Anzeige()                                 'Ausgabe der Texte auf LCD-Display
-      End While
+  '      Variablen für den Temperatursensor (DS1820 an Port F.5 = 45)
+  '      -----------------------------------------------------------------------------------
+         Dim WirePort As Byte                         'Eingangsport definieren
+         Dim ret, x As Integer                        'Rückgabewert des Befehls
+         Dim Temp1 As Single                          'Variable für Temperatur
+         Dim TempText1(10) As Char                    'Text Tempratur1 mit 1 Nachkommastelle
+         Dim Tp1(15) As Char                          'Textstring Temperatur LCD-Ausgabe
+         Dim scratch_pad(9) As Byte                   'Scratch Pad definieren
 
-      End Sub
-  '   ===============================================================================
+  '      Variablen für das Beschreiben der SD-Card
+  '      -----------------------------------------------------------------------------------
+         Dim Daten(100) As Char                       'Datensatz für SD-Karte definieren
+         Dim fat(562) As Byte                         'Puffer zur Initialisierung SD-Card
+         Dim fil(32) As Byte                          'Variable für den File-Puffer
+         Dim Info(4) As Long                          'Variable für Dateiinformationen
+         Dim size As Long                             'Speichergröße der SD-Card
+         Dim SD As Byte                               'Zählvariable für SD-Karte
 
-  '   Anlagen-Reset durchführen
-  '   *******************************************************************************
-      Sub Reset()
-          LCD_CursorPos(00)                        '? LCD läuft sonst nicht sauber an
-          SCHARF = 0                               'Anlage entschärfen
-          Port_WriteBit(51,0)                      'LED1 "Alarm AUS" einschalten
-          Port_WriteBit(52,1)                      'LED2 "Alarm EIN" ausschalten
-          Port_WriteBit(24,1)                      'Alarm "akustisch" ausschalten
-          Port_WriteBit(25,1)                      'Alarm "optisch" ausschalten
-          Zeile1 = " Anlage "                      'Text Zeile 1
-          Zeile2 = "  AUS   "                      'Text Zeile 2
-          Anzeige()                                'Ausgabe der Texte auf LCD-Display
-      End Sub
+  '      Hauptprogramm
+  '      ===================================================================================
 
-  '   Anlage verzögert scharfschalten
-  '   *******************************************************************************
-      Sub Scharf()
-          Port_WriteBit(51,1)                      'LED1 "Alarm AUS" ausschalten
-          Zeit = Timer_Scharf
-          For i = 0 To Timer_Scharf                'Verzögerungszeit in Sekunden
-          If Port_ReadBit(36)=0 Then Exit:End If   'Wenn Taste gedrückt Startabbruch
-              Port_WriteBit(52,0)                  'LED2 "Alarm EIN" einschalten
-              Zeit = Timer_Scharf-i
-              LCD_Locate(1,1)                      'Position für Text Zeile 1
-              LCD_WriteText ("Start in")           'Text Zeile 1
-              LCD_Locate(2,1)                      'Position für fixen Text Zeile 2
-              LCD_WriteText ("    Sec ")           'fixer Text Zeile 2
-              If Zeit > 9 Then                     'Position variabler Text Zeile 2
-                 LCD_Locate(2,2)
-                 Else LCD_Locate(2,3)
-              End If
-              LCD_WriteWord(Zeit,1)                'variabler Text Zeile 2
-              AbsDelay(500)                        'Pause 1/2 Sekunde
-          If Port_ReadBit(36)=0 Then Exit:End If   'Wenn Taste gedrückt Startabbruch
-              Port_WriteBit(52,1)                  'LED2 "Alarm EIN" ausschalten
-              AbsDelay(500)                        'Pause 1/2 Sekunde
-          Next
-          Port_WriteBit(52,0)                      'LED2 "Alarm EIN" einschalten
-          SCHARF = 1                               'Anlage scharfschalten
-          Zeile1 = " Anlage "                      'Text Zeile 1
-          Zeile2 = " scharf "                      'Text Zeile 2
-      End Sub
+         Sub main()
 
-  '   Abfrage der Eingangsports und festlegen der Aktionen
-  '   *******************************************************************************
-      Sub Abfrage()
-          If Port_ReadBit(33) = 0 Then              '1. Etage
-             Zeile2 = "1. Etage"
-             Timer_Alarm = 45                       '45 sec Alarmverzögerung
-             Alarm()
-          End If
-          If Port_ReadBit(40) = 0 Then              'Garten
-             Zeile2 = " Garten "
-             Timer_Alarm = 45                       '45 sec Alarmverzögerung
-             Alarm()
-          End If
-          If Port_ReadBit(41) = 0 Then              'Keller
-             Zeile2 = " Keller "
-             Timer_Alarm = 45                       '45 sec Alarmverzögerung
-             Alarm()
-          End If
-          If Port_ReadBit(42) = 0 Then              'frei unten
-             Zeile2 = "  unten "
-             Timer_Alarm = 45                       '45 sec Alarmverzögerung
-             Alarm()
-          End If
-          If Port_ReadBit(43) = 0 Then              'Sabotageschalter
-             Zeile2 = "Sabotage"
-             Timer_Alarm = 15                       '15 sec Alarmverzögerung
-             Alarm()
-          End If
-          If Port_ReadBit(44) = 0 Then              'Terasse
-             Zeile2 = " Terasse"
-             Timer_Alarm = 45                       '45 sec Alarmverzögerung
-             Alarm()
-          End If
-          If Port_ReadBit(45) = 0 Then              'frei oben
-             Zeile2 = "  oben  "
-             Timer_Alarm = 45                       '45 sec Alarmverzögerung
-             Alarm()
-          End If
-          If Port_ReadBit(46) = 0 Then              'Hausflur
-             Zeile2 = "Hausflur"
-             Timer_Alarm = 30                       '30 sec Alarmverzögerung
-             Alarm()
-          End If
-          If Port_ReadBit(47) = 0 Then              'Wohnzimmer
-             Zeile2 = "Wohnzimm"
-             Timer_Alarm = 45                       '45 sec Alarmverzögerung
-             Alarm()
-          End If
-      End Sub
-  '   *******************************************************************************
+  '          Startparameter für Uhr (DS3232 über I2C-Bus) festlegen
+  '          -------------------------------------------------------------------------------
+  '          Die Uhr kann über das Programm KJS_DS3232 gestellt werden. Da die Uhr batterie-
+  '          gepuffert ist, ist hier keine neue Eingabe der Startparameter vorgesehen.
 
-  '   Alarmverzögerung
-  '   *******************************************************************************
-      Sub Alarm()
-          Zeit = Timer_Alarm                       'Zeit = Verzögerungszeit
-          For i = 0 To Timer_Alarm                 'Verzögerungszeit in Sekunden
-          If Port_ReadBit(36)=0 Then Exit:End If   'Wenn Taste gedrückt Startabbruch
-             Port_WriteBit(52,0)                   'LED2 "Alarm EIN" einschalten
-             Zeit = Timer_Alarm-i                  'Zeit zurückzählen
-             LCD_Locate(1,1)                       'Position für Text Zeile 1
-             LCD_WriteText ("Alarm in")            'Text Zeile 1
-             LCD_Locate(2,1)                       'Position für fixen Text Zeile 2
-             LCD_WriteText ("    Sec ")            'fixer Text Zeile 2
-             If Zeit > 9 Then                      'Position variabler Text Zeile 2
-                LCD_Locate(2,2)
-                Else LCD_Locate(2,3)
+  '          Parameter für MAX7311 Zähler festlegen
+  '          -------------------------------------------------------------------------------
+             MAX7311_SlaveID = &H22                   'MAX7311 Standard-Adresse = &H22 = 22
+             MAX7311_SlaveID_read = MAX7311_SlaveID+1 'Leseadresse für MAX 7311
+             I2C_Init(I2C_100kHz)                     'I2C-Bus initialisieren
+             MAX7311_lesen()                          'MAX7311 Zähler lesen
+             Start = 0 - Zahl                         'Startwert des Zählers ermitteln
+  '          ********************                     'Zählerstand des Solarzähler, muß
+             Stand = 89179.400000  '23.01.2013 23:00  'beim Neustart des Programms hier von
+  '          ********************                     'Hand neu eingetragen werden !!!
+
+  '          Parameter für Energiezähler (IR-Koppler) festlegen
+  '          -------------------------------------------------------------------------------
+             ser = 1                                  'Nummer der Schnittstelle festlegen
+             Serial_Init(ser,SR_8BIT,SR_BD9600)       'Initialisierung der Schnittstelle
+
+  '          Startparameter für Betriebstundenzähler festlegen
+  '          -------------------------------------------------------------------------------
+             Brennerzustand = 0                       'Brennerzustand bei Start = AUS
+             BrDa = 0
+
+  '          Startparameter für SFR02 Entfernungsmesser festlegen
+  '          -------------------------------------------------------------------------------
+             I2C_Init(I2C_100kHz)                     'I2C-Bus initialisieren
+             SFR02_SlaveID = &HE0                     'SFR02 Standard-Adresse = &HE0 = 224
+             SFR02_SlaveID_read = SFR02_SlaveID + 1
+
+  '          Startparameter für Temperatursensor (DS1820 an Port F.5 = 45) festlegen
+  '          -------------------------------------------------------------------------------
+             WirePort = 45                            'Eingangsport festlegen
+
+  '          Startparameter für das Beschreiben der SD-Karte festlegen
+  '          -------------------------------------------------------------------------------
+             SD = 0                                   'SD Schreiben erlaubt wenn SD = 0
+
+  '          Endlosschleife zur Datenerfassung
+  '          -------------------------------------------------------------------------------
+             SPI_Disable()                            'SPI-Schnittstelle ausschalten
+             LCD_Init()                               'LCD initialisieren
+             LCD_ClearLCD()                           'LCD-Display löschen
+             LCD_CursorOff()                          'LCD Cursor ausschalten
+             I2C_Init(I2C_100kHz)                     'I2C-Bus initialisieren
+
+             Do While 1                               'Endlosschleife
+
+                RS232()                               'Unterprogramm "Stromzähler" aufrufen
+                If Sekunde = 40 Then
+                   MAX7311_lesen()                    'Unterprogramm "Solarzähler" aufrufen
+                End If
+                DS3232_Zeit_lesen()                   'Externe DS3232 Uhr lesen
+                Brennzeit_lesen()                     'Einschaltzeit des Brenners ermitteln
+
+  '             Datenausgabe:
+                Screen_Ausgabe()                      'Daten auf Bildschirm ausgeben
+                LCD_Ausgabe()                         'Daten auf LCD-Display ausgeben
+
+  '             Solar-Zähler zurücksetzen:
+  '             Da ein sekundengenauer Rücksetzbefehl im Programmablauf nicht immer erkannt
+  '             wird, wird während der Minute 0 der Rücksetzbefehl beliebig oft ausgeführt.
+
+                If Stunde = 1 And Minute = 0 Then     'um 1 Uhr nachts bei Minute 0
+                   Start = 0 - Zahl                   'Startwert Solarzähler zurücksetzen
+                   Stand = Solges                     'Solarzählerstand aktualisieren
+                End If
+
+  '             Brenner-Betriebszeit zurücksetzen:
+  '             Da ein sekundengenauer Rücksetzbefehl im Programmablauf nicht immer erkannt
+  '             wird, wird während der Minute 0 der Rücksetzbefehl mehrfach ausgeführt.
+
+                If Stunde = 23 And Minute = 0 Then    'um 23 Uhr nachts bei Minute = 0
+                   If Sekunde < 5 Then                'innerhalb der ersten 5 Sekunden
+                      BrZt = 0                        'Brenner-Betriebszeit zurücksetzen
+                   End If
+                End If
+
+  '             Inhalt des Öltanks ermitteln:
+                If Minute = 15 Or Minute = 45 Then    'jede halbe Stunde
+                   If Sekunde < 5 Then                'max. 5 Sekunden lang
+                      SFR02_lesen()                   'SFR02 Entfernung auslesen
+                   End If
+                End If
+
+  '             Temperatursensor auslesen:            'im 10-Minuten Takt
+                If Minute=7 Or Minute=17 Or Minute=27_
+                Or Minute=37 Or Minute=47 Or Minute=57 Then
+                   If Sekunde = 0 Then
+                      DS1820_Temp_lesen()             'Temperatursensor DS18S20 lesen
+                   End If
+                End If
+
+  '             Werte auf SD-Karte schreiben:
+  '             Da ein sekundengenauer Schreibbefehl im Programmablauf nicht immer erkannt
+  '             wird, wird über die Abfrage SD = 0 oder 1 geprüft, ob der Schreibbefehl aus-
+  '             geführt wurde. Falls nicht wird innerhalb der gewählten Minute solange der
+  '             Schreibbefehl wiederholt, bis die Aktion erfolgreich war.
+
+                If Minute = 0 Or Minute = 30 Then     'jede halbe Stunde
+                   If SD = 0 Then                     'wenn Schreiben erlaubt
+                      SFR02_lesen()                   'SFR02 Entfernung auslesen
+                      SD_schreiben()                  'Daten auf SD-Karte schreiben
+                      SD = 1                          'Schreiben gesperrt
+                   End If
+                End If
+                If Minute = 1 Or Minute = 31 Then     'nach Ablauf 1 Min
+                   SD = 0                             'Schreiben wieder erlauben
+                End If
+
+             End While
+
+         End Sub
+  '      ===================================================================================
+
+  '      ***********************************************************************************
+  '      Ausgabe der Daten auf dem Bildschirm
+  '      ***********************************************************************************
+
+         Sub Screen_Ausgabe()
+             Msg_WriteText(DaZt)                      'Datum ausgeben
+             Msg_WriteText(" ")                       'Leerzeichen
+             Msg_WriteText(Solarges)                  'Solar-Gesamtzähler ausgeben
+             Msg_WriteText(" ")                       'Leerzeichen
+             Msg_WriteText(Bezug)                     'Bezugszähler ausgeben
+             Msg_WriteText(" ")                       'Leerzeichen
+             Msg_WriteText(Einspeisen)                'Einspeisezähler ausgeben
+             Msg_WriteText(" ")                       'Leerzeichen
+             Msg_WriteText(BZ)                        'Betriebszeit ausgeben
+             Msg_WriteText(" ")                       'Leerzeichen
+             Msg_WriteWord(Inhalt)                    'Inhalt des Öltanks ausgeben
+             Msg_WriteText(" Lit")                    '"Liter" hinzufügen
+             Msg_WriteText(" ")                       'Leerzeichen
+             Msg_WriteText(Tp1)                       'Temperatur 1 ausgeben
+             Msg_WriteChar(13)                        'Zeilenvorsprung
+         End Sub
+
+  '      ***********************************************************************************
+  '      Ausgabe der Daten auf dem LCD-Display
+  '      ***********************************************************************************
+
+         Sub LCD_Ausgabe()
+             LCD_CursorPos(0x00)                      'Cursor Zeile 1, Position 0
+             LCD_WriteText(DaZt)                      'Datum & Zeit ausgeben
+             LCD_CursorPos(0x40)                      'Cursor Zeile 2, Position 0
+             LCD_WriteText(Solarges)                  'Solar-Gesamtzähler ausgeben
+             LCD_CursorPos(0x14)                      'Cursor Zeile 3, Position 0
+             LCD_WriteText(Bezug)                     'Bezugszähler ausgeben
+             LCD_CursorPos(0x54)                      'Cursor Zeile 4, Position 0
+             LCD_WriteText(Einspeisen)                'Einspeisezähler ausgeben
+             LCD_CursorOff()
+         End Sub
+
+  '      ***********************************************************************************
+  '      Zeit des externen Uhrenchips DS3232 über I2C auslesen
+  '      ***********************************************************************************
+
+         Sub DS3232_Zeit_lesen()
+             Dim TimeArr (7) As Byte
+             Dim i As Integer
+             I2C_Start()
+             I2C_Write(&HD0)                          'DS3232 Schreibadresse = 11010000 = D0
+             I2C_Write(&H00)                          'Startadresse für Sekunden
+             I2C_Start()                              'Neustart
+             I2C_Write(&HD1)                          'DS3232 Leseadresse = 11010001 = D1
+             For i = 0 To 5
+                 TimeArr (i) = I2C_Read_ACK()
+             Next
+             TimeArr (6) = I2C_Read_NACK()
+             I2C_Stop()
+
+            'Binärzahlen in Dezimalzahlen umwandeln
+             Sekunde = (TimeArr (0) And &H0F) +(TimeArr (0) >> 4)*10
+             Minute  = (TimeArr (1) And &H0F) +(TimeArr (1) >> 4)*10
+             Stunde  = (TimeArr (2) And &H0F) +(TimeArr (2) >> 4)*10
+             DoW     = (TimeArr (3) And &H0F) +(TimeArr (3) >> 4)*10
+             Tag     = (TimeArr (4) And &H0F) +(TimeArr (4) >> 4)*10
+             Monat   = (TimeArr (5) And &H0F) +(TimeArr (5) >> 4)*10
+             Jahr    = (TimeArr (6) And &H0F) +(TimeArr (6) >> 4)*10
+
+             DaZt = ""
+             Str_WriteWord(Tag,10,DaZt,0,2)              'Tag
+             Str_Copy(DaZt,".",STR_APPEND)               'Punkt hinzufügen
+             Str_WriteWord(Monat,10,DaZt,STR_APPEND,2)   'Monat hinzufügen
+             Str_Copy(DaZt,".20",STR_APPEND)             '".20" hinzufügen
+             Str_WriteWord(Jahr,10,DaZt,STR_APPEND,2)    'Jahr hinzufügen
+             Str_Copy(DaZt,"  ",STR_APPEND)              '"  " hinzufügen
+             Str_WriteWord(Stunde,10,DaZt,STR_APPEND,2)  'Stunde hinzufügen
+             Str_Copy(DaZt,":",STR_APPEND)               '"." hinzufügen
+             Str_WriteWord(Minute,10,DaZt,STR_APPEND,2)  'Minute hinzufügen
+             Str_Copy(DaZt,":",STR_APPEND)               '"." hinzufügen
+             Str_WriteWord(Sekunde,10,DaZt,STR_APPEND,2) 'Sek. hinzufügen
+         End Sub
+
+  '      ***********************************************************************************
+  '      Daten vom Solar-Stromzähler lesen und auswerten
+  '      ***********************************************************************************
+  '      Der Solarzähler arbeitet mit einer Ferraris-Scheibe. Diese wird mit einer Reflex-
+  '      Lichtschranke abgetastet. Die silberne Scheibe reflektiert gut, d.h. am Ausgang
+  '      liegen dann +5V an. Bei Durchlauf der roten Markierung ist die Reflektion schlecht,
+  '      es entsteht eine negative Flanke, die LED leuchtet und diese Impulse werden gezählt
+  '      und als Verbrauchswert aufsummiert. Dies geschieht in einem Zählerbaustein mit
+  '      Speicher, der dann im Rahmen der Schleife ausgelesen wird.
+
+  '      Zählerstand des MAX7311 über I2C auslesen
+  '      -----------------------------------------------------------------------------------
+         Sub MAX7311_lesen()
+             I2C_Start()
+             I2C_Write(MAX7311_SlaveID)               'MAX7311 Standard-Adresse ansprechen
+             I2C_Write(0x00 - 1 + &H01)               'Port Input Register auswählen
+             I2C_Start()                              'I2C erneut starten
+             I2C_Write(MAX7311_SlaveID_read)          'MAX7311 in Lesebetrieb schalten
+             CountHex1=I2C_Read_NACK()                'Byte lesen und von Hex
+             CountDez1=(CountHex1 And &H0F) + (CountHex1 >> 4)*16     'in Dez umwandeln
+             I2C_Write(0x01 - 1 + &H01)               'Port Input Register auswählen
+             I2C_Start()                              'I2C erneut starten
+             I2C_Write(MAX7311_SlaveID_read)          'MAX7311 in Lesebetrieb schalten
+             CountHex2=I2C_Read_NACK()                'Byte lesen und von Hex
+             CountDez2=(CountHex2 And &H0F) + (CountHex2 >> 4)*16     'in Dez umwandeln
+             Counter = CountDez2 * 256
+             Counter = Counter + CountDez1            'Gesamtzählerstand in Dez
+             Zahl = Counter / 75.000000               '75 Impulse/kWh = Zählerstand in kWh
+             I2C_Stop()                               'Stop
+             If Zahl > 0 Then                         'nur bei realistischem Zählerwert
+                Sol = Start + Zahl                    'Solarzähler = Startwert - akt. Wert
+                Else
+                Sol = Start
              End If
-             LCD_WriteWord(Zeit,1)                 'variabler Text Zeile 2
-             AbsDelay(500)                         'Pause 1/2 Sekunde
-          If Port_ReadBit(36)=0 Then Exit:End If   'Wenn Taste gedrückt Startabbruch
-             Port_WriteBit(52,1)                   'LED2 "Alarm EIN" ausschalten
-             AbsDelay(500)                         'Pause 1/2 Sekunde
-          Next
-          Port_WriteBit(52,0)                      'LED2 "Alarm EIN" einschalten
-          Zeile1 = "*Alarm!*"                      'Text Zeile 1
-          Anzeige()                                'Textausgabe auf LCD-Display
-          Alarmsignal()
-      End Sub
+             Solges = Stand + Sol                     'Gesamtwert des Solarzählers
 
-  '   Alarmsignal auslösen
-  '   *******************************************************************************
-      Sub Alarmsignal()
-          Port_WriteBit(24,0)                      'Alarm "akustisch" einschalten
-          Port_WriteBit(25,0)                      'Alarm "optisch" einschalten
-          Zeit = Timer_Dauer                       'Zeit = Alarmdauer
-          For i = 0 To Timer_Dauer                 'Alarmdauer in Sekunden
-          If Port_ReadBit(36)=0 Then Exit:End If   'Wenn Taste gedrückt Startabbruch
-             Zeit = Timer_Dauer-i                  'Zeit zurückzählen
-             AbsDelay(500)                         'Pause 1/2 Sekunde
-          If Port_ReadBit(36)=0 Then Exit:End If   'Wenn Taste gedrückt Startabbruch
-             AbsDelay(500)                         'Pause 1/2 Sekunde
-          Next
-          Port_WriteBit(24,1)                      'Alarm "akustisch" ausschalten
-          Port_WriteBit(25,1)                      'Alarm "optisch" ausschalten
-      End Sub
+  '          LCD Textstring für Solar-Gesamtzähler erstellen
+             Str_WriteFloat(Solges,2,SolgesText2,0)   'Text Solar-Gesamt mit 2 Nachkommast.
+             Solarges = ""                            'alten String löschen !! wichtig !!
+             If Solges < 100000 Then Leer = "   ":End If   'Leerstellen für rechtsbündige
+             If Solges < 10000 Then Leer = "    ":End If   'Schreibweise ermitteln
+             If Solges < 1000 Then Leer = "     ":End If
+             If Solges < 100 Then Leer = "      ":End If
+             If Solges < 10 Then Leer = "       ":End If
+             Str_Copy(Solarges,"Solar",STR_APPEND)    'LCD Text-String für Solar erstellen
+             Str_Copy(Solarges,Leer,STR_APPEND)       'Leerzeichen hinzufügen
+             Str_Copy(Solarges,SolgesText2,STR_APPEND)'Solarwert hinzufügen
+             Str_Copy(Solarges," kWh",STR_APPEND)     'Text "kWh" hinzufügen
 
-  '   Ausgabe der Tastatureingaben auf dem LCD-Display
-  '   *******************************************************************************
-      Sub Anzeige()
-          LCD_CursorOff()                          'Display Cursor ausschalten
-          LCD_CursorPos(00)                        'Position für Text Zeile 1
-          LCD_WriteText(Zeile1)                    'Zeile 1 ausgeben
-          LCD_CursorPos(40)                        'Position für Text Zeile 2
-          LCD_WriteText(Zeile2)                    'Zeile 2 ausgeben
-      End Sub
-  '   *******************************************************************************
+  '          SD-Card Textstring Solar erstellen
+             SolSD=""                                 'alten String löschen
+             Str_WriteFloat(Solges,2,SolSD,0)         'Text Solar mit 2 Nachkommastellen
+         End Sub
+
+  '      ***********************************************************************************
+  '      Lesen der Daten vom IR-Transmitter des Stromzählers über die serielle Schnittstelle
+  '      ***********************************************************************************
+
+  '      Programm zum Lesen und Auswerten der seriellen Schnittstelle
+  '      -----------------------------------------------------------------------------------
+         Sub RS232()
+
+  '          Das HEX-Datentelegramm enthält 356 Zeichen, die nicht benötigten Zeichen werden
+  '          zwar gelesen, aber dann übersprungen. Nur die Zählerstände werden ausgegeben.
+
+             For n = 1 To 142                         'für die ersten 142 HEX-Zahlen
+                 i = Serial_Read(ser)                 'Lesen der Schnittstelle
+             Next
+
+  '          Bei den nächsten 5 Byte folgt der Zählerstand für Bezug
+             i = Serial_Read(ser)                     'Lesen der Schnittstelle (10.000-er)
+             Bez1 = i * 429496.7296                   'mit Stellen-Faktor multiplizieren
+             i = Serial_Read(ser)                     'Lesen der Schnittstelle (1.000-er)
+             Bez2 = i * 1677.7216                     'mit Stellen-Faktor multiplizieren
+             i = Serial_Read(ser)                     'Lesen der Schnittstelle (100-er)
+             Bez3 = i * 6.5536                        'mit Stellen-Faktor multiplizieren
+             i = Serial_Read(ser)                     'Lesen der Schnittstelle (10-er)
+             Bez4 = i * 0.0256                        'mit Stellen-Faktor multiplizieren
+             i = Serial_Read(ser)                     'Lesen der Schnittstelle (1-er)
+             Bez5 = i/10000
+             For n = 1 To 18                          'für die nächsten 18 HEX-Zahlen
+                 i = Serial_Read(ser)                 'Lesen der Schnittstelle
+             Next
+
+  '          Folgende 5 Byte enthalten den Einspeise-Zählerstand (5-stellig, 4 Kommastellen)
+             i = Serial_Read(ser)                     'Lesen der Schnittstelle (10.000-er)
+             Ein1 = i * 42949.67296                   'mit Stellen-Faktor multipliziere
+             i = Serial_Read(ser)                     'Lesen der Schnittstelle (1.000-er)
+             Ein2 = i * 1677.7216                     'mit Stellen-Faktor multipliziere
+             i = Serial_Read(ser)                     'Lesen der Schnittstelle (100-er)
+             Ein3 = i * 6.5536                        'mit Stellen-Faktor multipliziere
+             i = Serial_Read(ser)                     'Lesen der Schnittstelle (10-er)
+             Ein4 = i * 0.0256                        'mit Stellen-Faktor multipliziere
+             i = Serial_Read(ser)                     'Lesen der Schnittstelle (1-er)
+             Ein5 = i/10000
+             For n = 1 To 186                         'für die restlichen 186 HEX-Zahlen
+                 i = Serial_Read(ser)                 'Lesen der Schnittstelle
+             Next
+
+  '          Die Addition der einzelnen Werte ergibt die Zählerstände in kWh mit den
+  '          Nachkommastellen. Durch Umwandlung in einen Text-String können die Nachkomma-
+  '          stellen für die Anzeige auf eine definierte Stellenzahl begrenzt werden.
+
+             Bez = (Bez1 + Bez2 + Bez3 + Bez4 + Bez5) 'Addition der Bezugswerte (Float-Zahl)
+             Str_WriteFloat(Bez,2,BezText2,0)         'Text für Bezug mit 2 Nachkommastellen
+             Bezug=""                                 'alten String löschen !! wichtig !!
+             If Bez<100000 Then Leer="   ":End If     'Leerstellen für rechtsbündige
+             If Bez<10000 Then Leer="    ":End If     'Schreibweise ermitteln
+             If Bez<1000 Then Leer="     ":End If
+             If Bez<100 Then Leer="      ":End If
+             Str_Copy(Bezug,"Bezug",STR_APPEND)         'LCD Text-String für Bezug erstellen
+             Str_Copy(Bezug,Leer,STR_APPEND)          'Leerzeichen hinzufügen
+             Str_Copy(Bezug,BezText2,STR_APPEND)      'Bezugswert hinzufügen
+             Str_Copy(Bezug," kWh",STR_APPEND)        'Text "kWh" hinzufügen
+
+  '          SD-Card Textstring Bezug erstellen
+             BezSD=""                                 'alten String löschen
+             Str_WriteFloat(Bez,2,BezSD,0)            'Text Bezug mit 2 Nachkommastellen
+
+             Ein = (Ein1 + Ein2 + Ein3 + Ein4 + Ein5) 'Addition der Einspeisewerte
+             Str_WriteFloat(Ein,2,EinText2,0)         'Text Einspeis. mit 2 Nachkommastellen
+             Einspeisen=""                            'alten String löschen !! wichtig !!
+             If Ein<100000 Then Leer="   ":End If     'Leerstellen für rechtsbündige
+             If Ein<10000 Then Leer="    ":End If     'Schreibweise ermitteln
+             If Ein<1000 Then Leer="     ":End If
+             If Ein<100 Then Leer="      ":End If
+             Str_Copy(Einspeisen,"Einsp",STR_APPEND)  'LCD Text-String Einspeisen erstellen
+             Str_Copy(Einspeisen,Leer,STR_APPEND)     'Leerzeichen hinzufügen
+             Str_Copy(Einspeisen,EinText2,STR_APPEND) 'Einspeisewert hinzufügen
+             Str_Copy(Einspeisen," kWh",STR_APPEND)   'Text "kWh" hinzufügen
+
+  '          SD-Card Textstring Einspeisen erstellen
+             EinSD=""                                 'alten String löschen
+             Str_WriteFloat(Ein,2,EinSD,0)            'Text Einspeisen, 2 Nachkommastellen
+
+         End Sub
+
+  '      ***********************************************************************************
+  '      Einschaltzeit des Ölbrenners über Port F.4 (44) ermitteln
+  '      ***********************************************************************************
+
+         Sub Brennzeit_lesen()
+             Port_DataDirBit(44,0)                    'Port F.4 (44) auf Eingang schalten
+             If Brennerzustand = 0 Then               'wenn Brennerzustand = AUS
+                If Port_ReadBit(44) = 1 Then          'wenn Brenner eingeschaltet wird
+                   Timer_TickCount()                  'Timer starten
+                   Brennerzustand = 1                 'Brennerzustand auf EIN setzen
+                End If
+             End If
+             If Brennerzustand = 1 Then               'wenn Brennerzustand = EIN
+                If Port_ReadBit(44) = 0 Then          'wenn Brenner ausgeschaltet wird
+                   BrDa = Timer_TickCount()/6000.00   'Timer stoppen >> Brenndauer [min]
+                   BrZt = BrZt + BrDa/60              'Brennzeit/Tag [h]
+                   Brennerzustand = 0                 'Brennerzustand auf AUS setzen
+                End If
+             End If
+             BZ = "Brenner "                          'String Brennzeit erstellen
+             Str_WriteFloat(BrZt,2,BZ,STR_APPEND)     'Zeit hinzufügen
+             Str_Copy(BZ," h/Tag",STR_APPEND)         '" h/Tag" hinzufügen
+  '          SD-Card Textstring Brennzeit erstellen
+             BrZtSD=""                                'alten String löschen
+             Str_WriteFloat(BrZt,2,BrZtSD,0)          'Text Brennzeit, 2 Nachkommastellen
+         End Sub
+
+  '      ***********************************************************************************
+  '      SFR02 Ultraschall Entfernungsmesser über I2C auslesen
+  '      ***********************************************************************************
+
+         Sub SFR02_lesen()
+             I2C_Start()
+             I2C_Write(SFR02_SlaveID)                 'SFR02 Standard-Adresse ansprechen
+             I2C_Write(0x00)                          'Befehlsregister ansprechen
+             I2C_Write(0x51)                          'Startet Messvorgang [cm], Dez = 81
+             I2C_Stop()
+             AbsDelay(250)                            '250 ms warten auf Messung
+             I2C_Start()                              'I2C erneut starten
+             I2C_Write(SFR02_SlaveID)                 'SFR02 Standard-Adresse ansprechen
+             I2C_Write(0x02)                          'Leseregister festlegen
+             I2C_Stop()
+             I2C_Start()                              'I2C erneut starten
+             I2C_Write(SFR02_SlaveID_read)            'Schnittstelle in Lesebetrieb schalten
+             HighByte = I2C_Read_ACK()                'High Byte lesen
+             LowByte = I2C_Read_NACK()                'Low Byte lesen
+             I2C_Stop()
+             Entfernung = HighByte * 256 + LowByte    'Berechnung der Entfernung
+             Hoehe = 146 - Entfernung                 'Sensorposition 146 cm über Tankboden
+
+  '          In Abhängigkeit von Tankgeometrie und Füllhöhe wird der Inhalt berechnet
+             Select Case Hoehe
+                    Case > 140: Inhalt = 5792.0 + (Hoehe - 140) * 26.4
+                    Case > 135: Inhalt = 5620.0 + (Hoehe - 135) * 34.4
+                    Case > 130: Inhalt = 5432.0 + (Hoehe - 130) * 37.6
+                    Case > 125: Inhalt = 5236.0 + (Hoehe - 125) * 39.2
+                    Case > 120: Inhalt = 5028.0 + (Hoehe - 120) * 41.6
+                    Case > 115: Inhalt = 4812.0 + (Hoehe - 115) * 43.2
+                    Case >  35: Inhalt = 1188.0 + (Hoehe -  35) * 45.3
+                    Case >  30: Inhalt =  972.0 + (Hoehe -  30) * 43.2
+                    Case >  25: Inhalt =  746.0 + (Hoehe -  25) * 41.6
+                    Case >  20: Inhalt =  568.0 + (Hoehe -  20) * 39.2
+                    Case >  15: Inhalt =  380.0 + (Hoehe -  15) * 37.6
+                    Case >  10: Inhalt =  208.0 + (Hoehe -  10) * 34.4
+                    Case >   5: Inhalt =   76.0 + (Hoehe -   5) * 26.4
+             End Case
+
+             DaLit = ""                                  'alten String löschen
+             Str_WriteWord(Hoehe,10,DaLit,0,2)           'Füllstand
+             Str_Copy(DaLit," cm",STR_APPEND)            '"cm" hinzufügen
+             If Hoehe > 99 Then
+                Str_Copy(DaLit,"  ",STR_APPEND)          '2 Leerzeichen hinzufügen
+                Else
+                Str_Copy(DaLit,"   ",STR_APPEND)         '3 Leerzeichen hinzufügen
+             End If
+             Str_WriteWord(Inhalt,10,DaLit,STR_APPEND,2) 'Inhalt hinzufügen
+             Str_Copy(DaLit," Liter",STR_APPEND)         '"Liter" hinzufügen
+  '          SD-Card Textstring Tankinhalt erstellen
+             LitSD=""                                    'alten String löschen
+             Str_WriteFloat(Inhalt,2,LitSD,0)            'Text Tankinhalt, 2 Kommastellen
+         End Sub
+
+  '      ***********************************************************************************
+  '      Temperatur des Sensors DS1820 über Port auslesen
+  '      ***********************************************************************************
+
+         Sub DS1820_Temp_lesen()
+             ret = OneWire_Reset(WirePort)            'Rückgabewert ermitteln
+             OneWire_Write(0xcc)   		            'ROM überspringen Kommando
+             OneWire_Write(0x44)   		            'Start Temperaturmessung aller Fühler
+             AbsDelay(800)                            'Warten bis Temperatur gelesen wurde
+  '          Auslesen Außenfühler
+             OneWire_Reset(WirePort)                  'Eingangsport OneWire zurücksetzen
+             OneWire_Write(0x55)   		            'Fühler empfangsbereit schalten
+             OneWire_Write(16)   		                'Adressbyte 0 Fühler 3
+             OneWire_Write(115)    	                'Adressbyte 1 Fühler 3
+             OneWire_Write(183)  		                'Adressbyte 2 Fühler 3
+             OneWire_Write(141)  		                'Adressbyte 3 Fühler 3
+             OneWire_Write(2)  		                'Adressbyte 4 Fühler 3
+             OneWire_Write(8)   		                'Adressbyte 5 Fühler 3
+             OneWire_Write(0)   		                'Adressbyte 6 Fühler 3
+             OneWire_Write(89)  		                'Adressbyte 7 Fühler 3
+             OneWire_Write(0xbe)  		            'Befehl für scratchpad lesen
+             For x = 0 To 9        		            'Komplettes scratchpad lesen
+                 scratch_pad(x)= OneWire_Read()
+             Next
+             Temp1 = (scratch_pad(1)*256+scratch_pad(0))*0.5     'Temperatur berechnen
+             Str_WriteFloat(Temp1,1,TempText1,0)      'Text Temperatur mit 1 Nachkommastelle
+  '          String für LCD-Ausgabe Temperatur 1
+             If Temp1 > -20 And Temp1 < 50 Then       'Meßbereich Temperatur 1 eingrenzen
+                Tp1="Temp "                           'String Tp1 erzeugen
+                Str_Copy(Tp1,TempText1,STR_APPEND)    'Temperatur hinzufügen
+                Str_Copy(Tp1," °C",STR_APPEND)        '" °C" hinzufügen
+             End If
+         End Sub
+
+  '      ***********************************************************************************
+  '      Daten auf SD-Karte schreiben
+  '      ***********************************************************************************
+
+  '      Zuerst wird der verfügbare Speicherplatz auf der SD-Karte ermittelt. Anschließend
+  '      wird die Datei "Daten.txt" geöffnet bzw. falls nicht vorhanden neu angelegt. In
+  '      einem vorgegebenen Zeitintervall werden dann Daten in die Datei geschrieben.
+
+  '      Hauptprogramm zum Beschreiben der SD-Card
+  '      ===================================================================================
+         Sub SD_schreiben()
+             Dim br(1) As Word
+             SD_Reset()                               'Sprung zu "SD_Reset"
+             SD_Power_On()                            'Sprung zu "SD_Power_On"
+             SDC_Init(fat)                            'SD-Karte initialisieren
+             SDC_FStat("0:/Daten.txt",Info)           'Dateiinformationen ermitteln
+             size=Info(0)                             'Dateigröße = Info(0)
+
+             SDC_FOpen(fil,"0:/Daten.txt",FA_OPEN_ALWAYS) 'Öffnet oder erzeugt Datei
+             SDC_FOpen(fil,"0:/Daten.txt",FA_WRITE)       'Schreibfreigabe für Datei
+
+             Daten=""                                  'alten Daten-String löschen
+             Str_Copy(Daten,DaZt,STR_APPEND)           'String erstellen mit Datum & Zeit
+             Str_Copy(Daten," , ",STR_APPEND)          'Trennzeichen hinzufügen
+             Str_Copy(Daten,BezSD,STR_APPEND)          'Bezug hinzufügen
+             Str_Copy(Daten," , ",STR_APPEND)          'Trennzeichen hinzufügen
+             Str_Copy(Daten,EinSD,STR_APPEND)          'Einspeisung hinzufügen
+             Str_Copy(Daten," , ",STR_APPEND)          'Trennzeichen hinzufügen
+             Str_Copy(Daten,SolSD,STR_APPEND)          'Solar hinzufügen
+             Str_Copy(Daten," , ",STR_APPEND)          'Trennzeichen hinzufügen
+             Str_Copy(Daten,BrZtSD,STR_APPEND)         'Brennzeit hinzufügen
+             Str_Copy(Daten," , ",STR_APPEND)          'Trennzeichen hinzufügen
+             Str_Copy(Daten,LitSD,STR_APPEND)          'Tankinhalt hinzufügen
+             Str_Copy(Daten," , ",STR_APPEND)          'Trennzeichen hinzufügen
+             Str_Copy(Daten,TempText1,STR_APPEND)      'Temperatur 1 hinzufügen
+             Str_Copy(Daten,"%d\r\n",STR_APPEND)       'Zeilenumbruch hinzufügen
+
+             Str_Printf(Daten,Daten,0)                 'String formatieren ???
+             SDC_FSeek(fil, size)                      'Schreibposition Festlegen
+             SDC_FWrite(fil, Daten, Str_Len(Daten), br)'Schreibt Daten in die Datei
+             Msg_WriteText(Daten)
+             SDC_FSync(fil)                            'Puffer auf SD-Karte schreiben
+             SDC_FClose(fil)                           'Datei schließen
+             SD_Power_Off()                            'Sprung zu "SD_Power_Off"
+         End Sub
+  '      ===================================================================================
+
+  '      Zurücksetzen der SD-Card (Reset Pin EN1 & EN2)
+  '      -----------------------------------------------------------------------------------
+         Sub SD_Reset()
+             Port_DataDirBit(13,1)                    'Port B.5 (13) auf Ausgang schalten
+             Port_DataDirBit(14,1)                    'Port B.6 (14) auf Ausgang schalten
+             Port_WriteBit(13,1)                      'Port B.5 (13) auf High >> EN1 = +5V
+             Port_WriteBit(14,0)                      'Port B.6 (14) auf Low  >> EN2 = GND
+             AbsDelay(50)                             'Pause 50 ms
+             Port_WriteBit(13,0)                      'Port B.5 (13) auf Low  >> EN1 = GND
+             Port_WriteBit(14,1)                      'Port B.6 (14) auf High >> EN2 = +5V
+         End Sub
+
+  '      Einschalten des SD-Kartenadapters (Pin EN2 auf +5V setzen)
+  '      -----------------------------------------------------------------------------------
+         Sub SD_Power_On()
+             Port_DataDirBit(14,1)                    'Port B.6 (14) auf Ausgang schalten
+             Port_WriteBit(14,1)                      'Port B.6 (14) auf High >> EN2 = +5V
+         End Sub
+
+  '      Ausschalten des SD-Kartenadapters
+  '      -----------------------------------------------------------------------------------
+         Sub SD_Power_Off()
+             Port_DataDirBit(14,1)                    'Port B.6 (14) auf Ausgang schalten
+             Port_WriteBit(14,0)                      'Port B.6 (14) auf Low >> EN2 = GND
+         End Sub
+
+  '      ***********************************************************************************
 </code>
 </pre>
