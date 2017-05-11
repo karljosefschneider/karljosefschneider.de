@@ -37,7 +37,7 @@ title: 'Blasstahlwerk mit Antrieb der Konverter und Krane'
   <li>
     <span class=MsoHyperlink>
       <a href="#_Toc480180624">
-        ...
+        Die Schrottfähren
       </a>
     </span>
   </li>
@@ -45,10 +45,19 @@ title: 'Blasstahlwerk mit Antrieb der Konverter und Krane'
   <li>
     <span class=MsoHyperlink>
       <a href="#_Toc480180625">
-        ...
+        Die Krane
       </a>
     </span>
   </li>
+
+  <li>
+    <span class=MsoHyperlink>
+      <a href="#_Toc480180626">
+        Das Bedienpanel
+      </a>
+    </span>
+  </li>
+
 </ul>
 
 <h1><a name="_Toc480180621">Projektbeschreibung</a></h1>
@@ -129,3 +138,136 @@ align="center" width="1095" height="731">
 align="center" width="1095" height="731">
 
 <p align-"justify">
+  Die Blaslanzen der Konverter wurden aus einem 3 mm Messingrohr gefertigt. Am
+  unteren Ende befand sich eine blaue Leuchtdiode, welche über ein Flackerlicht
+  -Modul angesteuert wurde. Der Antrieb der Lanzen wurde zunächst über einen
+  Servo mit Drahtgestänge realisiert. Dies erwies sich jedoch nicht als
+  zufriedenstellend, insbesondere weil die Servos nicht immer ihre Endlage
+  erreichten und daher ständig nachregelten (Störgeräusche). Die endgültige
+  Version bestand daher aus einem Mini-getriebemotor und einer an dem Lanzenrohr
+  angebrachten Zahnstange. Über Endschalter erfolgte eine zuverlässige
+  Abschaltung.
+</p>
+
+<p align-"justify">
+  Die Bauteile für die Ansteuerung von Konvertern und Lanzen wurden auf mehreren
+  Platinen untergebracht, verbunden durch Flachbandkabel:
+</p>
+
+<ul>
+  <li>Schalter für die Bedienung sowie LEDs für die Rückmeldung gemeinsam mit
+      der Kransteuerung auf dem Haupt-Bedienpanel</li>
+  <li>Relais-Steuerung und Flackerlicht für die Lanzen auf einer Zwischenplatine
+      an der Stahlwerksrückwand</li>
+  <li>Einzelpatinen für die Konverter und jede Lanze</li>
+</ul>
+
+<p>
+  Die komplette Schaltung wird aus den folgenden Einzelbildern ersichtlich:
+</p>
+
+<img src="/img/moba/stahlwerk/stahl_06.jpg" alt="stahl_06"
+align="center" width="1095" height="">
+<img src="/img/moba/stahlwerk/stahl_07.jpg" alt="stahl_07"
+align="center" width="1095" height="">
+<img src="/img/moba/stahlwerk/stahl_08.jpg" alt="stahl_08"
+align="center" width="1095" height="">
+
+<h1><a name="_Toc480180624">Die Schrottfähren</a></h1>
+
+<p align="justify">
+  Für den Transfer der Schrottmulden vom Schrottverladeplatz in die
+  Chargierhalle kamen zwei Schrottfähren zum Einsatz. Da der Fahrweg nur ca. 80
+  mm betrug wurde für diese kurze Bewegung ein Zahnstangenantrieb gewählt. Die
+  komplette Einheit mit Antrieb, Endschaltern und Warnleuchten wurde mit
+  Cu-beschichteten Pertinaxplatten aufgebaut. Somit konnte die Einheit
+  funktionssicher getestet werden und konnte jederzeit in den Stahlwerkskomplex
+  eingeschoben und auch wieder entnommen werden. Die folgende Abbildung zeigt
+  den Rohbau der Einheit, von dieser Technik ist später im Betrieb nichts mehr
+  zu erkennen.
+</p>
+
+<img src="/img/moba/stahlwerk/stahl_09.jpg" alt="stahl_09"
+align="center" width="1095" height="">
+
+<h1><a name="_Toc480180625">Die Krane</a></h1>
+
+<p align="justify">
+  Für das Chargieren von Roheisen und Schrott in die Konverter sowie für das
+  Beladen der Schrottmulden waren entsprechende Krane erforderlich. In der
+  Praxis reicht jeweils ein Kran sicherlich nicht aus, da es hier in diesem
+  Maßstab ohnehin schwierig genug war bewegliche Krane einzubauen habe ich mich
+  auf jeweils einen Kran beschränkt.
+</p>
+
+<p align="justify">
+  Erste Versuche orientierten sich am Original, d.h. ein Kran sollte auf
+  Schienen auf einer Kranbahn durch die Halle laufen. Wie aus dem Grundriss
+  ersichtlich betrug die Hallenbreite 74 mm, die Spurweite der Kranbahn musste
+  also in dieser Größenordnung liegen. Der gesamte Kran mit allen Antrieben
+  hatte somit ein fast quadratisches Ausmaß von 70 x 70 mm. Das Gehäuse wurde
+  aus Cu-beschichteten Pertinaxplatten hergestellt, diese dienten gleichzeitig
+  als Leiterbahnen für den Strom.
+</p>
+
+<p align="justify">
+  Drei Motore für Kranfahrt, Katzfahrt und Hub waren mit Strom zu versorgen,
+  also mussten sechs Adern über Schleifer durchgeführt werden. Da dieses Problem
+  kaum lösbar erschien wurde für die Mini-Motore im Kran ein Akkubetrieb
+  vorgesehen. Für die Bedienung wurde eine simple Funkfernsteuerung aus kleinen
+  Automodellen eingebaut. Die folgende Zeichnung zeigt das aufgeklappte
+  Krangehäuse, die Schaltung ist im nächsten Bild dargestellt.
+</p>
+
+<div>
+  <img src="/img/moba/stahlwerk/stahl_10.jpg" alt="stahl_10"
+  align="left" width="400" height="" style="margin:10px">
+  <img src="/img/moba/stahlwerk/stahl_11.jpg" alt="stahl_11"
+  align="left" width="640" height="" style="margin:10px">
+</div>
+
+<p align="justify">
+  Der Akku wurde über die Schienen aufgeladen, somit war die Stromversorgung
+  gewährleistet, auch wenn kurzfristig kein Kontakt zur Schiene bestand. Ein
+  weiteres Problem wurde aber schließlich zum KO-Kriterium für diese Art des
+  Aufbaus. Es konnte kein sauberer und gerader Lauf der Krane erreicht werden,
+  da bei dieser vergleichsweise riesigen Spurweite immer wieder ein leichtes
+  Verkannten auftrat und somit kein Vortrieb des Kranes gegeben war. Es war also
+  nach einer grundsätzlich anderen Lösung zu suchen.
+</p>
+
+<p align="justify">
+  Die Lösung wurde letztlich beim Ausschlachten eines alten Tintenstrahldruckers
+  gefunden. Die Aufnahme für die Tintenpatrone wird über einen Schrittmotor
+  mittels Zahnriemen angetrieben. Diese Einheit wurde ausgebaut und wieder in
+  ein aus Leiterplatten gefertigtes Gehäuse eingebaut. Die Aufnahme für die
+  Tintenpatrone wurde durch das Krangehäuse ersetzt. Die Stromversorgung für die
+  Motoren für Katzfahrt und Hub wurde über Schleifer auf den seitlichen
+  Leiterbahnen realisiert. Somit entstand eine komplette funktionsfähige
+  Einheit, die außerhalb des Gebäudes abgestimmt und getestet werden konnte.
+  Anschließend konnte diese Einheit von der Stirnseite in das Stahlwerksgebäude
+  eingeschoben werden.
+</p>
+
+<p align="justify">
+  Die folgenden Bilder zeigen die Platinen für den Chargierkran von der Löt- und
+  Bestückungsseite sowie die komplette Schaltung für die Kranantriebe.
+</p>
+
+<img src="/img/moba/stahlwerk/stahl_12.jpg" alt="stahl_12"
+align="center" width="1095" height="">
+<img src="/img/moba/stahlwerk/stahl_13.jpg" alt="stahl_13"
+align="center" width="1095" height="">
+
+<h1><a name="_Toc480180626">Das Bedienpanel</a></h1>
+
+<p align="justify">
+  Die komplette Steuerung für die Konverter- und Lanzenbewegungen sowie für den
+  Schrottkran incl. Schrottfähren und den Chargierkran wurden auf einer
+  gemeinsamen Leiterplatine   untergebracht. Die folgende Abbildung zeigt das
+  Bedienpanel, welches direkt   auf die Kippschalter der Leiterplatte montiert
+  wurde.
+</p>
+
+<img src="/img/moba/stahlwerk/stahl_14.jpg" alt="stahl_14"
+align="center" width="1095" height="">
