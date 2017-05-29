@@ -131,15 +131,23 @@ Inhaltsverzeichnis */
 /* Das Bild in einem Inhaltsverzeichnislink */
 .toc-img {
   display: block;
-  width: 3rem;
+  width: 5rem;
   float: left;
   margin-right: 1rem;
+}
+
+.toc-title1 {
+  display: inline-block;
+  float: left;
+  padding-top: 0.65rem;
+  font-size: 2rem; /* Schriftgröße */
 }
 
 .toc-title {
   display: block;
   float: left;
-  padding-top: .65rem;
+  padding-top: 0.65rem;
+  font-size: 1.25rem; /* Schriftgröße */
 }
 
 /* Styles für Codebeispiele */
