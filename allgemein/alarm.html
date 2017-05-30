@@ -1,0 +1,428 @@
+---
+layout: default
+title: 'Alarmanlage mit C-Control Mega 128'
+---
+
+<h1>
+  Alarmanlage mit C-Control Mega 128
+</h1>
+
+<p>Inhalt</p>
+
+<ul>
+  <li>
+    <span class=MsoHyperlink>
+      <a href="#_Toc480180621">
+        Projektbeschreibung
+      </a>
+    </span>
+  </li>
+
+  <li>
+    <span class=MsoHyperlink>
+      <a href="#_Toc480180622">
+        Hardware
+      </a>
+    </span>
+  </li>
+
+  <li>
+    <span class=MsoHyperlink>
+      <a href="#_Toc480180623">
+        Software
+      </a>
+    </span>
+  </li>
+
+</ul>
+
+<h1><a name="_Toc480180621">Projektbeschreibung</a></h1>
+
+<p>
+  <img src="/img/allgemein/alarm/alarm_01.jpg" alt="Alarm_01"
+  align="right" width="300" height="">
+  Eine aus dem Jahr 1988 stammende Alarmanlage basierend auf einem
+  Conrad-Bausatz sollte erneuert werden. Die Anlage hatte über 25 Jahre
+  einwandfrei funktioniert, leider war aber der verwendete Microprozessor
+  CTC 1189 in dieser Zeit mehrfach dem Blitzschlag zum Opfer gefallen und
+  letztlich war dieser Typ nicht mehr am Markt verfügbar.
+  Die vorhandenen Alarmgeber und somit das bewährte Konzept und die Funktionen
+  der alten Anlage sollten grundsätzlich beibehalten werden:
+</p>
+
+<ul>
+  <li>drahtgebundene Alarmkontakte über Bewegungsmelder in verschiedenen
+   Räumen</li>
+  <li>Abschaltung einzelner Schleifen bei Bedarf</li>
+  <li>Sabotage- und Panikkontakte</li>
+  <li>Optischer und akustischer Alarm über Dachsirene und interne
+  Meldeeinheit</li>
+  <li>Netz- und Batteriebetrieb</li>
+  <li>Einstellung von Alarmzeit, Alarmverzögerung und Scharfschaltverzögerung
+  </li>
+  <li>Aktivierung und Stoppen der Anlage von verschiedenen Standorten</li>
+  <br>
+</ul>
+
+<p align=justify>
+  Die vorliegende Aufgabe wurde durch den Einsatz eines C-Control Mega 128
+  gelöst. Die Ansteuerung der Eingänge über Optokoppler fand auf der
+  Entwicklungsboard-Platine der C-Control Einheit Platz. Das Board wurde auf
+  eine größere Basisplatine aufgesetzt, diese enthielt die Stromversorgung und
+  die erweiterten Anschlüsse für die Ein- und Ausgänge der Anlage.
+</p>
+
+<p align=justify>
+  Die komplette Basisplatine sowie ein separates Bedienpanel konnten in den
+  vorhandenen Bedienschrank eingebaut werden. Eine externe Steuerung der Anlage
+  erfolgte je nach Standort über Taster oder vom Handy über die App eines
+  Homematic-Systems.
+</p>
+
+<p align=justify>
+  Die Programmierung des Mega128 erfolgte über einen entsprechend
+  zugeschnittenen Basic-Code.
+</p>
+
+<h1><a name="_Toc480180622">Hardware</a></h1>
+
+<p align=justify>
+  Die gesamte Anlage wurde auf 3 Platinen aufgebaut:
+</p>
+
+<ul>
+  <li>C-Control Entwicklungsbord mit den Ein- und Ausgängen über Optokoppler
+  </li>
+  <li>Basisplatine mit Stromversorgung und Ansteuerung der Ein- und Ausgänge
+  sowie als Trägerplatine für das Entwicklungsboard</li>
+  <li>Platine für das Bedienpanel im Schrank</li>
+</ul>
+
+<p align="justify">
+  Die Schaltung und der Aufbau der Anlage werden aus den folgenden Bildern
+  ersichtlich:
+</p>
+
+<p align="center">
+  <img src="/img/allgemein/alarm/alarm_02.png" alt="Alarm_02"
+  width="" height="">
+</p>
+
+<p align="center">
+  <img src="/img/allgemein/alarm/alarm_03.png" alt="Alarm_03"
+  width="" height="">
+</p>
+
+<p align="center">
+  <img src="/img/allgemein/alarm/alarm_04.png" alt="Alarm_04"
+  width="" height="">
+</p>
+
+<p align="center">
+  <img src="/img/allgemein/alarm/alarm_05.jpg" alt="Alarm_05"
+  width="" height="">
+</p>
+
+<p align="center">
+  <img src="/img/allgemein/alarm/alarm_06.jpg" alt="Alarm_06"
+  width="" height="">
+</p>
+
+<p align="justify">
+  Eine detaillierte Beschreibung der Schaltung dürfte sich erübrigen, da die
+  Funktion aus den vorgelegten Schaltplänen hervorgeht. Bei den externen
+  Eingängen ist folgende Besonderheit zu beachten:
+</p>
+
+<p align="center">
+  <img src="/img/allgemein/alarm/alarm_07.jpg" alt="Alarm_07"
+  width="" height="">
+</p>
+
+<h1><a name="_Toc480180623">Software</a></h1>
+
+<p align="justify">
+  Das Basic-Programm für die C-Control Mega 128 sieht wie folgt aus:
+</p>
+
+<pre>
+<code>
+  '---------2---------3---------4----------5----------6---------7---------8---------9
+  '
+  '      Programm für C-Control Mega 128 zur Steuerung der Alarmanlage
+  '      =============================================================
+  '
+  '      Projektname:         KJS_Alarmanlage.cprj
+  '      Funktionen:          - Anlagen Reset
+  '                           - Anlage scharfschalten
+  '                           - Eingänge auslesen und auswerten
+  '                           - Anzeige aller Aktionen auf dem LCD Display
+  '                           - Alarm auslösen
+  '                           - Alarmdaten speichern
+  '      Benötigte Libs:      IntFunc_lib.cc, LCD_Lib.cc
+  '      Autor:               Karl-Josef Schneider
+  '      Erstelldatum:        06.01.2015
+  '      Letzte Bearbeitung:  08.12.2015
+  '                           Paniktaste integriert
+  '                           individuelle Alarm-Verzögerungszeiten festgelegt
+  '---------2---------3---------4----------5----------6---------7---------8---------9
+
+  '   Zuordnung der Ports für Input und Output
+  '   -------------------------------------------------------------------------------
+  '
+  '          Port    Port    Zuordnung   Zuordnung           I / O   Portzustand
+  '                  Bit     original    hier                        Passiv  Aktiv
+  '          ---------------------------------------------------------------------
+  '          D.0     24      I2C         Alarm akustisch     Output  High    Low
+  '          D.1     25      I2C         Alarm optisch       Output  High    Low
+  '          E.0     32      RS232       Input Paniktaste    Input   High    Low
+  '          E.1     33      RS232       Input 1. Etage      Input   High    Low
+  '          E.4     36      SW1         Anlage RESET        Input   High    Low
+  '          E.6     38      SW2         Anlage SCHARF       Input   High    Low
+  '          F.0     40                  Input Garten        Input   High    Low
+  '          F.1     41                  Input Keller        Input   High    Low
+  '          F.2     42                  Input frei unten    Input   High    Low
+  '          F.3     43                  Input Sabotage      Input   High    Low
+  '          F.4     44                  Input Terasse       Input   High    Low
+  '          F.5     45                  Input frei oben     Input   High    Low
+  '          F.6     46                  Input Hausflur      Input   High    Low
+  '          F.7     47                  Input Wohnzimmer    Input   High    Low
+  '          G.3     51      LED1        Alarm AUS           Output  High    Low
+  '          G.4     52      LED2        Alarm EIN           Output  High    Low
+
+  '   Variablendeklaration
+  '   -------------------------------------------------------------------------------
+      Dim SCHARF As Integer                        'Wert = 1 wenn Scharf, sonst = 0
+      Dim Zeile1(10) As Char                       'Display variablen definieren
+      Dim Zeile2(10) As Char                       'Display variablen definieren
+      Dim Zeit As Word                             'Zeit in Sekunden für Countdown
+      Dim Timer_Scharf As Integer                  'Verzögerungszeit für SCHARF [sec]
+      Dim Timer_Alarm As Integer                   'Verzögerungszeit für ALARM [sec]
+      Dim Timer_Dauer As Integer                   'Dauer des Alarmsignals in Sec
+      Dim i As Integer                             'Zählvariable
+
+  '   Hauptprogramm
+  '   ===============================================================================
+      Sub main()
+
+  '   Ports als Input oder Output definieren und Pull-Up setzen
+  '   Syntax: Port_DataDirBit(portbit,val);(val=0=in, val=1=out)
+  '   -------------------------------------------------------------------------------
+      Port_DataDirBit(24,1)                        'PortD.0 = Output  Alarm AUS
+      Port_WriteBit(24,1)                          'Pull-Up für PortD.0 setzen
+      Port_DataDirBit(25,1)                        'PortD.1 = Output  Alarm EIN
+      Port_WriteBit(25,1)                          'Pull-Up für PortD.1 setzen
+      Port_DataDirBit(32,0)                        'PortE.0 = Input Paniktaste
+      Port_WriteBit(32,1)                          'Pull-Up für PortE.0 setzen
+      Port_DataDirBit(33,0)                        'PortE.1 = Input 1. Etage
+      Port_WriteBit(33,1)                          'Pull-Up für PortE.1 setzen
+      Port_DataDirBit(36,0)                        'PortE.4 = SW1 = Eingang RESET
+      Port_WriteBit(36,1)                          'Pull-Up für SW1 setzen
+      Port_DataDirBit(38,0)                        'PortE.6 = SW2 = Eingang SCHARF
+      Port_WriteBit(38,1)                          'Pull-Up für SW2 setzen
+      Port_DataDirBit(40,0)                        'PortF.0 = Input Garten
+      Port_WriteBit(40,1)                          'Pull-Up für PortF.0 setzen
+      Port_DataDirBit(41,0)                        'PortF.1 = Input Keller
+      Port_WriteBit(41,1)                          'Pull-Up für PortF.1 setzen
+      Port_DataDirBit(42,0)                        'PortF.2 = Input frei unten
+      Port_WriteBit(42,1)                          'Pull-Up für PortF.2 setzen
+      Port_DataDirBit(43,0)                        'PortF.3 = Input Sabotageschalter
+      Port_WriteBit(43,1)                          'Pull-Up für PortF.3 setzen
+      Port_DataDirBit(44,0)                        'PortF.4 = Input Terasse
+      Port_WriteBit(44,1)                          'Pull-Up für PortF.4 setzen
+      Port_DataDirBit(45,0)                        'PortF.5 = Input frei oben
+      Port_WriteBit(45,1)                          'Pull-Up für PortF.5 setzen
+      Port_DataDirBit(46,0)                        'PortF.6 = Input Hausflur
+      Port_WriteBit(46,1)                          'Pull-Up für PortF.6 setzen
+      Port_DataDirBit(47,0)                        'PortF.7 = Input Wohnzimmer
+      Port_WriteBit(47,1)                          'Pull-Up für PortF.7 setzen
+      Port_DataDirBit(51,1)                        'PortG.3 = Output  LED Alarm AUS
+      Port_DataDirBit(52,1)                        'PortG.4 = Output  LED Alarm EIN
+
+  '   Initialisierung des LCD
+  '   -------------------------------------------------------------------------------
+      LCD_Init()                                   'LCD Initialisieren
+      LCD_ClearLCD()                               'Display löschen
+      LCD_CursorOff()                              'Display Cursor ausschalten
+
+  '   Startwerte für Timer [sec] festlegen und Anlagen-Reset durchführen
+  '   -------------------------------------------------------------------------------
+      Timer_Scharf = 300                           'Verzögerungszeit Scharfstellung
+      Timer_Alarm = 300                            'Verzögerungszeit für Alarmsignal
+      Timer_Dauer = 60                             'Dauer des Alarmsignals
+      Reset()                                      'Reset wird durchgeführt
+
+  '   Endlosschleife
+  '   -------------------------------------------------------------------------------
+      Do While (1)
+         If Port_ReadBit(36) = 0 Then              'SW1 erkannt
+            Reset()                                'Reset der Anlage
+         End If
+         If Port_ReadBit(38) = 0 Then              'SW2 erkannt
+            Scharf()                               'Anlage scharfstellen
+         End If
+         If Port_ReadBit(32) = 0 Then              'Paniktaste erkannt
+            Zeile2 = " Panik  "
+            Timer_Alarm = 0                        'ohne Verzögerung für Alarmsignal
+            Alarm()                                'Alarm auslösen
+         End If
+         If SCHARF = 1 Then                        'Wenn Anlage scharf
+            Abfrage()                              'Input-Ports lesen
+         End If
+         Anzeige()                                 'Ausgabe der Texte auf LCD-Display
+      End While
+
+      End Sub
+  '   ===============================================================================
+
+  '   Anlagen-Reset durchführen
+  '   *******************************************************************************
+      Sub Reset()
+          LCD_CursorPos(00)                        '? LCD läuft sonst nicht sauber an
+          SCHARF = 0                               'Anlage entschärfen
+          Port_WriteBit(51,0)                      'LED1 "Alarm AUS" einschalten
+          Port_WriteBit(52,1)                      'LED2 "Alarm EIN" ausschalten
+          Port_WriteBit(24,1)                      'Alarm "akustisch" ausschalten
+          Port_WriteBit(25,1)                      'Alarm "optisch" ausschalten
+          Zeile1 = " Anlage "                      'Text Zeile 1
+          Zeile2 = "  AUS   "                      'Text Zeile 2
+          Anzeige()                                'Ausgabe der Texte auf LCD-Display
+      End Sub
+
+  '   Anlage verzögert scharfschalten
+  '   *******************************************************************************
+      Sub Scharf()
+          Port_WriteBit(51,1)                      'LED1 "Alarm AUS" ausschalten
+          Zeit = Timer_Scharf
+          For i = 0 To Timer_Scharf                'Verzögerungszeit in Sekunden
+          If Port_ReadBit(36)=0 Then Exit:End If   'Wenn Taste gedrückt Startabbruch
+              Port_WriteBit(52,0)                  'LED2 "Alarm EIN" einschalten
+              Zeit = Timer_Scharf-i
+              LCD_Locate(1,1)                      'Position für Text Zeile 1
+              LCD_WriteText ("Start in")           'Text Zeile 1
+              LCD_Locate(2,1)                      'Position für fixen Text Zeile 2
+              LCD_WriteText ("    Sec ")           'fixer Text Zeile 2
+              If Zeit > 9 Then                     'Position variabler Text Zeile 2
+                 LCD_Locate(2,2)
+                 Else LCD_Locate(2,3)
+              End If
+              LCD_WriteWord(Zeit,1)                'variabler Text Zeile 2
+              AbsDelay(500)                        'Pause 1/2 Sekunde
+          If Port_ReadBit(36)=0 Then Exit:End If   'Wenn Taste gedrückt Startabbruch
+              Port_WriteBit(52,1)                  'LED2 "Alarm EIN" ausschalten
+              AbsDelay(500)                        'Pause 1/2 Sekunde
+          Next
+          Port_WriteBit(52,0)                      'LED2 "Alarm EIN" einschalten
+          SCHARF = 1                               'Anlage scharfschalten
+          Zeile1 = " Anlage "                      'Text Zeile 1
+          Zeile2 = " scharf "                      'Text Zeile 2
+      End Sub
+
+  '   Abfrage der Eingangsports und festlegen der Aktionen
+  '   *******************************************************************************
+      Sub Abfrage()
+          If Port_ReadBit(33) = 0 Then              '1. Etage
+             Zeile2 = "1. Etage"
+             Timer_Alarm = 45                       '45 sec Alarmverzögerung
+             Alarm()
+          End If
+          If Port_ReadBit(40) = 0 Then              'Garten
+             Zeile2 = " Garten "
+             Timer_Alarm = 45                       '45 sec Alarmverzögerung
+             Alarm()
+          End If
+          If Port_ReadBit(41) = 0 Then              'Keller
+             Zeile2 = " Keller "
+             Timer_Alarm = 45                       '45 sec Alarmverzögerung
+             Alarm()
+          End If
+          If Port_ReadBit(42) = 0 Then              'frei unten
+             Zeile2 = "  unten "
+             Timer_Alarm = 45                       '45 sec Alarmverzögerung
+             Alarm()
+          End If
+          If Port_ReadBit(43) = 0 Then              'Sabotageschalter
+             Zeile2 = "Sabotage"
+             Timer_Alarm = 15                       '15 sec Alarmverzögerung
+             Alarm()
+          End If
+          If Port_ReadBit(44) = 0 Then              'Terasse
+             Zeile2 = " Terasse"
+             Timer_Alarm = 45                       '45 sec Alarmverzögerung
+             Alarm()
+          End If
+          If Port_ReadBit(45) = 0 Then              'frei oben
+             Zeile2 = "  oben  "
+             Timer_Alarm = 45                       '45 sec Alarmverzögerung
+             Alarm()
+          End If
+          If Port_ReadBit(46) = 0 Then              'Hausflur
+             Zeile2 = "Hausflur"
+             Timer_Alarm = 30                       '30 sec Alarmverzögerung
+             Alarm()
+          End If
+          If Port_ReadBit(47) = 0 Then              'Wohnzimmer
+             Zeile2 = "Wohnzimm"
+             Timer_Alarm = 45                       '45 sec Alarmverzögerung
+             Alarm()
+          End If
+      End Sub
+  '   *******************************************************************************
+
+  '   Alarmverzögerung
+  '   *******************************************************************************
+      Sub Alarm()
+          Zeit = Timer_Alarm                       'Zeit = Verzögerungszeit
+          For i = 0 To Timer_Alarm                 'Verzögerungszeit in Sekunden
+          If Port_ReadBit(36)=0 Then Exit:End If   'Wenn Taste gedrückt Startabbruch
+             Port_WriteBit(52,0)                   'LED2 "Alarm EIN" einschalten
+             Zeit = Timer_Alarm-i                  'Zeit zurückzählen
+             LCD_Locate(1,1)                       'Position für Text Zeile 1
+             LCD_WriteText ("Alarm in")            'Text Zeile 1
+             LCD_Locate(2,1)                       'Position für fixen Text Zeile 2
+             LCD_WriteText ("    Sec ")            'fixer Text Zeile 2
+             If Zeit > 9 Then                      'Position variabler Text Zeile 2
+                LCD_Locate(2,2)
+                Else LCD_Locate(2,3)
+             End If
+             LCD_WriteWord(Zeit,1)                 'variabler Text Zeile 2
+             AbsDelay(500)                         'Pause 1/2 Sekunde
+          If Port_ReadBit(36)=0 Then Exit:End If   'Wenn Taste gedrückt Startabbruch
+             Port_WriteBit(52,1)                   'LED2 "Alarm EIN" ausschalten
+             AbsDelay(500)                         'Pause 1/2 Sekunde
+          Next
+          Port_WriteBit(52,0)                      'LED2 "Alarm EIN" einschalten
+          Zeile1 = "*Alarm!*"                      'Text Zeile 1
+          Anzeige()                                'Textausgabe auf LCD-Display
+          Alarmsignal()
+      End Sub
+
+  '   Alarmsignal auslösen
+  '   *******************************************************************************
+      Sub Alarmsignal()
+          Port_WriteBit(24,0)                      'Alarm "akustisch" einschalten
+          Port_WriteBit(25,0)                      'Alarm "optisch" einschalten
+          Zeit = Timer_Dauer                       'Zeit = Alarmdauer
+          For i = 0 To Timer_Dauer                 'Alarmdauer in Sekunden
+          If Port_ReadBit(36)=0 Then Exit:End If   'Wenn Taste gedrückt Startabbruch
+             Zeit = Timer_Dauer-i                  'Zeit zurückzählen
+             AbsDelay(500)                         'Pause 1/2 Sekunde
+          If Port_ReadBit(36)=0 Then Exit:End If   'Wenn Taste gedrückt Startabbruch
+             AbsDelay(500)                         'Pause 1/2 Sekunde
+          Next
+          Port_WriteBit(24,1)                      'Alarm "akustisch" ausschalten
+          Port_WriteBit(25,1)                      'Alarm "optisch" ausschalten
+      End Sub
+
+  '   Ausgabe der Tastatureingaben auf dem LCD-Display
+  '   *******************************************************************************
+      Sub Anzeige()
+          LCD_CursorOff()                          'Display Cursor ausschalten
+          LCD_CursorPos(00)                        'Position für Text Zeile 1
+          LCD_WriteText(Zeile1)                    'Zeile 1 ausgeben
+          LCD_CursorPos(40)                        'Position für Text Zeile 2
+          LCD_WriteText(Zeile2)                    'Zeile 2 ausgeben
+      End Sub
+  '   *******************************************************************************
+</code>
+</pre>
