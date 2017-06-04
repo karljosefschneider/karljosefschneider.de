@@ -11,91 +11,69 @@ title: 'Spannung und Strom messen mit dem Arduino Uno'
 
 <ul>
   <li>
-    <span class=MsoHyperlink>
-      <a href="#beschreibung">
-        Projektbeschreibung
-      </a>
-    </span>
+    <a href="#beschreibung">
+      Projektbeschreibung
+    </a>
   </li>
 
   <li>
-    <span class=MsoHyperlink>
-      <a href="#_Toc480180622">
-        Spannungsmessung
-      </a>
-    </span>
+    <a href="#spannung">
+      Spannungsmessung
+    </a>
   </li>
 
   <li>
-    <span class=MsoHyperlink>
-      <a href="#_Toc480180623">
-        Gleichspannung
-      </a>
-    </span>
+    <a href="#udc">
+      Gleichspannung
+    </a>
   </li>
 
   <li>
-    <span class=MsoHyperlink>
-      <a href="#_Toc480180624">
-        Wechselspannung
-      </a>
-    </span>
+    <a href="#uac">
+      Wechselspannung
+    </a>
   </li>
 
   <li>
-    <span class=MsoHyperlink>
-      <a href="#_Toc480180625">
-        Strommessung
-      </a>
-    </span>
+    <a href="#strom">
+      Strommessung
+    </a>
   </li>
 
   <li>
-    <span class=MsoHyperlink>
-      <a href="#_Toc480180626">
-        Gleich- und Wechselstrom
-      </a>
-    </span>
+    <a href="#acdc">
+      Gleich- und Wechselstrom
+    </a>
   </li>
 
   <li>
-    <span class=MsoHyperlink>
-      <a href="#_Toc480180627">
-        Hardware
-      </a>
-    </span>
+    <a href="#hardware">
+      Hardware
+    </a>
   </li>
 
   <li>
-    <span class=MsoHyperlink>
-      <a href="#_Toc480180628">
-        Schaltplan
-      </a>
-    </span>
+    <a href="#schaltplan">
+      Schaltplan
+    </a>
   </li>
 
   <li>
-    <span class=MsoHyperlink>
-      <a href="#_Toc480180629">
-        Software
-      </a>
-    </span>
+    <a href="#software">
+      Software
+    </a>
   </li>
 
   <li>
-    <span class=MsoHyperlink>
-    <a href="#_Toc480180630">
-        Quellcode Arduino
-      </a>
-    </span>
+    <a href="#arduino">
+      Quellcode Arduino
+    </a>
   </li>
 
   <li>
-    <span class=MsoHyperlink>
-      <a href="#_Toc480180631">
-        Quellcode Processing
-      </a>
-    </span>
+    <a href="#processing">
+      Quellcode Processing
+    </a>
   </li>
 </ul>
 
@@ -141,9 +119,9 @@ title: 'Spannung und Strom messen mit dem Arduino Uno'
   Messwertanzeige
 </p>
 
-<h1><a name="_Toc480180622">Spannungsmessung</a></h1>
+<h1><a name="spannung">Spannungsmessung</a></h1>
 
-<h2><a name="_Toc480180623">Gleichspannung</a></h2>
+<h2><a name="udc">Gleichspannung</a></h2>
 
 <p align=justify>
   An den Analogeingängen des Arduino kann man per „analogRead(A0-5)“ Bit-Werte
@@ -234,7 +212,7 @@ title: 'Spannung und Strom messen mit dem Arduino Uno'
   width="" height="">
 </p>
 
-<h2><a name="_Toc480180624">Wechselspannung</a></h2>
+<h2><a name="uac">Wechselspannung</a></h2>
 
 <p align="justify">
   Wenn man die Messwerte einer Wechselspannung über eine oder mehrere Perioden
@@ -295,7 +273,7 @@ title: 'Spannung und Strom messen mit dem Arduino Uno'
   width="" height="">
 </p>
 
-<h1><a name="_Toc480180625">Strommessung</a></h1>
+<h1><a name="strom">Strommessung</a></h1>
 
 <p align="justify">
   Für die Messung des Stromes bietet sich der Allegro ACS711-Stromsensor an.
@@ -410,7 +388,7 @@ title: 'Spannung und Strom messen mit dem Arduino Uno'
   width="" height="">
 </p>
 
-<h2><a name="_Toc480180626">Gleichstrom und Wechselstrom</a></h2>
+<h2><a name="acdc">Gleichstrom und Wechselstrom</a></h2>
 
 <p align="justify">
   Die Messung des Gleich- und des Wechselstromes wurde nach den oben
@@ -421,9 +399,9 @@ title: 'Spannung und Strom messen mit dem Arduino Uno'
   in den oben aufgeführten Tabellen der Spannungsmessungen dargestellt.
 </p>
 
-<h1><a name="_Toc480180627">Hardware</a></h1>
+<h1><a name="hardware">Hardware</a></h1>
 
-<h2><a name="_Toc480180628">Schaltplan</a></h2>
+<h2><a name="schaltplan">Schaltplan</a></h2>
 
 <p align="center">
   <img src="/img/moba/strom/strom_21.jpg" alt="Strom_21"
@@ -435,14 +413,14 @@ title: 'Spannung und Strom messen mit dem Arduino Uno'
   width="" height="">
 </p>
 
-<h1><a name="_Toc480180629">Software</a></h1>
+<h1><a name="software">Software</a></h1>
 
 <p align="justify">
   Die Erfassung der Messwerte erfolgte mit dem Arduino Sketch
   „MoBa_Strom_und_Spannung_02“:
 </p>
 
-<h2><a name="_Toc480180630">Quellcode Arduino</a></h2>
+<h2><a name="arduino">Quellcode Arduino</a></h2>
 
 <pre>
   <code>
@@ -590,7 +568,7 @@ void loop() {
   Processing Sketch „sketch_Strom_und_Spannung_02“:
 </p>
 
-<h2><a name="_Toc480180631">Quellcode Processing</a></h2>
+<h2><a name="processing">Quellcode Processing</a></h2>
 
 <pre>
   <code>
