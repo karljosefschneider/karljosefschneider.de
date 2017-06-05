@@ -7,3 +7,7 @@ url: "http://www.karljosefschneider.de" # the base hostname & protocol for your 
 permalink: pretty
 
 repository: karljosefschneider/karljosefschneider.de
+
+sass:
+  sass_dir: scss
+  style: compressed

@@ -1,38 +1,50 @@
-/* apply a natural box layout model to all elements, but allowing components to change */
-html {
-  box-sizing: border-box;
-}
-*, *:before, *:after {
-  box-sizing: inherit;
-}
+---
+
+---
+
+// Imports
+@import "imports/reset";
+
+// Variables
+
+$color-grey: #293749;
+$color-grey-50: #949BA4;
+$color-grey-20: #D4D7DB;
+$color-grey-10: #E9EBEC;
+$color-grey-06: #F2F3F4;
+$color-blue: #0A79BD;
+$color-green: #41A873;
+$color-purple: #671FE2;
+$color-yellow: #E9B81F;
+$color-red: #E31823;
 
 /* Globale Styles für alles im Body */
+html {
+  font-size: 100%;
+}
+
 body {
   display: flex;  /* Child-Elemente in Reihe */
   flex-direction: column; /* Reihe als Säule anordnen */
   min-height: 100vh;  /* Mindesthöhe Browswerfenster */
   margin: 0;
   padding: 0;
-  color: black;
-  background-color: lightgrey;
+  color: $color-grey;
+  background-color: $color-grey-10;
   font-family: "Calibri", Arial, Helvetica, sans-serif;
-  font-size: 1.25rem; /* Schriftgröße */
 }
 
 /* links formatieren*/
 a {
   text-decoration: none;
-}
-
-/* Link Farbe wenn besucht*/
-a:visited {
-  color: inherit;
-}
-
-/* Link Farbe beim drüberfahren*/
-a:hover,
-a:focus {
-  color: red;
+  color: $color-blue;
+  &:visited {
+    color: inherit;
+  }
+  /* Link Farbe beim drüberfahren*/
+  &:hover, &:focus {
+    color: $color-green;
+  }
 }
 
 /* Logo formatieren*/
@@ -43,36 +55,32 @@ a:focus {
 
 /* Topbar formatieren*/
 .topbar {
+  text-align: center;
   padding: 0.5rem;  /* Innenabstand */
-  background-color: #F5FFFA;  /* Hintergrundfarbe */
-  display: flex;  /* Child-Elemente in Reihe */
-  justify-content: space-between; /* Abstand Child-Elemente */
-  align-items: center;  /* Ausrichtung zentriert */
 }
 
  /* Topbar Titel formatieren */
 .topbartitle {
-  color: green; /* Textfarbe */
   display: inline;  /* Elemente nebeneinander */
   margin-left: 2rem;  /* Abstand der Elemente */
   vertical-align: middle; /* Ausrichtung vertikal */
 }
 
+.navi {
+  text-align: center;
+}
+
 /* Navi Links formatieren */
 .navilink {
-  color: black; /* Textfarbe */
   padding: 1rem;  /* Innenabstand */
-  font-size: 1.25rem; /* Schriftgröße */
+  font-size: .875rem;
+  text-transform: uppercase;
+  letter-spacing: .05em;
 }
 
 /* Main formatieren */
 .main {
-  padding: 0 1rem 0 1rem;  /* Innenabstände */
   flex-grow: 1; /* maximale Ausdehnung */
-  background-image: url("../img/logo-kjs.svg");
-  background-size: 1rem;
-  background-color: #FF0;
-  /*background-repeat: no-repeat;*/
 }
 
 /* Container formatieren */
@@ -87,10 +95,8 @@ a:focus {
 
  /* Footer formatieren */
 .footer {
-  color: grey;  /* Textfarbe */
-  background-color: #F5FFFA;  /* Hintergrundfarbe */
-  padding: 0 1rem 0 1rem;  /* Innenabstände */
-  font-size: 0.875rem;  /* Schriftgröße */
+  padding: 1rem;  /* Innenabstände */
+  font-size: 0.75rem;  /* Schriftgröße */
   display: flex;  /* Child-Elemente in Reihe */
   justify-content: space-between; /* Abstand Child-Elemente */
   align-items: center;  /* Ausrichtung zentriert */
@@ -120,12 +126,9 @@ Inhaltsverzeichnis */
 }
 
 .toc-link {
-  color: black;
-}
-
-.toc-link:hover,
-.toc-link:focus {
-  color: green;
+  &:hover,
+  &:focus {
+  }
 }
 
 /* Das Bild in einem Inhaltsverzeichnislink */
@@ -182,5 +185,5 @@ pre code {
  .spec-table {
    width: 100%;
    text-align: left;
-   
+
  }

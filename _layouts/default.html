@@ -4,28 +4,23 @@
     <meta charset="utf-8">
     <title>KJS Elektronik-Projekte</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/scss/main.css">
   </head>
   <body>
     <header class="topbar">
-      <div>
-        <a href="/">  <!-- zurück auf Homepage -->
-          <img src="/img/logo-kjs.svg" alt="KJS Logo" class="logo" />
-          <h1 class="topbartitle">Elektronik-Projekte</h1>
-        </a>
-      </div>
-      <nav class="navi">
-        <a class="navilink" href="/nostalgie">Nostalgie</a>
-        <a class="navilink" href="/haus">Haus</a>
-        <a class="navilink" href="/modellbahn">Modellbahn</a>
-        <a class="navilink" href="/kfz">KFZ</a>
-        <a class="navilink" href="/kontakt">Kontakt</a>
-      </nav>
+      <a href="/">  <!-- zurück auf Homepage -->
+        <img src="/img/logo-kjs.svg" alt="KJS Logo" class="logo" />
+        <h1 class="topbartitle">Elektronik-Projekte</h1>
+      </a>
     </header>
+    <nav class="navi">
+      <a class="navilink" href="/nostalgie">Nostalgie</a>
+      <a class="navilink" href="/haus">Haus</a>
+      <a class="navilink" href="/modellbahn">Modellbahn</a>
+      <a class="navilink" href="/kfz">KFZ</a>
+    </nav>
     <main class="main">
-      <div class="container">
-        {{ content }}
-      </div>
+      {{ content }}
     </main>
     <footer class="footer">
       <p>
