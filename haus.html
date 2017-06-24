@@ -1,0 +1,8 @@
+---
+layout: category
+title: 'Elektronik-Projekte rund ums Haus'
+description: 'Hier werden Elektronik Projekte aus dem Bereich Haustechnik vorgestellt, welche in den letzten Jahren realisiert wurden.'
+---
+
+{% assign articles = (site.haus | sort: "order" ) %}
+{% include gallery.html %}

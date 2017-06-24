@@ -1,0 +1,8 @@
+---
+layout: category
+title: Nostalgische Projekte. Projekte aus den Anfängen der "Elektronik"
+description: 'Hier wird eine Chronologie von Projekten vorgestellt, welche die typische Entwicklung in den letzten Jahrzehnten wiederspiegelt.'
+---
+
+{% assign articles = (site.nostalgie | sort: "year" ) %}
+{% include gallery.html %}

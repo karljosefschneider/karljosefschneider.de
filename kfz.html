@@ -1,0 +1,8 @@
+---
+layout: category
+title: Projekte aus dem Bereich KFZ-Technik
+description: 'Hier werden Projekte aus dem Bereich KFZ-Technik vorgestellt, welche in den letzten Jahren realisiert wurden.'
+---
+
+{% assign articles = (site.kfz | sort: "order" ) %}
+{% include gallery.html %}

@@ -4,20 +4,20 @@
     <meta charset="utf-8">
     <title>KJS Elektronik-Projekte</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="/scss/main.css">
+    <link rel="stylesheet" href="{{ site.baseurl }}/scss/main.css">
   </head>
   <body>
     <header class="topbar">
-      <a href="/">  <!-- zurück auf Homepage -->
-        <img src="/img/logo-kjs.svg" alt="KJS Logo" class="logo" />
+      <a href="{{ site.baseurl }}">  <!-- zurück auf Homepage -->
+        <img src="{{ site.baseurl }}/img/logo-kjs.svg" alt="KJS Logo" class="logo" />
         <h1 class="topbartitle">Elektronik-Projekte</h1>
       </a>
     </header>
     <nav class="navi">
-      <a class="navilink" href="/nostalgie">Nostalgie</a>
-      <a class="navilink" href="/haus">Haus</a>
-      <a class="navilink" href="/modellbahn">Modellbahn</a>
-      <a class="navilink" href="/kfz">KFZ</a>
+      <a class="navilink" href="{{ site.baseurl }}/nostalgie">Nostalgie</a>
+      <a class="navilink" href="{{ site.baseurl }}/haus">Haus</a>
+      <a class="navilink" href="{{ site.baseurl }}/modellbahn">Modellbahn</a>
+      <a class="navilink" href="{{ site.baseurl }}/kfz">KFZ</a>
     </nav>
     <main class="main">
       {{ content }}
@@ -27,7 +27,7 @@
         Copyright Karl-Josef Schneider 2017
       </p>
       <p>
-        <a href="impressum.html">Impressum</a>
+        <a href="{{ site.baseurl }}/impressum">Impressum</a>
       </p>
     </footer>
   </body>

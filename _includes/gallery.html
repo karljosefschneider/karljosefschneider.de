@@ -1,0 +1,17 @@
+<div class="gallery">
+  {% for post in articles %}
+    <div class="gallery__item">
+      <a class="toc-link" href="{{post.url}}">
+        <img src="../img/{{post.img}}" alt="" class="toc-img">
+        <h2 class="toc-title">
+          {% if post.year %}
+          <span class="">
+            {{ post.year }}
+          </span>
+          {% endif %}
+          {{ post.title }}
+        </h2>
+      </a>
+    </div>
+  {% endfor %}
+</div>

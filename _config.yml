@@ -11,3 +11,13 @@ repository: karljosefschneider/karljosefschneider.de
 sass:
   sass_dir: scss
   style: compressed
+
+collections:
+  haus:
+    output: true
+  kfz:
+    output: true
+  modellbahn:
+    output: true
+  nostalgie:
+    output: true
