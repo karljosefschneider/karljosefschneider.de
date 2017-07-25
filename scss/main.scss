@@ -3,24 +3,12 @@
 ---
 
 // Imports
+@import "imports/colors";
 @import "imports/breakpoints";
 @import "imports/reset";
 @import "imports/topbar";
-
-// Variables
-
-$color-grey: #293749;
-$color-grey-50: #949BA4;
-$color-grey-20: #D4D7DB;
-$color-grey-10: #E9EBEC;
-$color-grey-06: #F2F3F4;
-$color-blue: #0000ff;
-$color-blue-hover: #4646fd;
-$color-green: #01ba81;
-$color-green-hover: #00ff96;
-$color-purple: #671FE2;
-$color-yellow: #E9B81F;
-$color-red: #E31823;
+@import "imports/gallery";
+@import "imports/card";
 
 /* Globale Styles für alles im Body */
 html {
@@ -34,7 +22,7 @@ body {
   margin: 0;
   padding: 0;
   color: $color-grey;
-  background-color: $color-grey-10;
+  background-color: $color-grey-06;
   font-family: "Calibri", Arial, Helvetica, sans-serif;
 }
 
@@ -58,12 +46,17 @@ a {
 
 /* Container formatieren */
 .container {
-  background-color: #FFF; /* Hintergrundfarbe */
   max-width: 72rem; /* Breite */
-  padding: 1rem 2rem 1rem 2rem; /* Abstand zum Rand */
-  margin: 2rem auto 2rem auto;  /* Abstand zum nächsten Element */
+  margin: 0 auto;  /* Abstand zum nächsten Element */
+  padding-left: 1rem;
+  padding-right: 1rem;
   overflow: hidden;
-  min-height: calc(100vh - 14rem);
+}
+
+.page-header {
+  padding: 2rem;
+  background-color: $color-white;
+  text-align: center;
 }
 
  /* Footer formatieren */

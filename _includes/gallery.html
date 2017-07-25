@@ -1,17 +1,17 @@
 <div class="gallery">
   {% for post in articles %}
-    <div class="gallery__item">
-      <a class="toc-link" href="{{post.url}}">
-        <img src="../img/{{post.img}}" alt="" class="toc-img">
-        <h2 class="toc-title">
+    <a class="card" href="{{post.url}}">
+      <div class="card-media">
+        <img src="{{ site.baseurl }}/img/{{post.img}}" alt="" class="">
+      </div>
+      <div class="card-body">
           {% if post.year %}
-          <span class="">
+          <span class="card-subtitle">
             {{ post.year }}
           </span>
           {% endif %}
           {{ post.title }}
-        </h2>
-      </a>
-    </div>
+      </div>
+    </a>
   {% endfor %}
 </div>

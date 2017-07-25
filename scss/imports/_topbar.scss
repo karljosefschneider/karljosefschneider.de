@@ -11,8 +11,8 @@
   .logo-img {
     display: block;
     background-color: white;
-    width: 3.5rem;
-    height: 3rem;
+    width: 4rem;
+    height: 3.5rem;
     padding: .5rem;
   }
   .logo-title {
@@ -20,7 +20,7 @@
     text-transform: uppercase;
     letter-spacing: .1em;
     white-space: nowrap;
-    padding: 0 1rem;
+    padding: 0 .5rem 0 1rem;
   }
 }
 
@@ -30,7 +30,7 @@
 
 .navi-link {
   display: block;
-  padding: .5rem;
+  padding: 1rem .5rem;
   font-size: 1.75rem;
   text-transform: uppercase;
   letter-spacing: .1em;
@@ -39,6 +39,10 @@
     font-size: .875rem;
   }
   @media (min-width: $large) {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  @media (min-width: $huge) {
     display: inline-block;
     font-size: 1rem;
   }
