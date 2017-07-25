@@ -27,7 +27,7 @@ order: 2
 
 <h1><a name="beschreibung">Projektbeschreibung</a></h1>
 
-<p align="justify">
+<p>
   Zunehmender Stromverbrauch und wachsende Kosten für elektrische Energie führen
   zu den bekannten Sparmaßnahmen wie Einsatz von Geräten mit optimiertem
   Verbrauch oder auch Wechsel des Stromanbieters. Für eine drastische
@@ -39,7 +39,7 @@ order: 2
   Überschuss ergibt.
 </p>
 
-<p align="justify">
+<p>
   Um die Effizienz der neuen Anlage zu beurteilen wurde ein Aufzeichnungsgerät
   SolarLog 100 installiert. Über WLAN oder auch Internet kann hiermit jederzeit
   am PC die aktuelle Produktion sowie die Historie beobachtet werden. Letztlich
@@ -49,7 +49,7 @@ order: 2
   und Kosten ist gemacht werden.
 </p>
 
-<p align="justify">
+<p>
   Neben der Solarstromerzeugung sind also auch der Strombezug vom
   Energieversorger sowie die Einspeisung ins Netz zu erfassen. Für dieses
   Datenlogging sollte ein Microcontroller eingesetzt werden, da der hohe
@@ -58,7 +58,7 @@ order: 2
   soll dann am PC mit Hilfe von EXCEL durchgeführt werden.
 </p>
 
-<p align="justify">
+<p>
   Als Microcontroller wurde ein C-Control Pro Mega 128 ausgewählt, da mit diesem
   System schon Erfahrungen aus einem anderen Projekt vorlagen. Ziel hier war nun
   das Auslesen zwei unterschiedlicher Stromzähler incl. Anzeige und Speicherung
@@ -71,7 +71,7 @@ order: 2
   erfasst werden.
 </p>
 
-<p align="justify">
+<p>
   In den folgenden Kapiteln werden die verwendete Hardware und Software
   beschrieben und es wird auf die Erfahrungen und Probleme beim Aufbau und
   Betrieb eingegangen.
@@ -81,7 +81,7 @@ order: 2
 
 <h2><a name="ehz">Digitaler EMH eHZ Zweirichtungs-Stromzähler</a></h2>
 
-<p align="justify">
+<p>
   Zur Erfassung des Strombezuges sowie der Stromeinspeisung in das öffentliche
   Netz wurde vom RWE im November 2011 der elektronische Zweirichtungszähler
   <b> EMH eHz-HW8E2A5LOEQ2P </b> eingebaut.
@@ -97,7 +97,7 @@ order: 2
 
 <h2>&nbsp;</h2>  <!-- Leerzeile -->
 
-<p align="justify">
+<p>
   Der EMH-Zähler verfügt auf der Vorderseite über einen IR-Port. Der
   Datenaustausch erfolgt über einen entsprechenden Schreib-/Lesekopf, dieser ist
   von den max. Abmessungen nach DIN-EN 62056-21 genormt:
@@ -108,7 +108,7 @@ order: 2
   width="800" height="">
 </p>
 
-<p align="justify">
+<p>
   Die Datenübertragung erfolgt asynchron seriell ohne zusätzlichen Taktimpuls.
   Der EMH eHz arbeitet mit 9600 Baud, 8 Bit, keine Parität und einem Stopbit.
   Für die vorliegende Aufgabe muss die Schnittstelle nur als Lesekopf ausgeführt
@@ -117,7 +117,7 @@ order: 2
   erfolgt lastabhängig alle 1...4 Sekunden.
 </p>
 
-<p align="justify">
+<p>
   Die Impulse der IR-Sendediode können über eine Photodiode oder einen
   Phototransistor erfasst werden. Für Versuchszwecke wurde mit vorhandenen
   Bauteilen folgende Schaltung aufgebaut:
@@ -128,7 +128,7 @@ order: 2
   width="800" height="">
 </p>
 
-<p align="justify">
+<p>
   Der Phototransistor BPW40 erfasst die Blinksignale der IR-Diode im Zähler,
   d.h. bei auftretendem Licht schaltet der Transistor durch und es gelangen
   positive Impulse auf den nachfolgenden Komparator LM 393. Durch Nachschalten
@@ -148,7 +148,7 @@ order: 2
   über den Zählerstand ablesbar.
 </p>
 
-<p align="justify">
+<p>
   Da weitere Experimente mit der oben aufgeführten Anordnung erfolglos blieben,
   wurde auf eine in
   <a href="http://wiki.volkszaehler.org/hardware/controllers/ir-schreib-lesekopf"
@@ -162,7 +162,7 @@ order: 2
    alt="Schreib- Lesekopf" width="600" height="">
 </p>
 
-<p align="justify">
+<p>
   Die Schaltung enthält einen Schreib- und einen Lesekopf und wird als Bausatz
   mit Platine und Gehäuse für gut 10,- € zuzüglich Versand angeboten
   (udo1@gmx.net). Da die IR-Schnittstelle auf der Frontseite der eHZ-Zähler per
@@ -175,7 +175,7 @@ order: 2
   zu vermeiden muss man z.B. mit einem Schaumstoffring leicht ausgleichen.
 </p>
 
-<p align="justify">
+<p>
   Die Datenübertragung erfolgt seriell und es werden Logic-Pegel geliefert. Um
   sowohl das Eingangssignal, als auch das Ausgangssignal invertieren zu können,
   wurde beiden Stufen ein Exklusiv-Oder-Glied vorgeschaltet bzw. nachgeschaltet.
@@ -184,7 +184,7 @@ order: 2
   Verpolungsschutz.
 </p>
 
-<p align="justify">
+<p>
   Der nichtinvertierte Ausgang des Lesekopfes wurde nun wieder mit dem
   Eingangsport RXD einer seriellen Schnittstelle (RS232) eines PCs verbunden.
   Über das oben erwähnte Terminalprogramm war nun nicht nur die Struktur der
@@ -192,14 +192,14 @@ order: 2
   ausgewertet werden.
 </p>
 
-<p align="justify">
+<p>
   Das HEX-Datentelegramm enthält insgesamt 356 Zeichen, von denen aber zur
   Ablesung der Zählerstände nur einige wenige benötigt werden. Wie die
   nachfolgende Tabelle zeigt, enthalten die Zeichen 143 – 147 die Information
   für Bezug und die Zeichen 166 – 170 die Information für Einspeisung.
 </p>
 
-<p align="justify">
+<p>
   Für den Bezugswert ist die Hexadezimalzahl 00007D362E in das Dezimalsystem
   umzuwandeln. Jede Stelle der Zahl hat den Wert der entsprechenden Potenz von
   16, die rechte Ziffer entspricht 16º=1, die zweite von rechts 16¹=16 usw.
@@ -212,7 +212,7 @@ order: 2
    alt="Umwandlung Hex < Dez" width="600" height="">
 </p>
 
-<p align="justify">
+<p>
     Unter Berücksichtigung der Kommastelle ergibt sich somit der Zählerstand für
     Bezug zu 820,5870 kWh. Den Zählerstand für Einspeisen wird analog ermittelt.
 </p>
@@ -224,7 +224,7 @@ order: 2
 
 <h2><a name="siemens">Siemens Drehstromzähler mit Ferraris-Scheibe</a></h2>
 
-<p align="justify">
+<p>
     Im Rahmen der Installation der Photovoltaik-Anlage wurde zur Erfassung der
     erzeugten Energie ein Siemens Drehstromzähler eingebaut. Da zu dieser Zeit
     kein elektronischer Zähler verfügbar war, arbeitet der eingebaute Zähler
@@ -241,7 +241,7 @@ order: 2
   <br> Grundsätzlicher Aufbau eines mechanischen Wechselstromzählers
 </div>
 
-<p align="justify">
+<p>
   Bei den üblichen Wechselstromzählern, auch bekannt als Ferraris- bzw.
   Induktionszähler, werden die Spannungen und Ströme mit Spulen, Bremsmagneten
   und Läuferscheibe über Magnetfelder und Ströme analog multipliziert. Dieses
@@ -272,7 +272,7 @@ order: 2
    alt="Leistungsformel" width="" height="">
 </p>
 
-<p align="justify">
+<p>
   Damit nun aber nicht die einmal beschleunigte Scheibe nachläuft, wenn der
   Stromverbrauch geringer wird oder gar ausbleibt, ist ein Bremsmagnet
   installiert, der die Beschleunigung kompensiert und so die Umdrehungszahl der
@@ -280,7 +280,7 @@ order: 2
   sofortigen Stopp der Scheibe, wenn kein Stromfluss mehr vorhanden ist.
 </p>
 
-<p align="justify">
+<p>
   Die Ferraris-Scheibe des Solarzählers wird mit einer Reflex-Lichtschranke
   abgetastet. Die silberne Scheibe reflektiert gut, d.h. am Ausgang liegen +5V
   an. Bei Durchlauf der roten Markierung ist die Reflektion schlecht, es
@@ -288,13 +288,13 @@ order: 2
   gezählt werden und als Verbrauchswert aufsummiert werden.
 </p>
 
-<p align="justify">
+<p>
   75 Impulse entsprechen 1 kWh. Es darf bei jedem Durchlauf nur ein Impuls
   gezählt werden, dies muss durch entsprechende Ausführung der Software
   sichergestellt werden.
 </p>
 
-<p align="justify">
+<p>
   Beim elektronischen Zähler werden die Zählerstände im Zähler gespeichert und
   dort bei Bedarf abgerufen, es steht also immer der genaue Zählerstand zur
   Erfassung im Datenlogger zur Verfügung. Im Gegensatz dazu sind beim
@@ -312,7 +312,7 @@ order: 2
   den I2C-Bus abgefragt werden.
 </p>
 
-<p align="justify">
+<p>
   Die folgende Schaltung zeigt die Ausführung mit dem Reflexkoppler
   CNY70 und dem Zählerbaustein:
 </p>
@@ -337,7 +337,7 @@ order: 2
   werden, durch Schlitzlöcher war eine genaue Justierung möglich.
 </p>
 
-<p align="justify">
+<p>
   Für die Übertragung von Steuerungssignalen innerhalb eines Gebäudes ist die
   Länge des reinen I²C-Busses jedoch zu gering. Hier wurde auf den Baustein
   P82B715, ein I²C Bus Buffer des Herstellers Philips, zurückgreifen. Somit sind
@@ -352,7 +352,7 @@ order: 2
    alt="I²C Verstärkerplatine" width="800" height="">
 </p>
 
-<p align="justify">
+<p>
   Trotz Einsatz der vorgenannten Verstärkerplatine kam es auf dem I²C-Bus immer
   wieder zu Störungen und die Signale wurden nicht sauber übertragen. Abhilfe
   wurde hier dadurch geschaffen, dass der Zählerbaustein direkt auf der
@@ -368,7 +368,7 @@ order: 2
 
 <h2><a name="tank">Füllstandsanzeige für den Öltank</a></h2>
 
-<p align=justify>
+<p>
   Zur Visualisierung des Füllstandes des Tanks der Ölheizung und damit auch zu
   einer langfristigen Verbrauchsübersicht wurde im Stutzen für die mechanische
   Messuhr zusätzlich zur Uhr ein Ultraschallsensor installiert. Hierbei wurde
@@ -401,7 +401,7 @@ order: 2
    alt="Ultraschallsensor" width="800" height="">
 </p>
 
-<p align=justify>
+<p>
   Im I²C-Modus wird der Pin Mode nicht beschaltet. Das Modul wurde über die
   oben beschriebene I²C-Verstärkerplatine an das C-Control Pro Mega 128
   Application Board angeschlossen.
@@ -409,7 +409,7 @@ order: 2
 
 <h2><a name="stunden">Betriebstundenzähler für die Ölheizung</a></h2>
 
-<p align=justify>
+<p>
   Die Heizungsanlage liefert bei eingeschaltetem Brenner ein 12 V – Signal.
   Dieses wurde über einen Optokoppler auf den 5 V- Level der C-Control Hardware
   umgesetzt und mit Port F.4 verbunden. Hier brauchte dann nur noch die
@@ -418,7 +418,7 @@ order: 2
 
 <h2><a name="temperatur">Temperaturmessung</a></h2>
 
-<p align=justify>
+<p>
   Für die Messung der Temperatur bietet sich der DS1820 Temperatursensor über
   den OneWire-Anschluß an. Zunächst wurde ein Sensor zur Erfassung der
   Außentemperatur installiert.
@@ -447,7 +447,7 @@ order: 2
 <h2><a name="mega128">Microcontroller C-Control Pro MEGA 128 Application
    Board </a></h2>
 
-<p align="justify">
+<p>
   Als Microcontroller wurde die C-Control Pro MEGA 128 mit Application Board von
   Conrad eingesetzt. Der Grund hierfür waren vorliegende Erfahrungen aus einem
   anderen Projekt, sicherlich sind hier auch andere Lösungen möglich. Auf der
@@ -476,7 +476,7 @@ order: 2
   C-Control Lötseite
 </p>
 
-<p align="justify">
+<p>
 Die vier Taster wurden von der Platine entfernt und durch Digitast-Taster
 ersetzt. Diese wurden auf einer kleinen Lochrasterplatine installiert und im
 Winkel von 90° an die Basisplatine gelötet. Zur besseren Stabilität wurden die
@@ -485,7 +485,7 @@ erforderlich damit die Bedienbarkeit der Taster beim späteren Einbau in ein
 Gehäuse gegeben war.
 </p>
 
-<p align="justify">
+<p>
 Für die Aufnahme des 4 x 20 LCD-Displays sowie des I²C-Speicherbausteines und
 des I²C-Verstärkerbausteines wurde eine gedruckte Platine angefertigt. Auf
 dieser Platine sind auch 6 LEDs angeordnet, hierüber werden z.B. der Impuls des
@@ -494,7 +494,7 @@ die Auswahl von 3 möglichen Temperatursensoren angezeigt. Diese Trägerplatine
 wurde mit Abstandsschrauben auf der Basisplatine der C-Control befestigt.
 </p>
 
-<p align="justify">
+<p>
 Die gesamte Elektronik wurde in ein Kunststoffgehäuse mit Klarsichtdeckel
 eingebaut. Das Gehäuse wurde auf der linken Seite mit einer Aussparung für die
 Bedien- und Anschlusselemente des Application Board versehen. Im unteren Bereich
@@ -510,7 +510,7 @@ Zugang zur SD-Karte sowie den Stecker der Eingangssignale.
 
 <h2><a name="display">LCD Display 4 x 20 </a></h2>
 
-<p align="justify">
+<p>
   Der Austausch des LCD-Displays gegen einen Typ mit 4 Zeilen und 20 Zeichen pro
   Zeile konnte bei gleicher Anschlussbelegung problemlos erfolgen. Hier die
   Spezifikation des verwendeten Displays:
@@ -527,7 +527,7 @@ Zugang zur SD-Karte sowie den Stecker der Eingangssignale.
   <b> Funkuhrmodul DCF77 </b>
 </p>
 
-<p align="justify">
+<p>
   Für eine genaue Zeitsteuerung wird von Conrad ein DCF77-Funkuhrmodul
   angeboten. Gegenüber der internen Uhr wäre eine höhere Genauigkeit bei
   gleichzeitiger automatischer Neujustierung nach einem Stromausfall gegeben.
@@ -546,7 +546,7 @@ Zugang zur SD-Karte sowie den Stecker der Eingangssignale.
   width="800" height="">
 </p>
 
-<p align="justify">
+<p>
   Die Anschlussbelegung sowie der Schaltplan des DCF77-Funkuhrmoduls gehen aus
   den vorstehenden Abbildungen hervor. Das Modul wird mit dem
   nichtinvertierenden Ausgang 3 an den Eingang des Ports angeschlossen. Über
@@ -554,7 +554,7 @@ Zugang zur SD-Karte sowie den Stecker der Eingangssignale.
   gemacht werden.
 </p>
 
-<p align="justify">
+<p>
   Die Inbetriebnahme des DCF-Moduls erwies sich als äußerst problematisch.
   Hierfür stellten sich letztlich zwei Ursachen heraus:
 </p>
@@ -575,7 +575,7 @@ Zugang zur SD-Karte sowie den Stecker der Eingangssignale.
      Beispieldateien hergestellt werden.  </li>
 </ul>
 
-<p align="justify">
+<p>
   Im Zusammenhang mit dem Gesamtprogramm des Datenloggers erwies sich die
   Funkuhr jedoch nicht als stabil. Offenbar war die Erfassung der
   Eingangssignale so zeitintensiv, dass es zu Konflikten mit der Software für
@@ -587,7 +587,7 @@ Zugang zur SD-Karte sowie den Stecker der Eingangssignale.
   <b>Interne Uhr </b>
 </p>
 
-<p align="justify">
+<p>
   Mit dem Einsatz der internen Uhr konnte ein stabiler Betrieb erreicht werden.
   Das Programm zur Datenerfassung nahm zwar so viel Zeit in Anspruch, dass die
   Zeit teilweise nur in Sprüngen von mehreren Sekunden angezeigt wurde,
@@ -620,7 +620,7 @@ Zugang zur SD-Karte sowie den Stecker der Eingangssignale.
   style="text-decoration: underline; color: blue;"
   >http://www.futurlec.com/Mini_DS3232.shtml</a>
 
-<p align="justify">
+<p>
   Diese Option ist nicht nur preisgünstiger, sondern stellt auch die bessere
   Lösung im Hinblick auf den Einbau dar. Die wesentlichen Merkmale des Chips
   sind in den folgenden Bildern wiedergegeben:
@@ -631,7 +631,7 @@ Zugang zur SD-Karte sowie den Stecker der Eingangssignale.
    alt="I²C Uhrschaltung" align="center" width="600" height="">
 </p>
 
-<p align="justify">
+<p>
   Wie die Abbildungen zeigen ist der Aufwand relativ gering. Das Stellen der Uhr
   sowie die Abfrage der Uhrzeit erfolgt über den I2C-Bus, die entsprechende
   Schnittstelle ist auf dem Application Board vorhanden. Aus dem Datenblatt des
@@ -654,7 +654,7 @@ Zugang zur SD-Karte sowie den Stecker der Eingangssignale.
   hervor.
 </p>
 
-<p align="justify">
+<p>
   Achtung! Der Port B.7 für die LED auf der SD-Card Platine wird auch für das
   LCD-Display benutzt und kann zu Konflikten führen. Daher wird der Port B.7
   nicht für das SD-Card Interface beschaltet, der Zugriff auf die SD-Card kann

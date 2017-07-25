@@ -1,12 +1,17 @@
 <header class="topbar">
-  <a href="{{ site.baseurl }}/">  <!-- zurück auf Homepage -->
-    <img src="{{ site.baseurl }}/img/logo-kjs.svg" alt="KJS Logo" class="logo" />
-    <h1 class="topbartitle">Elektronik-Projekte</h1>
+  <a href="{{ site.baseurl }}/" class="logo">  <!-- zurück auf Homepage -->
+    <img class="logo-img" src="{{ site.baseurl }}/img/logo-kjs.svg" alt="KJS Logo" />
+    <h1 class="logo-title">Elektronik-Projekte</h1>
   </a>
+  <div class="navi-wrapper">
+    <button type="button" class="navi-trigger">
+      <img class="logo-img" src="{{ site.baseurl }}/img/menu-icon.svg" alt="Toggle Menu" />
+    </button>
+    <nav class="navi">
+      <a class="navi-link" href="{{ site.baseurl }}/nostalgie">Nostalgie</a>
+      <a class="navi-link" href="{{ site.baseurl }}/haus">Haus</a>
+      <a class="navi-link" href="{{ site.baseurl }}/modellbahn">Modellbahn</a>
+      <a class="navi-link" href="{{ site.baseurl }}/kfz">KFZ</a>
+    </nav>
+  </div>
 </header>
-<nav class="navi">
-  <a class="navilink" href="{{ site.baseurl }}/nostalgie">Nostalgie</a>
-  <a class="navilink" href="{{ site.baseurl }}/haus">Haus</a>
-  <a class="navilink" href="{{ site.baseurl }}/modellbahn">Modellbahn</a>
-  <a class="navilink" href="{{ site.baseurl }}/kfz">KFZ</a>
-</nav>

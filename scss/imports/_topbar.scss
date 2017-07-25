@@ -1,0 +1,82 @@
+.topbar {
+  border-bottom: 1px solid white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  .logo-img {
+    display: block;
+    background-color: white;
+    width: 3.5rem;
+    height: 3rem;
+    padding: .5rem;
+  }
+  .logo-title {
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    white-space: nowrap;
+    padding: 0 1rem;
+  }
+}
+
+.navi-wrapper {
+  text-align: right;
+}
+
+.navi-link {
+  display: block;
+  padding: .5rem;
+  font-size: 1.75rem;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  @media (min-width: $medium) {
+    display: inline-block;
+    font-size: .875rem;
+  }
+  @media (min-width: $large) {
+    display: inline-block;
+    font-size: 1rem;
+  }
+}
+
+.navi {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 3rem;
+  background-color: white;
+  @media (min-width: $medium) {
+    position: static;
+    display: block;
+    padding: 0;
+    background-color: transparent;
+  }
+}
+
+.navi-trigger {
+  display: inline-block;
+  @media (min-width: $medium) {
+    display: none;
+  }
+}
+
+.navi-trigger {
+  background-color: transparent;
+  border: none;
+  padding: 1rem;
+  position: relative;
+  z-index: 2;
+  cursor: pointer;
+  img {
+    display: block;
+    width: 1rem;
+  }
+}

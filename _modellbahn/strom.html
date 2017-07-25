@@ -35,19 +35,19 @@ order: 4
   <li>12V/5A für die Beleuchtung über Gleichrichter</li>
 </ul>
 
-<p align=justify>
+<p>
   Die Steuerung der Anlage erfolgt über die Intellibox bzw. in Verbindung mit
   der WinDigipet Software über den PC. Der angeschlossene Flachbildschirm bietet
   die Möglichkeit, neben der Steuerung über WinDigipet weitere Daten anzuzeigen.
 </p>
 
-<p align=justify>
+<p>
   Ziel des vorliegenden Projektes ist, den Bildschirm auch für die Anzeige der
   Stromversorgungswerte zu nutzen, d.h. einen Überblick über die aktuellen
   Spannungen, Ströme und Leistungen der Netzgeräte zu geben.
 </p>
 
-<p align=justify>
+<p>
   Diese Aufgabe wurde auf der Hardwareseite durch einen Arduino Uno sowie 3
   Stromsensoren ACS711 realisiert. Neben der Arduino Software für die
   Datenerfassung wurde für die Visualisierung auf dem Bildschirm die Processing
@@ -69,7 +69,7 @@ order: 4
 
 <h2><a name="udc">Gleichspannung</a></h2>
 
-<p align=justify>
+<p>
   An den Analogeingängen des Arduino kann man per „analogRead(A0-5)“ Bit-Werte
   messen, die zwischen 0 und 1023 liegen. Für 5 V werden am Arduino 1023 Bit
   ausgegeben, d.h.
@@ -80,13 +80,13 @@ order: 4
   alt="Formel 1" width="" height="">
 </p>
 
-<p align="justify">
+<p>
   Die tatsächliche Spannung liegt beim Arduino meist etwas unterhalb der
   theoretischen Spannung von 5 Volt, daher muss dieser tatsächliche Wert
   (Messung) in die Gleichung oben einfließen.
 </p>
 
-<p align="justify">
+<p>
   Bei höheren Spannungen muss also grundsätzlich zunächst durch einen
   Spannungsteiler (R1 und R2) die zu messende Spannung auf Arduino-verträgliche
   5 V runterteilt werden:
@@ -97,12 +97,12 @@ order: 4
    alt="Formel 2" width="" height="">
 </p>
 
-<p align="justify">
+<p>
   Mit R1 = 15 kΩ und R2 = 5 KΩ, d.h. einem Teiler-Verhältnis von 3:1 kann z. B.
   eine Eingangsspannung von max. 20 V gemessen werden.
 </p>
 
-<p align="justify">
+<p>
   Wenn mehrere Spannungen gleichzeitig gemessen werden sollen, sollten diese
   galvanisch voneinander getrennt sein. Hier bietet sich als einfache Lösung
   sowohl für die Trennung wie auch für die Spannungsteilung ein Optokoppler wie
@@ -114,14 +114,14 @@ order: 4
    alt="Optokoppler" width="" height="">
 </p>
 
-<p align="justify">
+<p>
   Die maximale Spannung beträgt 5 Volt am Eingang des Arduino, mit dem
   Trimm-Poti kann diese eingestellt werden. Damit nicht jede Spitze das
   Messergebnis beeinflusst sind die Kondensatoren vorgesehen. Mit 100 nF fängt
   man kurze Spitzen ab, 4,7 µF dienen zum Glätten.
 </p>
 
-<p align="justify">
+<p>
   Da eine genaue Übertragung der Messspannung mit Optokopplern nur bedingt
   möglich ist, wird eine Eichung der Schaltung erforderlich. Hierzu wird die
   Messspannung im Rahmen des Messbereiches variiert und mit einem
@@ -140,7 +140,7 @@ order: 4
    alt="Formel 3" width="" height="">
 </p>
 
-<p align="justify">
+<p>
   Für das Netzteil der Beleuchtung der Modellbahnanlage (12 V / 5 A Gleichstrom)
   ergaben sich folgende Abhängigkeiten:
 </p>
@@ -150,7 +150,7 @@ order: 4
    alt="Messreihe Beleuchtung" width="" height="">
 </p>
 
-<p align="justify">
+<p>
   Die Gleichung für die Messspannung als Funktion der Spannung am
   Arduino-Eingang A1 ergibt sich somit zu:
 </p>
@@ -162,14 +162,14 @@ order: 4
 
 <h2><a name="uac">Wechselspannung</a></h2>
 
-<p align="justify">
+<p>
   Wenn man die Messwerte einer Wechselspannung über eine oder mehrere Perioden
   summiert erhält man null (der positive Teil entspricht dem negativen Teil).
   Daher muss man die absoluten Werte (bzw. die Differenz zum Offset)
   vorzeichenlos summieren.
 </p>
 
-<p align="justify">
+<p>
   Es bietet sich aber auch an, über einen Gleichrichter die Wechselspannung nach
   oben genannter Methode zu messen. Über die Aufzeichnung der Messreihe ergibt
   sich wieder eine lineare Funktion, somit kann die zu messende Wechselspannung
@@ -181,7 +181,7 @@ order: 4
    alt="Formel 5" width="" height="">
 </p>
 
-<p align="justify">
+<p>
   Für das Netzteil der Magnetartikel der Modellbahnanlage (18 V / 5 A
   Wechselstrom) ergaben sich folgende Abhängigkeiten:
 </p>
@@ -191,7 +191,7 @@ order: 4
    alt="Messreihe Magnetartikel" width="" height="">
 </p>
 
-<p align="justify">
+<p>
   Die Gleichung für die Messspannung als Funktion der Spannung am
   Arduino-Eingang A3 ergibt sich somit zu:
 </p>
@@ -201,7 +201,7 @@ order: 4
    alt="Formel 6" width="" height="">
 </p>
 
-<p align="justify">
+<p>
   Für das Netzteil der Fahrspannung der Modellbahnanlage (18 V / 5 A
   Wechselstrom) ergaben sich folgende Abhängigkeiten:
 </p>
@@ -211,7 +211,7 @@ order: 4
    alt="Messreihe Digitalspannung" width="" height="">
 </p>
 
-<p align="justify">
+<p>
   Die Gleichung für die Messspannung als Funktion der Spannung am
   Arduino-Eingang A5 ergibt sich somit zu:
 </p>
@@ -223,7 +223,7 @@ order: 4
 
 <h1><a name="strom">Strommessung</a></h1>
 
-<p align="justify">
+<p>
   Für die Messung des Stromes bietet sich der Allegro ACS711-Stromsensor an.
   Dieser besteht aus einem linearen Hall-Sensor-Schaltkreis mit einem Kupfer
   Leitungspfad welcher in der Nähe der Oberfläche der Pressform angeordnet ist.
@@ -232,13 +232,13 @@ order: 4
   wird.
 </p>
 
-<p align="justify">
+<p>
   Die Ausgangsspannung des Sensors hat eine positive Steigung proportional zum
   Stromfluss von IP+ (Pins 1 und 2) nach IP- (Pins 3 und 4). Der Innenwiderstand
   dieser Verbindung beträgt 1,2 mΩ.
 </p>
 
-<p align="justify">
+<p>
   Der ACS711 ist eine für Low-Side-Strommessung optimierte Anwendungen, wobei
   die Anschlüsse der Leiterbahn elektrisch von dem Sensor-IC isoliert sind.
   Hierdurch ergeben sich ausreichende interne Kriech- und Luft Abmessungen für
@@ -255,7 +255,7 @@ order: 4
   Richtung fließen kann.
 </p>
 
-<p align="justify">
+<p>
   Per „analogRead“ kann man am Arduino aber nur Werte messen, die zwischen 0 und
   1023 liegen, es handelt sich um 10-Bit ADC Messungen. Der Sensor ist nun so
   konstruiert, dass sein Nullpunkt in der Mitte liegt, also z.B. "Null Strom"
@@ -263,7 +263,7 @@ order: 4
   bisschen, genau wie die Messwerte).
 </p>
 
-<p align="justify">
+<p>
   Die Ausgangsspannung des Sensors verhält sich proportional zum Eingangsstrom.
   Die Werte sind über die Sensivity miteinander verknüpft, dieser Wert beträgt
   laut Datenblatt für den ACS711LC mit ± 12,5A 110 mV/A bei Vcc = 3,3 V. Der
@@ -276,7 +276,7 @@ order: 4
    alt="Formel 8" width="" height="">
 </p>
 
-<p align="justify">
+<p>
   Mit dieser Formel ergeben sich z.B. für	+12,5 A	  >	4,5833 V   und    938 Bits
   Nach Auflösen der Gleichung ergibt sich hieraus für die Sensivity bei Vcc =
   5 Volt:
@@ -338,7 +338,7 @@ order: 4
 
 <h2><a name="acdc">Gleichstrom und Wechselstrom</a></h2>
 
-<p align="justify">
+<p>
   Die Messung des Gleich- und des Wechselstromes wurde nach den oben
   aufgeführten Formeln durchgeführt. Der theoretische Mittelwert des
   Stromsensors beträgt 512, die tatsächlichen Mittelwerte wurden für
@@ -363,7 +363,7 @@ order: 4
 
 <h1><a name="software">Software</a></h1>
 
-<p align="justify">
+<p>
   Die Erfassung der Messwerte erfolgte mit dem Arduino Sketch
   „modellbahn_Strom_und_Spannung_02“:
 </p>
