@@ -21,5 +21,11 @@
       {{ content }}
     </main>
     {% include footer.html %}
+    <script>
+      var toggleMenu = function() {
+        document.getElementById('js-navi').classList.toggle('navi-is-visible')
+      }
+      document.getElementById('js-trigger-button').addEventListener("click", toggleMenu)
+    </script>
   </body>
 </html>

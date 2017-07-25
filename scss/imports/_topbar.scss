@@ -60,11 +60,17 @@
     background-color: transparent;
   }
 }
+.navi-is-visible {
+  display: block;
+}
 
 .navi-trigger {
   display: inline-block;
   @media (min-width: $medium) {
     display: none;
+  }
+  &:focus {
+    outline: none;
   }
 }
 
