@@ -70,9 +70,17 @@ a {
 }
 
 .page-header {
-  padding: 2rem;
+  padding: .5rem 2rem;
   background-color: $color-white;
   text-align: center;
+  @media (min-height: 600px) {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+  @media (min-height: 900px) {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
 }
 
  /* Footer formatieren */
