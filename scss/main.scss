@@ -11,6 +11,7 @@
 @import "imports/topbar";
 @import "imports/gallery";
 @import "imports/card";
+@import "imports/toc";
 
 /* Globale Styles für alles im Body */
 html {
@@ -49,7 +50,7 @@ a {
   margin: 0 auto;  /* Abstand zum nächsten Element */
   padding-left: 1rem;
   padding-right: 1rem;
-  overflow: hidden;
+//  overflow: hidden;
   @media (min-width: $medium) {
     padding-left: 2rem;
     padding-right: 2rem;
@@ -89,44 +90,6 @@ img {
   hinauswachsen. */
 }
 
-/* Inhaltsverzeichnis ------------------------------------------------------- */
-
-/* toc ist eine gängige Abkürzung, steht für "Table of Contents" =
-Inhaltsverzeichnis */
-.toc {
-
-}
-
-/* Ein Link in einem Inhaltsverzeichnis */
-.toc-link {
-  display: block;
-  overflow: hidden;
-  margin-bottom: .5rem;
-  padding-top: .5rem;
-  padding-bottom: .5rem;
-}
-
-.toc-link {
-  &:hover,
-  &:focus {
-  }
-}
-
-/* Das Bild in einem Inhaltsverzeichnislink */
-.toc-img {
-  display: block;
-  width: 5rem;
-  float: left;
-  margin-right: 1rem;
-}
-
-.toc-title {
-  display: block;
-  float: left;
-  padding-top: 0.65rem;
-  font-size: 1.25rem; /* Schriftgröße */
-}
-
 /* Styles für Codebeispiele */
 
 pre, code {
@@ -163,8 +126,7 @@ pre code {
     width: 100%;
     height: 100%;
 }
- .spec-table {
-   width: 100%;
-   text-align: left;
-
- }
+.spec-table {
+  width: 100%;
+  text-align: left;
+}

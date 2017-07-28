@@ -1,0 +1,33 @@
+
+/* Inhaltsverzeichnis ------------------------------------------------------- */
+
+/* toc ist eine gängige Abkürzung, steht für "Table of Contents" =
+Inhaltsverzeichnis */
+.toc {
+  margin-bottom: 1.5rem;
+  padding-left: 0;
+  list-style: none;
+  font-size: .75rem;
+  @media (min-width: $medium) {
+    border-left: 1px solid white;
+    float: right;
+    max-width: 12rem;
+    padding-left: 1rem;
+    margin-left: 2rem;
+  }
+  @media (min-width: $large) {
+    margin-right: -6rem;
+  }
+  a {
+    display: block;
+    overflow: hidden;
+    margin-bottom: .25rem;
+    padding-top: .25rem;
+    padding-bottom: .25rem;
+    color: $color-grey-50;
+    &:hover,
+    &:focus {
+      color: $color-grey;
+    }
+  }
+}
