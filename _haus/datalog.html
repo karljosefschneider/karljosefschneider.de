@@ -7,20 +7,19 @@ order: 2
 ---
 
 <ul class="toc">
-  <li> <a href="#beschreibung"> Projektbeschreibung</a></li>
-  <li> <a href="#mess"> Messgeräte und Schnittstellen</a></li>
-  <li> <a href="#ehz"> Digitaler EMH eHZ Zweirichtungs-Stromzähler</a></li>
-  <li> <a href="#siemens"> Siemens Drehstromzähler mit Ferraris-Scheibe</a></li>
-  <li> <a href="#tank"> Füllstandsanzeige für Öltank</a></li>
-  <li> <a href="#stunden"> Betriebstundenzähler für Ölheizung</a></li>
-  <li> <a href="#temperatur"> Temperaturmessung</a></li>
-  <li> <a href="#hardware"> Hardware</a></li>
-  <li> <a href="#mega128"> Microcontroller C-Control Pro MEGA 128 Application Board
-      </a></li>
-  <li> <a href="#display"> LCD Display 4 x 20</a></li>
-  <li> <a href="#uhr"> Zeituhr</a></li>
-  <li> <a href="#sdcard"> SD-Card Interface für C-Control Pro</a></li>
-  <li> <a href="#software"> Software</a></li>
+  <li><a href="#beschreibung">Projektbeschreibung</a></li>
+  <li><a href="#mess">Messgeräte und Schnittstellen</a></li>
+  <li><a href="#ehz">Digitaler EMH eHZ Zweirichtungs-Stromzähler</a></li>
+  <li><a href="#siemens">Siemens Drehstromzähler mit Ferraris-Scheibe</a></li>
+  <li><a href="#tank">Füllstandsanzeige für Öltank</a></li>
+  <li><a href="#stunden">Betriebstundenzähler für Ölheizung</a></li>
+  <li><a href="#temperatur">Temperaturmessung</a></li>
+  <li><a href="#hardware">Hardware</a></li>
+  <li><a href="#mega128">Microcontroller C-Control Pro MEGA 128 Application Board</a></li>
+  <li><a href="#display">LCD Display 4 x 20</a></li>
+  <li><a href="#uhr">Zeituhr</a></li>
+  <li><a href="#sdcard">SD-Card Interface für C-Control Pro</a></li>
+  <li><a href="#software">Software</a></li>
 </ul>
 
 <h2><a name="beschreibung"></a>Projektbeschreibung</h2>
@@ -82,15 +81,12 @@ order: 2
 <p>
   Zur Erfassung des Strombezuges sowie der Stromeinspeisung in das öffentliche
   Netz wurde vom RWE im November 2011 der elektronische Zweirichtungszähler
-  <b> EMH eHz-HW8E2A5LOEQ2P </b> eingebaut.
+  <b>EMH eHz-HW8E2A5LOEQ2P</b> eingebaut.
 </p>
 
-<div class="cf">
-  <img src="/img/haus/datalog/datalog_ehz.jpg" alt="EHZ-Zähler"
-   align="left" width="350" height="" style="margin:8px">
-
-  <img src="/img/haus/datalog/datalog_ehzdaten.jpg" alt="Technische Daten"
-  align="left" width="700" height="" style="margin:8px">
+<div class="tc">
+  <img src="/img/haus/datalog/datalog_ehz.jpg" alt="EHZ-Zähler">
+  <img src="/img/haus/datalog/datalog_ehzdaten.jpg" alt="Technische Daten">
 </div>
 
 <p>
@@ -99,10 +95,9 @@ order: 2
   von den max. Abmessungen nach DIN-EN 62056-21 genormt:
 </p>
 
-<p align="center">
-  <img src="/img/haus/datalog/datalog_ehzport.jpg" alt="EHZ IR-Port"
-  width="800" height="">
-</p>
+<div class="tc">
+  <img src="/img/haus/datalog/datalog_ehzport.jpg" alt="EHZ IR-Port">
+</div>
 
 <p>
   Die Datenübertragung erfolgt asynchron seriell ohne zusätzlichen Taktimpuls.
@@ -119,10 +114,9 @@ order: 2
   Bauteilen folgende Schaltung aufgebaut:
 </p>
 
-<p align="center">
-  <img src="/img/haus/datalog/datalog_ehzempfang.jpg" alt="Empfangsschaltung"
-  width="800" height="">
-</p>
+<div class="tc">
+  <img src="/img/haus/datalog/datalog_ehzempfang.jpg" alt="Empfangsschaltung">
+</div>
 
 <p>
   Der Phototransistor BPW40 erfasst die Blinksignale der IR-Diode im Zähler,
@@ -153,10 +147,10 @@ order: 2
   veröffentliche Schaltung zurückgegriffen:
 </p>
 
-<p align="center">
+<div class="tc">
   <img src="/img/haus/datalog/datalog_ehzlesekopf.jpg"
-   alt="Schreib- Lesekopf" width="600" height="">
-</p>
+   alt="Schreib- Lesekopf">
+</div>
 
 <p>
   Die Schaltung enthält einen Schreib- und einen Lesekopf und wird als Bausatz
@@ -203,38 +197,36 @@ order: 2
   Potenz multipliziert und anschließend summiert:
 </p>
 
-<p align="center">
+<div class="tc">
   <img src="/img/haus/datalog/datalog_hexadezimal.jpg"
-   alt="Umwandlung Hex < Dez" width="600" height="">
-</p>
+   alt="Umwandlung Hex < Dez">
+</div>
 
 <p>
-    Unter Berücksichtigung der Kommastelle ergibt sich somit der Zählerstand für
-    Bezug zu 820,5870 kWh. Den Zählerstand für Einspeisen wird analog ermittelt.
+  Unter Berücksichtigung der Kommastelle ergibt sich somit der Zählerstand für
+  Bezug zu 820,5870 kWh. Den Zählerstand für Einspeisen wird analog ermittelt.
 </p>
 
-<p align="center">
+<div class="tc">
   <img src="/img/haus/datalog/datalog_sml.jpg"
-   alt="SML Protokoll" width="800" height="">
-</p>
+   alt="SML Protokoll">
+</div>
 
 <h2><a name="siemens"></a>Siemens Drehstromzähler mit Ferraris-Scheibe</h2>
 
 <p>
-    Im Rahmen der Installation der Photovoltaik-Anlage wurde zur Erfassung der
-    erzeugten Energie ein Siemens Drehstromzähler eingebaut. Da zu dieser Zeit
-    kein elektronischer Zähler verfügbar war, arbeitet der eingebaute Zähler
-    nach dem alten Prinzip mit Ferraris-Drehscheibe und verfügt somit auch über
-    keine Schnittstelle.
+  Im Rahmen der Installation der Photovoltaik-Anlage wurde zur Erfassung der
+  erzeugten Energie ein Siemens Drehstromzähler eingebaut. Da zu dieser Zeit
+  kein elektronischer Zähler verfügbar war, arbeitet der eingebaute Zähler
+  nach dem alten Prinzip mit Ferraris-Drehscheibe und verfügt somit auch über
+  keine Schnittstelle.
 </p>
 
-<div align="center">
-  <img src="/img/haus/datalog/datalog_ferraris.jpg" alt="Ferraris-Zähler"
-  align="center" width="250" height="" style="margin:20px">
-
-  <img src="/img/haus/datalog/datalog_ferrarispr.jpg" alt="Ferraris-Prinzip"
-  align="center" width="400" height="" style="margin:8px">
-  <br> Grundsätzlicher Aufbau eines mechanischen Wechselstromzählers
+<div class="tc">
+  <img src="/img/haus/datalog/datalog_ferraris.jpg" alt="Ferraris-Zähler">
+  <img src="/img/haus/datalog/datalog_ferrarispr.jpg" alt="Ferraris-Prinzip">
+  <br>
+  Grundsätzlicher Aufbau eines mechanischen Wechselstromzählers
 </div>
 
 <p>
@@ -263,10 +255,10 @@ order: 2
   ermitteln:
 </p>
 
-<p align="center">
+<div class="tc">
   <img src="/img/haus/datalog/datalog_formel.jpg"
-   alt="Leistungsformel" width="" height="">
-</p>
+   alt="Leistungsformel">
+</div>
 
 <p>
   Damit nun aber nicht die einmal beschleunigte Scheibe nachläuft, wenn der
@@ -313,14 +305,14 @@ order: 2
   CNY70 und dem Zählerbaustein:
 </p>
 
-<p align="center">
+<div class="tc">
   <img src="/img/haus/datalog/datalog_reflexkoppler.jpg"
-   alt="Reflexkoppler" width="" height="">
-</p>
+   alt="Reflexkoppler">
+  <img src="/img/haus/datalog/datalog_kopplermontage.jpg"
+    alt="Montage des Reflexkopplers">
+</div>
 
 <p>
-  <img src="/img/haus/datalog/datalog_kopplermontage.jpg"
-   alt="Montage des Reflexkopplers" align="right" width="300" height="">
   Der Reflexkoppler muss auf der Glasscheibe des Zählers so angebracht werden,
   dass die Linie Fotodiode / IR-LED senkrecht verläuft. Die optimale Position
   auch in horizontaler Richtung ist durch Versuche zu ermitteln.
@@ -343,10 +335,10 @@ order: 2
   sowie die Bezugsquelle für die I²C-Verstärkerplatine.
 </p>
 
-<p align="center">
+<div class="tc">
   <img src="/img/haus/datalog/datalog_i2c.jpg"
-   alt="I²C Verstärkerplatine" width="800" height="">
-</p>
+   alt="I²C Verstärkerplatine">
+</div>
 
 <p>
   Trotz Einsatz der vorgenannten Verstärkerplatine kam es auf dem I²C-Bus immer
@@ -392,10 +384,10 @@ order: 2
   <li>Distributer: Robotikhardware.de </li>
 </ul>
 
-<p align="center">
+<div class="tc">
   <img src="/img/haus/datalog/datalog_ultraschall.jpg"
-   alt="Ultraschallsensor" width="800" height="">
-</p>
+   alt="Ultraschallsensor">
+</div>
 
 <p>
   Im I²C-Modus wird der Pin Mode nicht beschaltet. Das Modul wurde über die
@@ -424,19 +416,19 @@ order: 2
   Auszug aus dem Datenblatt des DS1820:
 </p>
 
-<p align="center">
+<div class="tc">
   <img src="/img/haus/datalog/datalog_temperatursensor.jpg"
-   alt="DS1820 Temperatursensor" width="600" height="">
-</p>
+   alt="DS1820 Temperatursensor">
+</div>
 
 <p>
   Anschlussbelegung:
 </p>
 
-<p align="center">
+<div class="tc">
   <img src="/img/haus/datalog/datalog_sensoranschluss.jpg"
-  alt="Anschlussbelegung des Temperatursensors" width="400" height="">
-</p>
+  alt="Anschlussbelegung des Temperatursensors">
+</div>
 
 <h2><a name="hardware"></a>Hardware</h2>
 
@@ -473,21 +465,21 @@ order: 2
 </p>
 
 <p>
-Die vier Taster wurden von der Platine entfernt und durch Digitast-Taster
-ersetzt. Diese wurden auf einer kleinen Lochrasterplatine installiert und im
-Winkel von 90° an die Basisplatine gelötet. Zur besseren Stabilität wurden die
-Platinen zusätzlich mit 2-Komponenten Kleber verbunden. Dieser Umbau war
-erforderlich damit die Bedienbarkeit der Taster beim späteren Einbau in ein
-Gehäuse gegeben war.
+  Die vier Taster wurden von der Platine entfernt und durch Digitast-Taster
+  ersetzt. Diese wurden auf einer kleinen Lochrasterplatine installiert und im
+  Winkel von 90° an die Basisplatine gelötet. Zur besseren Stabilität wurden die
+  Platinen zusätzlich mit 2-Komponenten Kleber verbunden. Dieser Umbau war
+  erforderlich damit die Bedienbarkeit der Taster beim späteren Einbau in ein
+  Gehäuse gegeben war.
 </p>
 
 <p>
-Für die Aufnahme des 4 x 20 LCD-Displays sowie des I²C-Speicherbausteines und
-des I²C-Verstärkerbausteines wurde eine gedruckte Platine angefertigt. Auf
-dieser Platine sind auch 6 LEDs angeordnet, hierüber werden z.B. der Impuls des
-Solarzählers, der Einschaltzustand der Heizung, der Zugriff auf die SD-Card und
-die Auswahl von 3 möglichen Temperatursensoren angezeigt. Diese Trägerplatine
-wurde mit Abstandsschrauben auf der Basisplatine der C-Control befestigt.
+  Für die Aufnahme des 4 x 20 LCD-Displays sowie des I²C-Speicherbausteines und
+  des I²C-Verstärkerbausteines wurde eine gedruckte Platine angefertigt. Auf
+  dieser Platine sind auch 6 LEDs angeordnet, hierüber werden z.B. der Impuls des
+  Solarzählers, der Einschaltzustand der Heizung, der Zugriff auf die SD-Card und
+  die Auswahl von 3 möglichen Temperatursensoren angezeigt. Diese Trägerplatine
+  wurde mit Abstandsschrauben auf der Basisplatine der C-Control befestigt.
 </p>
 
 <p>
@@ -498,11 +490,10 @@ erfolgte eine Aussparung für die Digitaster und Auf der rechten Seite für den
 Zugang zur SD-Karte sowie den Stecker der Eingangssignale.
 </p>
 
-<p align="center">
+<div class="tc">
   <img src="/img/haus/datalog/datalog_gesamtansicht.jpg"
-   alt="Gesamtansicht des Datenloggers"
-  width="800" height="">
-</p>
+   alt="Gesamtansicht des Datenloggers">
+</div>
 
 <h2><a name="display"></a>LCD Display 4 x 20</h2>
 
@@ -512,16 +503,14 @@ Zugang zur SD-Karte sowie den Stecker der Eingangssignale.
   Spezifikation des verwendeten Displays:
 </p>
 
-<p align="center">
+<div class="tc">
   <img src="/img/haus/datalog/datalog_display.jpg"
-   alt="LCD Display 4 x 20" width="600" height="">
-</p>
+   alt="LCD Display 4 x 20">
+</div>
 
 <h2><a name="uhr"></a>Zeituhr</h2>
 
-<p>
-  <b> Funkuhrmodul DCF77 </b>
-</p>
+<h3>Funkuhrmodul DCF77</h3>
 
 <p>
   Für eine genaue Zeitsteuerung wird von Conrad ein DCF77-Funkuhrmodul
@@ -529,17 +518,10 @@ Zugang zur SD-Karte sowie den Stecker der Eingangssignale.
   gleichzeitiger automatischer Neujustierung nach einem Stromausfall gegeben.
 </p>
 
-<div align="center">
-  <img src="/img/haus/datalog/datalog_dcf_01.jpg" alt="DCF-Empgänger_01"
-  align="center" width="400" height="" style="margin:20px">
-
-  <img src="/img/haus/datalog/datalog_dcf_02.jpg" alt="DCF-Empfänger_02"
-  align="center" width="400" height="" style="margin:8px">
-</div>
-
-<p align="center">
-  <img src="/img/haus/datalog/datalog_dcf_03.jpg" alt="DCF-Empfänger_03"
-  width="800" height="">
+<div class="tc">
+  <img src="/img/haus/datalog/datalog_dcf_01.jpg" alt="DCF-Empgänger_01">
+  <img src="/img/haus/datalog/datalog_dcf_02.jpg" alt="DCF-Empfänger_02">
+  <img src="/img/haus/datalog/datalog_dcf_03.jpg" alt="DCF-Empfänger_03">
 </p>
 
 <p>
@@ -556,19 +538,23 @@ Zugang zur SD-Karte sowie den Stecker der Eingangssignale.
 </p>
 
 <ul>
-  <li>Zunächst war es falsch das DCF-Modul direkt auf dem Application Board zu
+  <li>
+    Zunächst war es falsch das DCF-Modul direkt auf dem Application Board zu
      installieren. Das Modul reagiert sehr empfindlich auf sämtliche Störungen
      z.B. von PCs, Telefonen und auch wie sich auch zeigte vom Application Board
      selbst. Abhilfe schafften hier nur der Einbau in einem externen Gehäuse und
-     ein Abstand von mindestens 20 cm zum Application Board.</li>
-  <li>Ebenso wichtig war die Auswahl des Eingangsports für den Anschluss des
+     ein Abstand von mindestens 20 cm zum Application Board.
+  </li>
+  <li>
+    Ebenso wichtig war die Auswahl des Eingangsports für den Anschluss des
      DCF-Moduls. Standardmäßig ist in der DCF_Lib.cc zwar Port F.0 vorgesehen
      doch ich hatte mich wegen der günstigeren Lage auf dem Board auf die Ports
      C.0 – C.7 für meine Eingangsdaten konzentriert. Diese Ports sind jedoch
      alle noch mit Speicheraufgaben belegt was zwangsläufig zu Störungen führte
      und kein DCF-Signal detektiert werden konnte. Die Ports F.0 – F.7 erwiesen
      sich jedoch als sauber und somit konnte der Empfang mit den verfügbaren
-     Beispieldateien hergestellt werden.  </li>
+     Beispieldateien hergestellt werden.
+  </li>
 </ul>
 
 <p>
@@ -579,9 +565,7 @@ Zugang zur SD-Karte sowie den Stecker der Eingangssignale.
   zunächst auf die interne Uhr zurückgegriffen.
 </p>
 
-<p>
-  <b>Interne Uhr </b>
-</p>
+<h3>Interne Uhr</h3>
 
 <p>
   Mit dem Einsatz der internen Uhr konnte ein stabiler Betrieb erreicht werden.
@@ -596,9 +580,7 @@ Zugang zur SD-Karte sowie den Stecker der Eingangssignale.
   batteriegepuffert die Überbrückung eines Stromausfalls gewährleistete.
 </p>
 
-<p>
-  <b>DS3232 Uhr über I2C-Bus </b>
-</p>
+<h3>DS3232 Uhr über I2C-Bus</h3>
 
 <p>
   <img src="/img/haus/datalog/datalog_i2cuhr.jpg" alt="I²C Uhr"
