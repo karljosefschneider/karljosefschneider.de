@@ -14,10 +14,10 @@ order: 1
   <li><a href="#digital">Ausführung nach Digitalisierung der Anlage</a></li>
   <li><a href="#mechanikneu">Änderungen am mechanischen Aufbau</a></li>
   <li><a href="#elektrikneu">Elektrische Ausführung nach Digitalisierung</a></li>
+  <li><a href="#videos">Videos</a></li>
   <li><a href="#software">Software</a></li>
   <li><a href="#programmablauf">Programmablauf</a></li>
   <li><a href="#quellcode">Quellcode</a></li>
-  <li><a href="#videos">Videos</a></li>
 </ul>
 
 <h2><a name="beschreibung"></a>Projektbeschreibung</h2>
@@ -200,7 +200,7 @@ order: 1
 </ul>
 
 <img src="/img/modellbahn/aufzug/aufzug_gesamtschaltplan.jpg"
- alt="Gesamtschaltung des Aufzugs" align="center" width="1095" height="731">
+ alt="Gesamtschaltung des Aufzugs" width="1370" height="914">
 
 <p>
   Die C-Control Experimentierplatine mit Ansteuerung der Ports über Optokoppler
@@ -209,10 +209,10 @@ order: 1
 </p>
 
 <img src="/img/modellbahn/aufzug/aufzug_c-control.jpg"
- alt="C-Control Platine" align="center" width="1095" height="731">
+ alt="C-Control Platine" width="1637" height="886">
 
 <img src="/img/modellbahn/aufzug/aufzug_schienenverbindung.jpg"
- alt="Platine Schienenverbindung" align="center" width="1095" height="731">
+ alt="Platine Schienenverbindung" width="1374" height="914">
 
 <p>
   Das Bedienpanel wird in der folgenden Abbildung dargestellt. Hieraus erklären
@@ -226,7 +226,20 @@ order: 1
 </ul>
 
 <img src="/img/modellbahn/aufzug/aufzug_bedienpanel.jpg"
- alt="Bedienpanel" align="center" width="900" height="300">
+ alt="Bedienpanel" width="1024" height="398">
+
+<h2><a name="videos"></a>Videos</h2>
+
+<div id="videobereich1">
+ <iframe class="videoExtern" width="560" height="315"
+ src="https://www.youtube.com/embed/dPgVsze65HU?rel=0"
+ frameborder="0" allowfullscreen>
+ </iframe>
+</div>
+
+<p>
+ Zugfahrt aus und in den Aufzug
+</p>
 
 <h2><a name="software"></a>Software</h2>
 
@@ -238,419 +251,405 @@ order: 1
 </p>
 
 <img src="/img/modellbahn/aufzug/aufzug_programmablauf.jpg"
- alt="Programmablauf" align="center" width="600" height="1000">
+ alt="Programmablauf" width="696" height="1024">
 
 <h3><a name="quellcode"></a>Quellcode</h3>
 
 <pre>
   <code>
-    '---------2---------3---------4----------5----------6---------7---------8---------9
-    '
-    '  Programm für C-Control Mega 128 zur Steuerung des Aufzuges der Modellbahn
-    '  =========================================================================
-    '
-    '  Projektname:         Moba_Aufzug.cprj
-    '  Funktionen:          - Aktuelle Position des Aufzuges lesen und auf LCD ausgeben
-    '                       - Tastaturbefehle erfassen und AUF / AB Bewegung einleiten
-    '                       - Anzeige der Bewegung auf dem LCD Display
-    '                       - Stop bei Erreichen der vorgewählten Position
-    '                       - Gleisverbindung herstellen
-    '  Benötigte Libs:      IntFunc_lib.cc, LCD_Lib.cc, Key_Lib.cc
-    '  Autor:               Karl-Josef Schneider
-    '  Erstelldatum:        16.11.2011
-    '  Letzte Bearbeitung:  11.02.2015
-    '---------2---------3---------4----------5----------6---------7---------8---------9
+'---------2---------3---------4----------5----------6---------7---------8---------9
+'
+'  Programm für C-Control Mega 128 zur Steuerung des Aufzuges der Modellbahn
+'  =========================================================================
+'
+'  Projektname:         Moba_Aufzug.cprj
+'  Funktionen:          - Aktuelle Position des Aufzuges lesen und auf LCD ausgeben
+'                       - Tastaturbefehle erfassen und AUF / AB Bewegung einleiten
+'                       - Anzeige der Bewegung auf dem LCD Display
+'                       - Stop bei Erreichen der vorgewählten Position
+'                       - Gleisverbindung herstellen
+'  Benötigte Libs:      IntFunc_lib.cc, LCD_Lib.cc, Key_Lib.cc
+'  Autor:               Karl-Josef Schneider
+'  Erstelldatum:        16.11.2011
+'  Letzte Bearbeitung:  11.02.2015
+'---------2---------3---------4----------5----------6---------7---------8---------9
 
-    '  Zuordnung der Ports für Input und Output
-    '  --------------------------------------------------------------------------------
-    '
-    '       Port    Port    Zuordnung   Zuordnung           I / O   Portzustand
-    '               Bit     original    hier                        Passiv  Aktiv
-    '       ---------------------------------------------------------------------
-    '       D.0     24      I2C         Gleismotor ZU       Output  High    Low
-    '       D.1     25      I2C         Gleismotor AUF      Output  High    Low
-    '       E.0     32      RS232       Gleis 4             Input   High    Low
-    '       E.1     33      RS232       Gleis 5             Input   High    Low
-    '       E.4     36      SW1         Endschalter unten   Input   High    Low
-    '       E.6     38      SW2         Endschalter oben    Input   High    Low
-    '       F.0     40                  Gleis 0             Input   High    Low
-    '       F.1     41                  Gleis 9             Input   High    Low
-    '       F.2     42                  Gleis 8             Input   High    Low
-    '       F.3     43                  Gleis 7             Input   High    Low
-    '       F.4     44                  Gleis 6             Input   High    Low
-    '       F.5     45                  Gleis 3             Input   High    Low
-    '       F.6     46                  Gleis 2             Input   High    Low
-    '       F.7     47                  Gleis 1             Input   High    Low
-    '       G.3     51      LED1        Fahrmotor AUF       Input   High    Low
-    '       G.4     52      LED2        Fahrmotor AB        Input   High    Low
+'  Zuordnung der Ports für Input und Output
+'  --------------------------------------------------------------------------------
+'
+'       Port    Port    Zuordnung   Zuordnung           I / O   Portzustand
+'               Bit     original    hier                        Passiv  Aktiv
+'       ---------------------------------------------------------------------
+'       D.0     24      I2C         Gleismotor ZU       Output  High    Low
+'       D.1     25      I2C         Gleismotor AUF      Output  High    Low
+'       E.0     32      RS232       Gleis 4             Input   High    Low
+'       E.1     33      RS232       Gleis 5             Input   High    Low
+'       E.4     36      SW1         Endschalter unten   Input   High    Low
+'       E.6     38      SW2         Endschalter oben    Input   High    Low
+'       F.0     40                  Gleis 0             Input   High    Low
+'       F.1     41                  Gleis 9             Input   High    Low
+'       F.2     42                  Gleis 8             Input   High    Low
+'       F.3     43                  Gleis 7             Input   High    Low
+'       F.4     44                  Gleis 6             Input   High    Low
+'       F.5     45                  Gleis 3             Input   High    Low
+'       F.6     46                  Gleis 2             Input   High    Low
+'       F.7     47                  Gleis 1             Input   High    Low
+'       G.3     51      LED1        Fahrmotor AUF       Input   High    Low
+'       G.4     52      LED2        Fahrmotor AB        Input   High    Low
 
-    '  Variablendeklaration
-    '  --------------------------------------------------------------------------------
-       Dim Gleis0 As Integer                     'Rückmeldewert für die Gleisposition 0
-       Dim Gleis1 As Integer                     'Rückmeldewert für die Gleisposition 1
-       Dim Gleis2 As Integer                     'Rückmeldewert für die Gleisposition 2
-       Dim Gleis3 As Integer                     'Rückmeldewert für die Gleisposition 3
-       Dim Gleis4 As Integer                     'Rückmeldewert für die Gleisposition 4
-       Dim Gleis5 As Integer                     'Rückmeldewert für die Gleisposition 5
-       Dim Gleis6 As Integer                     'Rückmeldewert für die Gleisposition 6
-       Dim Gleis7 As Integer                     'Rückmeldewert für die Gleisposition 7
-       Dim Gleis8 As Integer                     'Rückmeldewert für die Gleisposition 8
-       Dim Gleis9 As Integer                     'Rückmeldewert für die Gleisposition 9
-       Dim End_oben As Integer                   'Rückmeldewert für Endschalter oben
-       Dim End_unten As Integer                  'Rückmeldewert für Endschalter unten
-       Dim GleisZU As Integer                    'Gleiskopplung ZU
-       Dim GleisAUF As Integer                   'Gleiskopplung AUF
-       Dim MotorAUF As Integer                   'Fahrmotor AUF
-       Dim MotorAB As Integer                    'Fahrmotor AB
-       Dim Pos As Integer                        'Aktuelle Position des Aufzuges
-       Dim Zeile1(12), Zeile2(12) As Char        'Display variablen definieren
-       Dim Zieleingabe As Word                   'Zieleingabe über Tastatur
-       Dim Taste As Integer                      'Zieletage als ASCII-Zeichen
-       Dim Ziel As Integer                       'Zieletage als ASCII-Zeichen
+'  Variablendeklaration
+'  --------------------------------------------------------------------------------
+   Dim Gleis0 As Integer                     'Rückmeldewert für die Gleisposition 0
+   Dim Gleis1 As Integer                     'Rückmeldewert für die Gleisposition 1
+   Dim Gleis2 As Integer                     'Rückmeldewert für die Gleisposition 2
+   Dim Gleis3 As Integer                     'Rückmeldewert für die Gleisposition 3
+   Dim Gleis4 As Integer                     'Rückmeldewert für die Gleisposition 4
+   Dim Gleis5 As Integer                     'Rückmeldewert für die Gleisposition 5
+   Dim Gleis6 As Integer                     'Rückmeldewert für die Gleisposition 6
+   Dim Gleis7 As Integer                     'Rückmeldewert für die Gleisposition 7
+   Dim Gleis8 As Integer                     'Rückmeldewert für die Gleisposition 8
+   Dim Gleis9 As Integer                     'Rückmeldewert für die Gleisposition 9
+   Dim End_oben As Integer                   'Rückmeldewert für Endschalter oben
+   Dim End_unten As Integer                  'Rückmeldewert für Endschalter unten
+   Dim GleisZU As Integer                    'Gleiskopplung ZU
+   Dim GleisAUF As Integer                   'Gleiskopplung AUF
+   Dim MotorAUF As Integer                   'Fahrmotor AUF
+   Dim MotorAB As Integer                    'Fahrmotor AB
+   Dim Pos As Integer                        'Aktuelle Position des Aufzuges
+   Dim Zeile1(12), Zeile2(12) As Char        'Display variablen definieren
+   Dim Zieleingabe As Word                   'Zieleingabe über Tastatur
+   Dim Taste As Integer                      'Zieletage als ASCII-Zeichen
+   Dim Ziel As Integer                       'Zieletage als ASCII-Zeichen
 
-    '  Hauptprogramm
-    '  ================================================================================
-       Sub main()
+'  Hauptprogramm
+'  ================================================================================
+   Sub main()
 
-    '      Input Ports definieren
-    '      Syntax: Port_DataDirBit(portbit,val);(val=0=in, val=1=out)
-    '      ----------------------------------------------------------------------------
-           Port_DataDirBit(32,0)                 'PortE.0 = Eingang Rückmeldung Gleis 4
-           Port_DataDirBit(33,0)                 'PortE.1 = Eingang Rückmeldung Gleis 5
-           Port_DataDirBit(36,0)                 'PortE.4 = Eingang Endschalter unten
-           Port_DataDirBit(38,0)                 'PortE.6 = Eingang Endschalter oben
-           Port_DataDirBit(40,0)                 'PortF.0 = Eingang Rückmeldung Gleis 0
-           Port_DataDirBit(41,0)                 'PortF.1 = Eingang Rückmeldung Gleis 9
-           Port_DataDirBit(42,0)                 'PortF.2 = Eingang Rückmeldung Gleis 8
-           Port_DataDirBit(43,0)                 'PortF.3 = Eingang Rückmeldung Gleis 7
-           Port_DataDirBit(44,0)                 'PortF.4 = Eingang Rückmeldung Gleis 6
-           Port_DataDirBit(45,0)                 'PortF.5 = Eingang Rückmeldung Gleis 3
-           Port_DataDirBit(46,0)                 'PortF.6 = Eingang Rückmeldung Gleis 2
-           Port_DataDirBit(47,0)                 'PortF.7 = Eingang Rückmeldung Gleis 1
+'      Input Ports definieren
+'      Syntax: Port_DataDirBit(portbit,val);(val=0=in, val=1=out)
+'      ----------------------------------------------------------------------------
+       Port_DataDirBit(32,0)                 'PortE.0 = Eingang Rückmeldung Gleis 4
+       Port_DataDirBit(33,0)                 'PortE.1 = Eingang Rückmeldung Gleis 5
+       Port_DataDirBit(36,0)                 'PortE.4 = Eingang Endschalter unten
+       Port_DataDirBit(38,0)                 'PortE.6 = Eingang Endschalter oben
+       Port_DataDirBit(40,0)                 'PortF.0 = Eingang Rückmeldung Gleis 0
+       Port_DataDirBit(41,0)                 'PortF.1 = Eingang Rückmeldung Gleis 9
+       Port_DataDirBit(42,0)                 'PortF.2 = Eingang Rückmeldung Gleis 8
+       Port_DataDirBit(43,0)                 'PortF.3 = Eingang Rückmeldung Gleis 7
+       Port_DataDirBit(44,0)                 'PortF.4 = Eingang Rückmeldung Gleis 6
+       Port_DataDirBit(45,0)                 'PortF.5 = Eingang Rückmeldung Gleis 3
+       Port_DataDirBit(46,0)                 'PortF.6 = Eingang Rückmeldung Gleis 2
+       Port_DataDirBit(47,0)                 'PortF.7 = Eingang Rückmeldung Gleis 1
 
-    '      Initialisierung von LCD und Tastatur
-    '      ----------------------------------------------------------------------------
-           LCD_Init()                            'LCD Initialisieren
-           LCD_ClearLCD()                        'Display löschen
-           LCD_CursorOff()                       'Display Cursor ausschalten
-           Key_Init()                            'Tastatur initialisieren
+'      Initialisierung von LCD und Tastatur
+'      ----------------------------------------------------------------------------
+       LCD_Init()                            'LCD Initialisieren
+       LCD_ClearLCD()                        'Display löschen
+       LCD_CursorOff()                       'Display Cursor ausschalten
+       Key_Init()                            'Tastatur initialisieren
 
-    '      Output Ports definieren und Startbedingungen festlegen, die beim Einschalten
-    '      der Anlage erfüllt sein müssen
-    '      Syntax: Port_WriteBit(portbit,val);(val=0 >> Port=Low, val=1 >> Port=High)
-    '      ----------------------------------------------------------------------------
-    '      Der Fahrmotor muß abgeschaltet sein:
-           MotorAUF = 1                          'Variable MotorAUF = Stop
-           MotorAB  = 1                          'Variable MotorAB  = Stop
-           Port_DataDirBit(51,1)                 'PortG.3 = Output  Fahrmotor AUF
-           Port_DataDirBit(52,1)                 'PortG.4 = Output  Fahrmotor AB
-           Port_WriteBit(51,MotorAUF)            'Wert MotorAUF auf Port übertragen
-           Port_WriteBit(52,MotorAB)             'Wert MotorAB  auf Port übertragen
-    '      Der Gleismotor muß abgeschaltet sein:
-           GleisAUF = 1                          'Variable GleisAUF = Stop
-           GleisZU  = 1                          'Variable GleisZU  = Stop
-           Port_DataDirBit(24,1)                 'PortD.0 = Output  Gleiskopplung ZU
-           Port_DataDirBit(25,1)                 'PortD.1 = Output  Gleiskopplung AUF
-           Port_WriteBit(24,GleisAUF)            'Wert GleisAUF auf Port übertragen
-           Port_WriteBit(25,GleisZU)             'Wert GleisAB  auf Port übertragen
-    '      Es darf kein Ziel definiert sein, d.h. der Aufzug darf sich nicht bewegen:
-           Ziel = 0                              'kein Ziel definiert
+'      Output Ports definieren und Startbedingungen festlegen, die beim Einschalten
+'      der Anlage erfüllt sein müssen
+'      Syntax: Port_WriteBit(portbit,val);(val=0 >> Port=Low, val=1 >> Port=High)
+'      ----------------------------------------------------------------------------
+'      Der Fahrmotor muß abgeschaltet sein:
+       MotorAUF = 1                          'Variable MotorAUF = Stop
+       MotorAB  = 1                          'Variable MotorAB  = Stop
+       Port_DataDirBit(51,1)                 'PortG.3 = Output  Fahrmotor AUF
+       Port_DataDirBit(52,1)                 'PortG.4 = Output  Fahrmotor AB
+       Port_WriteBit(51,MotorAUF)            'Wert MotorAUF auf Port übertragen
+       Port_WriteBit(52,MotorAB)             'Wert MotorAB  auf Port übertragen
+'      Der Gleismotor muß abgeschaltet sein:
+       GleisAUF = 1                          'Variable GleisAUF = Stop
+       GleisZU  = 1                          'Variable GleisZU  = Stop
+       Port_DataDirBit(24,1)                 'PortD.0 = Output  Gleiskopplung ZU
+       Port_DataDirBit(25,1)                 'PortD.1 = Output  Gleiskopplung AUF
+       Port_WriteBit(24,GleisAUF)            'Wert GleisAUF auf Port übertragen
+       Port_WriteBit(25,GleisZU)             'Wert GleisAB  auf Port übertragen
+'      Es darf kein Ziel definiert sein, d.h. der Aufzug darf sich nicht bewegen:
+       Ziel = 0                              'kein Ziel definiert
 
-    '      Endlosschleife
-    '      ----------------------------------------------------------------------------
-           Do While (1)
-              Zielsteuerung()                    'Abfrage ob Ziel erreicht ist
-              Anzeige()                          'Ausgabe der Texte auf LCD-Display
-              Position_zuordnen()                'Input-Ports lesen & Position zuordnen
-              Tastatur()                         'Tastaturabfrage auf Eingangsbefehle
-           End While
+'      Endlosschleife
+'      ----------------------------------------------------------------------------
+       Do While (1)
+          Zielsteuerung()                    'Abfrage ob Ziel erreicht ist
+          Anzeige()                          'Ausgabe der Texte auf LCD-Display
+          Position_zuordnen()                'Input-Ports lesen & Position zuordnen
+          Tastatur()                         'Tastaturabfrage auf Eingangsbefehle
+       End While
 
-       End Sub
-    '  ================================================================================
+   End Sub
+'  ================================================================================
 
-    '  Abfrage Rückmeldewerte Gleise 0 - 9 und Endschalter und Position zuordnen
-    '  ********************************************************************************
-    '  Die Lichtschranken für die einzelnen Gleispositionen des Aufzuges bzw. die End-
-    '  schalter liefern bei Aktivierung ein positives Signal(+12V). Eine Digitalanzeige
-    '  am Aufzug zeigt an, wenn eine Position erkannt wurde. Die entsprechenden Ports
-    '  sind über Optokoppler verbunden, dieser schaltet Masse durch auf den zugehörigen
-    '  Port, gleichzeitig wird der Schaltzustand der Ports über Leuchtdioden angezeigt.
+'  Abfrage Rückmeldewerte Gleise 0 - 9 und Endschalter und Position zuordnen
+'  ********************************************************************************
+'  Die Lichtschranken für die einzelnen Gleispositionen des Aufzuges bzw. die End-
+'  schalter liefern bei Aktivierung ein positives Signal(+12V). Eine Digitalanzeige
+'  am Aufzug zeigt an, wenn eine Position erkannt wurde. Die entsprechenden Ports
+'  sind über Optokoppler verbunden, dieser schaltet Masse durch auf den zugehörigen
+'  Port, gleichzeitig wird der Schaltzustand der Ports über Leuchtdioden angezeigt.
 
-       Sub Position_zuordnen()
+   Sub Position_zuordnen()
 
-    '      Lesen der Eingangsports
-    '      ----------------------------------------------------------------------------
-           Gleis0    = Port_ReadBit(40)          'F.0 Rückmeldewert Gleis 0 lesen
-           Gleis1    = Port_ReadBit(47)          'F.7 Rückmeldewert Gleis 1 lesen
-           Gleis2    = Port_ReadBit(46)          'F.6 Rückmeldewert Gleis 2 lesen
-           Gleis3    = Port_ReadBit(45)          'F.5 Rückmeldewert Gleis 3 lesen
-           Gleis4    = Port_ReadBit(32)          'E.0 Rückmeldewert Gleis 4 lesen
-           Gleis5    = Port_ReadBit(33)          'E.1 Rückmeldewert Gleis 5 lesen
-           Gleis6    = Port_ReadBit(44)          'F.4 Rückmeldewert Gleis 6 lesen
-           Gleis7    = Port_ReadBit(43)          'F.3 Rückmeldewert Gleis 7 lesen
-           Gleis8    = Port_ReadBit(42)          'F.2 Rückmeldewert Gleis 8 lesen
-           Gleis9    = Port_ReadBit(41)          'F.1 Rückmeldewert Gleis 9 lesen
-           End_oben  = Port_ReadBit(38)          'E.6 Rückmeldewert Endschalter oben
-           End_unten = Port_ReadBit(36)          'E.4 Rückmeldewert Endschalter unten
+'      Lesen der Eingangsports
+'      ----------------------------------------------------------------------------
+       Gleis0    = Port_ReadBit(40)          'F.0 Rückmeldewert Gleis 0 lesen
+       Gleis1    = Port_ReadBit(47)          'F.7 Rückmeldewert Gleis 1 lesen
+       Gleis2    = Port_ReadBit(46)          'F.6 Rückmeldewert Gleis 2 lesen
+       Gleis3    = Port_ReadBit(45)          'F.5 Rückmeldewert Gleis 3 lesen
+       Gleis4    = Port_ReadBit(32)          'E.0 Rückmeldewert Gleis 4 lesen
+       Gleis5    = Port_ReadBit(33)          'E.1 Rückmeldewert Gleis 5 lesen
+       Gleis6    = Port_ReadBit(44)          'F.4 Rückmeldewert Gleis 6 lesen
+       Gleis7    = Port_ReadBit(43)          'F.3 Rückmeldewert Gleis 7 lesen
+       Gleis8    = Port_ReadBit(42)          'F.2 Rückmeldewert Gleis 8 lesen
+       Gleis9    = Port_ReadBit(41)          'F.1 Rückmeldewert Gleis 9 lesen
+       End_oben  = Port_ReadBit(38)          'E.6 Rückmeldewert Endschalter oben
+       End_unten = Port_ReadBit(36)          'E.4 Rückmeldewert Endschalter unten
 
-    '      Positionen in Abhängigkeit von den Eingangszuständen zuordnen
-    '      ----------------------------------------------------------------------------
-           If End_unten = 0 Then Pos = 40: End If  'End_unten erkannt > Position = 40
-           If Gleis0    = 0 Then Pos = 48: End If  'Gleis 0 erkannt   > Position = 48
-           If Gleis1    = 0 Then Pos = 49: End If  'Gleis 1 erkannt   > Position = 49
-           If Gleis2    = 0 Then Pos = 50: End If  'Gleis 2 erkannt   > Position = 50
-           If Gleis3    = 0 Then Pos = 51: End If  'Gleis 3 erkannt   > Position = 51
-           If Gleis4    = 0 Then Pos = 52: End If  'Gleis 4 erkannt   > Position = 52
-           If Gleis5    = 0 Then Pos = 53: End If  'Gleis 5 erkannt   > Position = 53
-           If Gleis6    = 0 Then Pos = 54: End If  'Gleis 6 erkannt   > Position = 54
-           If Gleis7    = 0 Then Pos = 55: End If  'Gleis 7 erkannt   > Position = 55
-           If Gleis8    = 0 Then Pos = 56: End If  'Gleis 8 erkannt   > Position = 56
-           If Gleis9    = 0 Then Pos = 57: End If  'Gleis 9 erkannt   > Position = 57
-           If End_oben  = 0 Then Pos = 60: End If  'End_oben erkannt  > Position = 60
-           If Ziel = 35 And Pos <> 0 Then          'Wenn "AB" gewählt wurde
-              Ziel = Pos + 1                       'Ziel = nächste erreichbare Position
-           End If
-           If Ziel = 42 And Pos <> 0 Then          'Wenn "AUF" gewählt wurde
-              Ziel = Pos - 1                       'Ziel = nächste erreichbare Position
-           End If
+'      Positionen in Abhängigkeit von den Eingangszuständen zuordnen
+'      ----------------------------------------------------------------------------
+       If End_unten = 0 Then Pos = 40: End If  'End_unten erkannt > Position = 40
+       If Gleis0    = 0 Then Pos = 48: End If  'Gleis 0 erkannt   > Position = 48
+       If Gleis1    = 0 Then Pos = 49: End If  'Gleis 1 erkannt   > Position = 49
+       If Gleis2    = 0 Then Pos = 50: End If  'Gleis 2 erkannt   > Position = 50
+       If Gleis3    = 0 Then Pos = 51: End If  'Gleis 3 erkannt   > Position = 51
+       If Gleis4    = 0 Then Pos = 52: End If  'Gleis 4 erkannt   > Position = 52
+       If Gleis5    = 0 Then Pos = 53: End If  'Gleis 5 erkannt   > Position = 53
+       If Gleis6    = 0 Then Pos = 54: End If  'Gleis 6 erkannt   > Position = 54
+       If Gleis7    = 0 Then Pos = 55: End If  'Gleis 7 erkannt   > Position = 55
+       If Gleis8    = 0 Then Pos = 56: End If  'Gleis 8 erkannt   > Position = 56
+       If Gleis9    = 0 Then Pos = 57: End If  'Gleis 9 erkannt   > Position = 57
+       If End_oben  = 0 Then Pos = 60: End If  'End_oben erkannt  > Position = 60
+       If Ziel = 35 And Pos <> 0 Then          'Wenn "AB" gewählt wurde
+          Ziel = Pos + 1                       'Ziel = nächste erreichbare Position
+       End If
+       If Ziel = 42 And Pos <> 0 Then          'Wenn "AUF" gewählt wurde
+          Ziel = Pos - 1                       'Ziel = nächste erreichbare Position
+       End If
 
-    '      Textausgabe für die einzelnen Positionen festlegen
-    '      ----------------------------------------------------------------------------
-           Select Case Pos
-             Case = 40                              'Endschalter unten wurde erkannt
-                 MotorAB = 1                        'Variable MotorAB = Stop
-                 Port_WriteBit(52,MotorAB)          'Wert MotorAB auf Port übertragen
-                 Zeile1 = "> Stop <"                'Text Zeile 1
-                 Zeile2 = "  unten "                'Text Zeile 2
-             Case = 48                              'Gleisposition 0 erkannt
-                 If GleisAUF = 1 Then               'Wenn kein Fahrbefehl erteilt
-                    Zeile1 = "Position"             'Text Zeile 1
-                    Zeile2 = "Gleis  0"             'Text Zeile 2
-                 End If
-             Case = 49                              'Gleisposition 1 erkannt
-                 If GleisAUF = 1 Then               'Wenn kein Fahrbefehl erteilt
-                    Zeile1 = "Position"             'Text Zeile 1
-                    Zeile2 = "Gleis  1"             'Text Zeile 2
-                 End If
-             Case = 50                              'Gleisposition 2 erkannt
-                 If GleisAUF = 1 Then               'Wenn kein Fahrbefehl erteilt
-                    Zeile1 = "Position"             'Text Zeile 1
-                    Zeile2 = "Gleis  2"             'Text Zeile 2
-                 End If
-             Case = 51                              'Gleisposition 3 erkannt
-                 If GleisAUF = 1 Then               'Wenn kein Fahrbefehl erteilt
-                    Zeile1 = "Position"             'Text Zeile 1
-                    Zeile2 = "Gleis  3"             'Text Zeile 2
-                 End If
-             Case = 52                              'Gleisposition 4 erkannt
-                 If GleisAUF = 1 Then               'Wenn kein Fahrbefehl erteilt
-                    Zeile1 = "Position"             'Text Zeile 1
-                    Zeile2 = "Gleis  4"             'Text Zeile 2
-                 End If
-             Case = 53                              'Gleisposition 5 erkannt
-                 If GleisAUF = 1 Then               'Wenn kein Fahrbefehl erteilt
-                    Zeile1 = "Position"             'Text Zeile 1
-                    Zeile2 = "Gleis  5"             'Text Zeile 2
-                 End If
-             Case = 54                              'Gleisposition6 erkannt
-                 If GleisAUF = 1 Then               'Wenn kein Fahrbefehl erteilt
-                    Zeile1 = "Position"             'Text Zeile 1
-                    Zeile2 = "Gleis  6"             'Text Zeile 2
-                 End If
-             Case = 55                              'Gleisposition 7 erkannt
-                 If GleisAUF = 1 Then               'Wenn kein Fahrbefehl erteilt
-                    Zeile1 = "Position"             'Text Zeile 1
-                    Zeile2 = "Gleis  7"             'Text Zeile 2
-                 End If
-             Case = 56                              'Gleisposition 8 erkannt
-                 If GleisAUF = 1 Then               'Wenn kein Fahrbefehl erteilt
-                    Zeile1 = "Position"             'Text Zeile 1
-                    Zeile2 = "Gleis  8"             'Text Zeile 2
-                 End If
-             Case = 57                              'Gleisposition 9 erkannt
-                 If GleisAUF = 1 Then               'Wenn kein Fahrbefehl erteilt
-                    Zeile1 = "Position"             'Text Zeile 1
-                    Zeile2 = "Gleis  9"             'Text Zeile 2
-                 End If
-             Case = 60                              'Endschalter oben wurde erkannt
-                 MotorAUF = 1                       'Variable MotorAUF = Stop
-                 Port_WriteBit(51,MotorAUF)         'Wert MotorAUF auf Port übertragen
-                 Zeile1 = "> Stop <"                'Text Zeile 1
-                 Zeile2 = "  oben  "                'Text Zeile 2
-             Else                                   'Wenn keine Position erkannt wird
-                 Pos = 0                            'Gleisposition = 0
-                 If Ziel = 0 Then                   'Wenn kein Ziel definiert wurde
-                    Zeile1 = " keine  "             'Text Zeile 1
-                    Zeile2 = "Position"             'Text Zeile 2
-                 End If
-           End Case
-       End Sub
-    '  ********************************************************************************
+'      Textausgabe für die einzelnen Positionen festlegen
+'      ----------------------------------------------------------------------------
+       Select Case Pos
+         Case = 40                              'Endschalter unten wurde erkannt
+             MotorAB = 1                        'Variable MotorAB = Stop
+             Port_WriteBit(52,MotorAB)          'Wert MotorAB auf Port übertragen
+             Zeile1 = "> Stop <"                'Text Zeile 1
+             Zeile2 = "  unten "                'Text Zeile 2
+         Case = 48                              'Gleisposition 0 erkannt
+             If GleisAUF = 1 Then               'Wenn kein Fahrbefehl erteilt
+                Zeile1 = "Position"             'Text Zeile 1
+                Zeile2 = "Gleis  0"             'Text Zeile 2
+             End If
+         Case = 49                              'Gleisposition 1 erkannt
+             If GleisAUF = 1 Then               'Wenn kein Fahrbefehl erteilt
+                Zeile1 = "Position"             'Text Zeile 1
+                Zeile2 = "Gleis  1"             'Text Zeile 2
+             End If
+         Case = 50                              'Gleisposition 2 erkannt
+             If GleisAUF = 1 Then               'Wenn kein Fahrbefehl erteilt
+                Zeile1 = "Position"             'Text Zeile 1
+                Zeile2 = "Gleis  2"             'Text Zeile 2
+             End If
+         Case = 51                              'Gleisposition 3 erkannt
+             If GleisAUF = 1 Then               'Wenn kein Fahrbefehl erteilt
+                Zeile1 = "Position"             'Text Zeile 1
+                Zeile2 = "Gleis  3"             'Text Zeile 2
+             End If
+         Case = 52                              'Gleisposition 4 erkannt
+             If GleisAUF = 1 Then               'Wenn kein Fahrbefehl erteilt
+                Zeile1 = "Position"             'Text Zeile 1
+                Zeile2 = "Gleis  4"             'Text Zeile 2
+             End If
+         Case = 53                              'Gleisposition 5 erkannt
+             If GleisAUF = 1 Then               'Wenn kein Fahrbefehl erteilt
+                Zeile1 = "Position"             'Text Zeile 1
+                Zeile2 = "Gleis  5"             'Text Zeile 2
+             End If
+         Case = 54                              'Gleisposition6 erkannt
+             If GleisAUF = 1 Then               'Wenn kein Fahrbefehl erteilt
+                Zeile1 = "Position"             'Text Zeile 1
+                Zeile2 = "Gleis  6"             'Text Zeile 2
+             End If
+         Case = 55                              'Gleisposition 7 erkannt
+             If GleisAUF = 1 Then               'Wenn kein Fahrbefehl erteilt
+                Zeile1 = "Position"             'Text Zeile 1
+                Zeile2 = "Gleis  7"             'Text Zeile 2
+             End If
+         Case = 56                              'Gleisposition 8 erkannt
+             If GleisAUF = 1 Then               'Wenn kein Fahrbefehl erteilt
+                Zeile1 = "Position"             'Text Zeile 1
+                Zeile2 = "Gleis  8"             'Text Zeile 2
+             End If
+         Case = 57                              'Gleisposition 9 erkannt
+             If GleisAUF = 1 Then               'Wenn kein Fahrbefehl erteilt
+                Zeile1 = "Position"             'Text Zeile 1
+                Zeile2 = "Gleis  9"             'Text Zeile 2
+             End If
+         Case = 60                              'Endschalter oben wurde erkannt
+             MotorAUF = 1                       'Variable MotorAUF = Stop
+             Port_WriteBit(51,MotorAUF)         'Wert MotorAUF auf Port übertragen
+             Zeile1 = "> Stop <"                'Text Zeile 1
+             Zeile2 = "  oben  "                'Text Zeile 2
+         Else                                   'Wenn keine Position erkannt wird
+             Pos = 0                            'Gleisposition = 0
+             If Ziel = 0 Then                   'Wenn kein Ziel definiert wurde
+                Zeile1 = " keine  "             'Text Zeile 1
+                Zeile2 = "Position"             'Text Zeile 2
+             End If
+       End Case
+   End Sub
+'  ********************************************************************************
 
-    '  Abfrage der Tastatur und Festlegen der entsprechenden Aktionen
-    '  ********************************************************************************
-       Sub Tastatur()
-          ' Ziel = Pos                           'Startwert für Ziel
-    '      Abfrage der Tastatur
-    '      ----------------------------------------------------------------------------
-           Zieleingabe=Key_Scan()                'Abfrage der Tastatureingaben
-           Taste=Key_TranslateKey(Zieleingabe)   'Eingabe wird in ASCII umgewandelt
-           If Taste > 30 Then                    'Wert fixieren, da wenn keine Taste
-              Ziel = Taste                       'gedrückt wird der Rückmeldewert der
-           End If                                'Tastatur -1 beträgt!
+'  Abfrage der Tastatur und Festlegen der entsprechenden Aktionen
+'  ********************************************************************************
+   Sub Tastatur()
+      ' Ziel = Pos                           'Startwert für Ziel
+'      Abfrage der Tastatur
+'      ----------------------------------------------------------------------------
+       Zieleingabe=Key_Scan()                'Abfrage der Tastatureingaben
+       Taste=Key_TranslateKey(Zieleingabe)   'Eingabe wird in ASCII umgewandelt
+       If Taste > 30 Then                    'Wert fixieren, da wenn keine Taste
+          Ziel = Taste                       'gedrückt wird der Rückmeldewert der
+       End If                                'Tastatur -1 beträgt!
 
-    '      Aktionen und Textausgabe für die einzelnen Tastatureingaben festlegen
-    '      ----------------------------------------------------------------------------
-           Select Case Ziel
-             Case = 42                            'Taste "*" = AUF, d.h. Ziel = 42
-                 Zeile2 = "  AUF   "              'Text Zeile 2
-                 Ziel = 42
-                 Fahrt_AUF()                      'Fahrt aufwärts
-             Case = 35                            'Taste "#" = AB, d.h. Ziel = 35
-                 Zeile2 = "   AB   "              'Text Zeile 2
-                 Ziel = 35
-                 Fahrt_AB()                       'Fahrt abwärts
-             Case = 48                            'Taste "0" erkannt, d.h. Ziel = 48
-                 If Pos <> 0 And Ziel <> Pos Then 'wenn Position definiert und Ziel neu
-                    Zeile2 = " nach 0 "           'Text Zeile 2
-                 End If
-             Case = 49                            'Taste "1" erkannt, d.h. Ziel = 49
-                 If Pos <> 0 And Ziel <> Pos Then 'wenn Position definiert und Ziel neu
-                    Zeile2 = " nach 1 "           'Text Zeile 2
-                 End If
-             Case = 50                            'Taste "2" erkannt, d.h. Ziel = 50
-                 If Pos <> 0 And Ziel <> Pos Then 'wenn Position definiert und Ziel neu
-                    Zeile2 = " nach 2 "           'Text Zeile 2
-                 End If
-             Case = 51                            'Taste "3" erkannt, d.h. Ziel = 51
-                 If Pos <> 0 And Ziel <> Pos Then 'wenn Position definiert und Ziel neu
-                    Zeile2 = " nach 3 "           'Text Zeile 2
-                 End If
-             Case = 52                            'Taste "4" erkannt, d.h. Ziel = 52
-                 If Pos <> 0 And Ziel <> Pos Then 'wenn Position definiert und Ziel neu
-                    Zeile2 = " nach 4 "            'Text Zeile 2
-                 End If
-             Case = 53                            'Taste "5" erkannt, d.h. Ziel = 53
-                 If Pos <> 0 And Ziel <> Pos Then 'wenn Position definiert und Ziel neu
-                    Zeile2 = " nach 5 "           'Text Zeile 2
-                 End If
-             Case = 54                            'Taste "6" erkannt, d.h. Ziel = 54
-                 If Pos <> 0 And Ziel <> Pos Then 'wenn Position definiert und Ziel neu
-                    Zeile2 = " nach 6 "           'Text Zeile 2
-                 End If
-             Case = 55                            'Taste "7" erkannt, d.h. Ziel = 55
-                 If Pos <> 0 And Ziel <> Pos Then 'wenn Position definiert und Ziel neu
-                    Zeile2 = " nach 7 "           'Text Zeile 2
-                 End If
-             Case = 56                            'Taste "8" erkannt, d.h. Ziel = 56
-                 If Pos <> 0 And Ziel <> Pos Then 'wenn Position definiert und Ziel neu
-                    Zeile2 = " nach 8 "           'Text Zeile 2
-                 End If
-             Case = 57                            'Taste "9" erkannt, d.h. Ziel = 57
-                 If Pos <> 0 And Ziel <> Pos Then 'wenn Position definiert und Ziel neu
-                    Zeile2 = " nach 9 "           'Text Zeile 2
-                 End If
-           End Case
+'      Aktionen und Textausgabe für die einzelnen Tastatureingaben festlegen
+'      ----------------------------------------------------------------------------
+       Select Case Ziel
+         Case = 42                            'Taste "*" = AUF, d.h. Ziel = 42
+             Zeile2 = "  AUF   "              'Text Zeile 2
+             Ziel = 42
+             Fahrt_AUF()                      'Fahrt aufwärts
+         Case = 35                            'Taste "#" = AB, d.h. Ziel = 35
+             Zeile2 = "   AB   "              'Text Zeile 2
+             Ziel = 35
+             Fahrt_AB()                       'Fahrt abwärts
+         Case = 48                            'Taste "0" erkannt, d.h. Ziel = 48
+             If Pos <> 0 And Ziel <> Pos Then 'wenn Position definiert und Ziel neu
+                Zeile2 = " nach 0 "           'Text Zeile 2
+             End If
+         Case = 49                            'Taste "1" erkannt, d.h. Ziel = 49
+             If Pos <> 0 And Ziel <> Pos Then 'wenn Position definiert und Ziel neu
+                Zeile2 = " nach 1 "           'Text Zeile 2
+             End If
+         Case = 50                            'Taste "2" erkannt, d.h. Ziel = 50
+             If Pos <> 0 And Ziel <> Pos Then 'wenn Position definiert und Ziel neu
+                Zeile2 = " nach 2 "           'Text Zeile 2
+             End If
+         Case = 51                            'Taste "3" erkannt, d.h. Ziel = 51
+             If Pos <> 0 And Ziel <> Pos Then 'wenn Position definiert und Ziel neu
+                Zeile2 = " nach 3 "           'Text Zeile 2
+             End If
+         Case = 52                            'Taste "4" erkannt, d.h. Ziel = 52
+             If Pos <> 0 And Ziel <> Pos Then 'wenn Position definiert und Ziel neu
+                Zeile2 = " nach 4 "            'Text Zeile 2
+             End If
+         Case = 53                            'Taste "5" erkannt, d.h. Ziel = 53
+             If Pos <> 0 And Ziel <> Pos Then 'wenn Position definiert und Ziel neu
+                Zeile2 = " nach 5 "           'Text Zeile 2
+             End If
+         Case = 54                            'Taste "6" erkannt, d.h. Ziel = 54
+             If Pos <> 0 And Ziel <> Pos Then 'wenn Position definiert und Ziel neu
+                Zeile2 = " nach 6 "           'Text Zeile 2
+             End If
+         Case = 55                            'Taste "7" erkannt, d.h. Ziel = 55
+             If Pos <> 0 And Ziel <> Pos Then 'wenn Position definiert und Ziel neu
+                Zeile2 = " nach 7 "           'Text Zeile 2
+             End If
+         Case = 56                            'Taste "8" erkannt, d.h. Ziel = 56
+             If Pos <> 0 And Ziel <> Pos Then 'wenn Position definiert und Ziel neu
+                Zeile2 = " nach 8 "           'Text Zeile 2
+             End If
+         Case = 57                            'Taste "9" erkannt, d.h. Ziel = 57
+             If Pos <> 0 And Ziel <> Pos Then 'wenn Position definiert und Ziel neu
+                Zeile2 = " nach 9 "           'Text Zeile 2
+             End If
+       End Case
 
-           If Pos <> 0 And Ziel <> Pos Then       'wenn Position bekannt und Ziel neu
-              If Ziel > Pos And Ziel > 42 Then    'wenn Ziel größer als Position
-                 Fahrt_AB()                       'Fahrt abwärts
-              End If
-              If Ziel < Pos And Ziel <> 0 Then    'wenn Ziel kleiner Position und <> 0
-                 Fahrt_AUF()                      'Fahrt aufwärts
-              End If
-           End If
-       End Sub
-    '  ********************************************************************************
+       If Pos <> 0 And Ziel <> Pos Then       'wenn Position bekannt und Ziel neu
+          If Ziel > Pos And Ziel > 42 Then    'wenn Ziel größer als Position
+             Fahrt_AB()                       'Fahrt abwärts
+          End If
+          If Ziel < Pos And Ziel <> 0 Then    'wenn Ziel kleiner Position und <> 0
+             Fahrt_AUF()                      'Fahrt aufwärts
+          End If
+       End If
+   End Sub
+'  ********************************************************************************
 
-    '  Auzugsfahrt aufwärts
-    '  ********************************************************************************
-       Sub Fahrt_AUF()
-           GleisAUF = 0                          'Variable GleisAUF = Go
-           GleisZU  = 1                          'Variable GleisZU  = Stop
-           Port_WriteBit(24,GleisAUF)            'Wert GleisAUF auf Port übertragen
-           Port_WriteBit(25,GleisZU)             'Wert GleisZU auf Port übertragen
-           AbsDelay(1000)                        'nach 1 Sekunde
-           MotorAUF = 0                          'Variable Motor AUF = Go
-           MotorAB  = 1                          'Variable Motor AB  = Stop
-           Port_WriteBit(51,MotorAUF)            'Wert MotorAUF auf Port übertragen
-           Port_WriteBit(52,MotorAB)             'Wert MotorAB  auf Port übertragen
-           Zeile1 = " Fahrt  "                   'Text Zeile 1
-       End Sub
-    '  ********************************************************************************
+'  Auzugsfahrt aufwärts
+'  ********************************************************************************
+   Sub Fahrt_AUF()
+       GleisAUF = 0                          'Variable GleisAUF = Go
+       GleisZU  = 1                          'Variable GleisZU  = Stop
+       Port_WriteBit(24,GleisAUF)            'Wert GleisAUF auf Port übertragen
+       Port_WriteBit(25,GleisZU)             'Wert GleisZU auf Port übertragen
+       AbsDelay(1000)                        'nach 1 Sekunde
+       MotorAUF = 0                          'Variable Motor AUF = Go
+       MotorAB  = 1                          'Variable Motor AB  = Stop
+       Port_WriteBit(51,MotorAUF)            'Wert MotorAUF auf Port übertragen
+       Port_WriteBit(52,MotorAB)             'Wert MotorAB  auf Port übertragen
+       Zeile1 = " Fahrt  "                   'Text Zeile 1
+   End Sub
+'  ********************************************************************************
 
-    '  Aufzugsfahrt abwärts
-    '  ********************************************************************************
-       Sub Fahrt_AB()
-           GleisAUF = 0                          'Variable GleisAUF = Go
-           GleisZU  = 1                          'Variable GleisZU  = Stop
-           Port_WriteBit(24,GleisAUF)            'Wert GleisAUF auf Port übertragen
-           Port_WriteBit(25,GleisZU)             'Wert GleisZU auf Port übertragen
-           AbsDelay(1000)                        'nach 1 Sekunde
-           MotorAUF = 1                          'Variable Motor AUF = Stop
-           MotorAB  = 0                          'Variable Motor AB  = Go
-           Port_WriteBit(51,MotorAUF)            'Wert MotorAUF auf Port übertragen
-           Port_WriteBit(52,MotorAB)             'Wert MotorAB  auf Port übertragen
-           Zeile1 = " Fahrt  "                   'Text Zeile 1
-       End Sub
-    '  ********************************************************************************
+'  Aufzugsfahrt abwärts
+'  ********************************************************************************
+   Sub Fahrt_AB()
+       GleisAUF = 0                          'Variable GleisAUF = Go
+       GleisZU  = 1                          'Variable GleisZU  = Stop
+       Port_WriteBit(24,GleisAUF)            'Wert GleisAUF auf Port übertragen
+       Port_WriteBit(25,GleisZU)             'Wert GleisZU auf Port übertragen
+       AbsDelay(1000)                        'nach 1 Sekunde
+       MotorAUF = 1                          'Variable Motor AUF = Stop
+       MotorAB  = 0                          'Variable Motor AB  = Go
+       Port_WriteBit(51,MotorAUF)            'Wert MotorAUF auf Port übertragen
+       Port_WriteBit(52,MotorAB)             'Wert MotorAB  auf Port übertragen
+       Zeile1 = " Fahrt  "                   'Text Zeile 1
+   End Sub
+'  ********************************************************************************
 
-    '  Abfrage ob Ziel erreicht ist und Ansteuerung der Motoren
-    '  ********************************************************************************
-       Sub Zielsteuerung()
-           If Pos = Ziel And Ziel > 0 Then       'wenn Ziel ereicht wurde
-              MotorAUF = 1                       'Variable MotorAUF = Stop
-              Port_WriteBit(51,MotorAUF)         'Wert MotorAUF auf Port übertragen
-              MotorAB = 1                        'Variable MotorAB  = Stop
-              Port_WriteBit(52,MotorAB)          'Wert MotorAB  auf Port übertragen
-              AbsDelay(1000)                     'nach 1 Sekunde
-              GleisAUF = 1                       'Variable GleisAUF = Stop
-              GleisZU  = 0                       'Variable GleisZU  = Go
-              Port_WriteBit(24,GleisAUF)         'Wert GleisAUF auf Port übertragen
-              Port_WriteBit(25,GleisZU)          'Wert GleisZU auf Port übertragen
-              AbsDelay(3000)                     'nach 3 Sekunden
-           End If
-       End Sub
-    '  ********************************************************************************
+'  Abfrage ob Ziel erreicht ist und Ansteuerung der Motoren
+'  ********************************************************************************
+   Sub Zielsteuerung()
+       If Pos = Ziel And Ziel > 0 Then       'wenn Ziel ereicht wurde
+          MotorAUF = 1                       'Variable MotorAUF = Stop
+          Port_WriteBit(51,MotorAUF)         'Wert MotorAUF auf Port übertragen
+          MotorAB = 1                        'Variable MotorAB  = Stop
+          Port_WriteBit(52,MotorAB)          'Wert MotorAB  auf Port übertragen
+          AbsDelay(1000)                     'nach 1 Sekunde
+          GleisAUF = 1                       'Variable GleisAUF = Stop
+          GleisZU  = 0                       'Variable GleisZU  = Go
+          Port_WriteBit(24,GleisAUF)         'Wert GleisAUF auf Port übertragen
+          Port_WriteBit(25,GleisZU)          'Wert GleisZU auf Port übertragen
+          AbsDelay(3000)                     'nach 3 Sekunden
+       End If
+   End Sub
+'  ********************************************************************************
 
-    '  Ausgabe der Tastatureingaben auf dem LCD-Display
-    '  ********************************************************************************
-       Sub Anzeige()
-           LCD_CursorPos(0)                      'LCD Cursor auf 1.Zeile positionieren
-           LCD_WriteText(Zeile1)                 'Zeile 1 ausgeben
-           LCD_CursorPos(&H40)                   'LCD Cursor auf 2.Zeile positionieren
-           LCD_WriteText(Zeile2)                 'Zeile 2 ausgeben
+'  Ausgabe der Tastatureingaben auf dem LCD-Display
+'  ********************************************************************************
+   Sub Anzeige()
+       LCD_CursorPos(0)                      'LCD Cursor auf 1.Zeile positionieren
+       LCD_WriteText(Zeile1)                 'Zeile 1 ausgeben
+       LCD_CursorPos(&H40)                   'LCD Cursor auf 2.Zeile positionieren
+       LCD_WriteText(Zeile2)                 'Zeile 2 ausgeben
 
-               Msg_WriteText("Pos=")
-               Msg_WriteWord(Pos)
-               Msg_WriteText(" Ziel=")
-               Msg_WriteWord(Ziel)
-               Msg_WriteText(Zeile1)
-               Msg_WriteText(Zeile2)
-               Msg_WriteText(" GlAUF=")
-               Msg_WriteWord(GleisAUF)
-               Msg_WriteText(" GlZu=")
-               Msg_WriteWord(GleisZU)
-               Msg_WriteText(" MotAUF=")
-               Msg_WriteWord(MotorAUF)
-               Msg_WriteText(" MotAB=")
-               Msg_WriteWord(MotorAB)
-               Msg_WriteChar(13)
-       End Sub
-    '  ********************************************************************************
-
+           Msg_WriteText("Pos=")
+           Msg_WriteWord(Pos)
+           Msg_WriteText(" Ziel=")
+           Msg_WriteWord(Ziel)
+           Msg_WriteText(Zeile1)
+           Msg_WriteText(Zeile2)
+           Msg_WriteText(" GlAUF=")
+           Msg_WriteWord(GleisAUF)
+           Msg_WriteText(" GlZu=")
+           Msg_WriteWord(GleisZU)
+           Msg_WriteText(" MotAUF=")
+           Msg_WriteWord(MotorAUF)
+           Msg_WriteText(" MotAB=")
+           Msg_WriteWord(MotorAB)
+           Msg_WriteChar(13)
+   End Sub
+'  ********************************************************************************
   </code>
 </pre>
-
-<h2><a name="videos"></a>Videos</h2>
-
-<div id="videobereich1">
-  <iframe class="videoExtern" width="560" height="315"
-  src="https://www.youtube.com/embed/dPgVsze65HU?rel=0"
-  frameborder="0" allowfullscreen>
-  </iframe>
-</div>
-
-<p align="center">
-  Zugfahrt aus und in den Aufzug
-</p>
