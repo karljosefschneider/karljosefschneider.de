@@ -20,7 +20,7 @@ order: 4
   <li> <a href="#processing"> Quellcode Processing </a>  </li>
 </ul>
 
-<h1><a name="beschreibung">Projektbeschreibung</a></h1>
+<h2><a name="beschreibung"></a>Projektbeschreibung</h2>
 
 <p>
   Eine N-Spur (1:160) Modellbahnanlage wird über 3 separate Transformatoren
@@ -63,9 +63,9 @@ order: 4
   Messwertanzeige
 </p>
 
-<h1><a name="spannung">Spannungsmessung</a></h1>
+<h2><a name="spannung"></a>Spannungsmessung</h2>
 
-<h2><a name="udc">Gleichspannung</a></h2>
+<h3><a name="udc"></a>Gleichspannung</h3>
 
 <p>
   An den Analogeingängen des Arduino kann man per „analogRead(A0-5)“ Bit-Werte
@@ -158,7 +158,7 @@ order: 4
    alt="Formel 4" width="" height="">
 </p>
 
-<h2><a name="uac">Wechselspannung</a></h2>
+<h3><a name="uac"></a>Wechselspannung</h3>
 
 <p>
   Wenn man die Messwerte einer Wechselspannung über eine oder mehrere Perioden
@@ -219,7 +219,7 @@ order: 4
    alt="Formel 7" width="" height="">
 </p>
 
-<h1><a name="strom">Strommessung</a></h1>
+<h2><a name="strom"></a>Strommessung</h2>
 
 <p>
   Für die Messung des Stromes bietet sich der Allegro ACS711-Stromsensor an.
@@ -334,7 +334,7 @@ order: 4
    alt="Formel 13" width="" height="">
 </p>
 
-<h2><a name="acdc">Gleichstrom und Wechselstrom</a></h2>
+<h3><a name="acdc"></a>Gleichstrom und Wechselstrom</h3>
 
 <p>
   Die Messung des Gleich- und des Wechselstromes wurde nach den oben
@@ -345,9 +345,9 @@ order: 4
   in den oben aufgeführten Tabellen der Spannungsmessungen dargestellt.
 </p>
 
-<h1><a name="hardware">Hardware</a></h1>
+<h2><a name="hardware"></a>Hardware</h2>
 
-<h2><a name="schaltplan">Schaltplan</a></h2>
+<h3><a name="schaltplan"></a>Schaltplan</h3>
 
 <p align="center">
   <img src="/img/modellbahn/strom/strom_schaltplan.jpg"
@@ -359,14 +359,14 @@ order: 4
    alt="Platine" width="" height="">
 </p>
 
-<h1><a name="software">Software</a></h1>
+<h2><a name="software"></a>Software</h2>
 
 <p>
   Die Erfassung der Messwerte erfolgte mit dem Arduino Sketch
   „modellbahn_Strom_und_Spannung_02“:
 </p>
 
-<h2><a name="arduino">Quellcode Arduino</a></h2>
+<h3><a name="arduino"></a>Quellcode Arduino</h3>
 
 <pre>
   <code>
@@ -514,7 +514,7 @@ void loop() {
   Processing Sketch „sketch_Strom_und_Spannung_02“:
 </p>
 
-<h2><a name="processing">Quellcode Processing</a></h2>
+<h3><a name="processing"></a>Quellcode Processing</h3>
 
 <pre>
   <code>
