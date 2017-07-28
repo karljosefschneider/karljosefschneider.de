@@ -86,7 +86,8 @@ a {
 
 /* Bilder */
 img {
-  max-width: 100%; /* verhindert, dass große Bilder über ihr Container-Element
+  max-width: 100%;
+  height: auto; /* verhindert, dass große Bilder über ihr Container-Element
   hinauswachsen. */
 }
 
