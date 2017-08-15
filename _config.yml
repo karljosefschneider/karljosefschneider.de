@@ -15,7 +15,7 @@ sass:
 collections:
   haus:
     output: true
-  kfz:
+  automobiles:
     output: true
   modellbahn:
     output: true
