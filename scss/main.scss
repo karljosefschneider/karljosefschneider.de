@@ -24,9 +24,20 @@ body {
   min-height: 100vh;  /* Mindesthöhe Browswerfenster */
   margin: 0;
   padding: 0;
+  line-height: 1.5;
+  letter-spacing: 0.005em;
   color: $color-grey;
   background-color: $color-grey-06;
   font-family: "Calibri", Arial, Helvetica, sans-serif;
+  @media (min-width: $medium) {
+    font-size: 1rem;
+  }
+  @media (min-width: $large) {
+    font-size: 1.25rem;
+  }
+  @media (min-width: $huge) {
+    font-size: 1.5rem;
+  }
 }
 
 /* links formatieren*/
@@ -50,8 +61,8 @@ a {
   margin: 0 auto;  /* Abstand zum nächsten Element */
   padding-left: 1rem;
   padding-right: 1rem;
-//  overflow: hidden;
   @media (min-width: $medium) {
+    max-width: 54rem; /* Breite */
     padding-left: 2rem;
     padding-right: 2rem;
   }
@@ -60,6 +71,7 @@ a {
     padding-right: 3rem;
   }
   @media (min-width: $huge) {
+    max-width: 64rem; /* Breite */
     padding-left: 5rem;
     padding-right: 5rem;
   }
