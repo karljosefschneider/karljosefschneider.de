@@ -1,0 +1,169 @@
+---
+layout: article
+category: haus
+title: 'Türsprechanlage mit DECT-Telefon und FritzBox 7490'
+img: 'haus/dect_titel.jpg'
+order: 1
+---
+
+<ul class="toc">
+  <li><a href="#ausgang">Ausgangssituation</a></li>
+  <li><a href="#aufgabe">Aufgabenstellung</a></li>
+  <li><a href="#rufannahme">Automatische Rufannahme</a></li>
+  <li><a href="#freisprechen">Freisprechen</a></li>
+  <li><a href="#strom">Stromversorgung</a></li>
+  <li><a href="#plan">Schaltplan</a></li>
+  <li><a href="#aufbau">Aufbau der Anlage</a></li>
+</ul>
+
+<h2><a name="ausgang"></a>Ausgangssituation</h2>
+
+<p>
+  In einem Einfamilienhaus ist seit Jahrzehnten eine Türsprechanlage TFS 2016
+  von Auerswald verbaut. Diese wurde bis vor einigen Jahren über eine Auerswald
+  Telefonanlage ETS-4308i betrieben. Eine solche Telefon-Installation mit
+  aufwendiger Verdrahtung ist längst nicht mehr zeitgemäß, daher wurde die
+  Anlage vor einigen Jahren deinstalliert. Heute werden die Aufgaben der
+  früheren Telefonanlage von einer FritzBox 7490 übernommen, diese kann
+  bekanntlich DECT-Telefone wie auch analoge Telefone komfortabel über PC oder
+  Handy verwalten. Die vorhandene Türsprechanlage ist seither außer Betrieb, da
+  sie keinen a/b-Analogausgang hat und somit nicht an die FritzBox angeschlossen
+  werden kann. Ein von Auerswald angebotener a/b-Adapter ist mit ca. 180,- €
+  viel zu teuer für die Aufrüstung einer veralteten Technik, hier gibt es für
+  gleiches Geld modernere Lösungen. Es stellt sich aber die Frage, ob nicht mit
+  einem alten vorhanden DECT-Telefon eine wesentlich kostengünstigere
+  Installation realisiert werden kann.
+</p>
+
+<h2><a name="aufgabe"></a>Aufgabenstellung</h2>
+
+<p>
+  Die Türklingel soll wie bisher unverändert und unabhängig von einer
+  Sprecheinrichtung genutzt werden. Ein elektrischer Türöffner ist nicht
+  vorhanden und wird auch nicht vorgesehen. Für den Einsatz eines DECT-Telefons
+  ist daher grundsätzlich zunächst einmal eine automatische Rufannahme
+  erforderlich, damit das Telefon von den entsprechenden Gegenstellen
+  angesprochen werden kann. Weiterhin sind das vorhandene verbauten Mikrofon und
+  der Lautsprecher der alten Türsprechanlage mit dem Audio-Input/Output bzw. des
+  Telefons zu koppeln. Die gesamte Einrichtung incl. Stromversorgung muss in dem
+  vorhandenen Gehäuse oberhalb der Eingangstür innen im Gebäude Platz finden.
+</p>
+
+<p>
+  Als Basis für die geplante Freisprecheinrichtung sollte ein vorhandenes
+  Audioline DECT 8600 SIM Verwendung finden. Dieses Gerät wies folgende
+  Besonderheiten auf:
+</p>
+<ul>
+  <li>Freisprecheinrichtung im Hörer</li>
+  <li>Headset-Anschluss im Hörer</li>
+  <li>SIM-Karteneinschub in der Basisstation</li>
+  <br>
+</ul>
+
+<p>
+  Die Basisstation mit dem SIM-Karteneinschub wurde nicht benötigt, da die
+  gesamte Anlage über die FritzBox betrieben werden sollte. Die beiden anderen
+  Features boten jedoch potentielle Lösungsansätze für die Türsprechanlage.
+</p>
+
+<h2><a name="rufannahme"></a>Automatische Rufannahme</h2>
+
+<p>
+  Für eine automatische Rufannahme können akustische oder optische Signale
+  genutzt werden, die beim Anrufen des Telefons ausgelöst werden, in der Regel
+  sind das der Klingelton des Lautsprechers und das Aufleuchten einer LED oder
+  der Displaybeleuchtung. Da im vorliegenden Fall keine LED vorhanden war und
+  die Displaybeleuchtung über Lötanschluss oder z.B. einen LDR nicht abzugreifen
+  war, kam nur der Klingelton als Signalgeber in Frage.
+</p>
+
+<p>
+  Über den Lautsprecher des Handapparates wurde nicht nur das Klingelsignal,
+  sondern auch das Lauthören dargestellt. Versuche das Signal zum Einschalten
+  der automatischen Rufannahme in Parallelschaltung zum Lautsprecheranschluss
+  abzugreifen erwiesen sich als erfolglos. Der Anschluss reagierte äußerst
+  sensibel, bei gleichzeitig angeschlossenem Lautsprecher führten Rückkopplungen
+  zum unkontrollierten Abschalten des Telefons. Da die im Telefon integrierte
+  Freisprecheinrichtung ohnehin zu schwach war für den geplanten Zweck, wurde
+  der Lautsprecher des Telefons ausschließlich als Signalgeber für die
+  automatische Rufannahme eingesetzt.
+</p>
+
+<p>
+  Auf der Telefonplatine wurde der Lautsprecher entfernt und die beiden
+  Anschlüsse über einen Optokoppler als Eingang auf einen monostabilen
+  Multivibrator (NE 555) geführt. Somit wird aus dem Klingelsignal ein
+  definierter Impuls erzeugt. Die Dauer des Ausgangsimpulses wird durch die
+  Ladezeit des verbauten Kondensators und den dafür vorgesehenen Widerstand
+  bestimmt und berechnet sich zu:
+</p>
+
+<p>
+  Impulsdauer [sec]=1,1 ×R [Ω] ×C [μF]  / 10^6
+</p>
+
+<p>
+  Dieser Impuls liefert dann über einen weiteren Optokoppler das Tastsignal für
+  den Rufannahmekontakt. Die Leitungen wurden direkt auf die Platine des
+  Telefons gelötet.
+</p>
+
+<h2><a name="freisprechen"></a>Freisprechen</h2>
+
+<p>
+  Die Headset-Buchse des Telefons bot sich an, einerseits ein externes
+  Kondensatormikrofon und andererseits einen Lautsprecher über einen
+  entsprechenden Verstärker anzuschließen. Mikrofon und Lautsprecher waren
+  vorhanden und oberhalb der Haustür verbaut. Da das Headset nur einen Kopfhörer
+  speisen konnte war für den Lautsprecher ein kleiner NF-Verstärker
+  erforderlich. Dieser wurde mit einem LM 386 realisiert, der mit wenigen
+  externen Bauteilen platzsparend auf der Platine untergebracht werden konnte
+  und mit einer Ausgansleistung kleiner 1 Watt vollkommen ausreichend war.
+</p>
+
+<h2><a name="strom"></a>Stromversorgung</h2>
+
+<p>
+  Die gesamte Schaltung wurde an den vorhandenen Klingeltransformator
+  angeschlossen. Die erforderliche Gleichspannung wurde über Gleichrichtung und
+  einem 5 Volt Festspannungsregler 7805 erzeugt. Über eine weiteren
+  einstellbaren Spannungsregler LM 317 wurden dann ca. 2,8 V für den Betrieb der
+  Telefonplatine gewonnen. Die Ausgangsspannung berechnet sich aus dem
+  Verhältnis der Widerstände zu:
+</p>
+
+<p>
+  Uout=1,25 ×( 1+R2/R1)
+</p>
+
+<h2><a name="plan"></a>Schaltplan</h2>
+
+<p>
+  Der Schaltplan für die gesamte Anlage sieht wie folgt aus:
+</p>
+
+<p align="center">
+  <img src="/img/haus/dect/dect_schaltplan.jpg"
+   alt="DECT Schaltplan" width="" height="">
+</p>
+
+<h2><a name="aufbau"></a>Aufbau der Anlage</h2>
+
+<p>
+  Die gesamte Schaltung wurde zusammen mit der Platine des Telefonhörers auf
+  einer selbst gefertigten Trägerplatine aufgebaut. Die T-förmige Form dieser
+  Trägerplatine hat sich aus dem verfügbaren Platz in dem vorhandenen Gehäuse
+  ergeben. Die folgenden Bilder zeigen die Platine von der Bauteilseite und von
+  der Lötseite.
+</p>
+
+<p align="center">
+  <img src="/img/haus/dect/dect_platine_bauteilseite.jpg"
+   alt="DECT Platine Bauteilseite" width="" height="">
+</p>
+
+<p align="center">
+  <img src="/img/haus/dect/dect_platine_loetseite.jpg"
+   alt="DECT Platine Lötseite" width="" height="">
+</p>
