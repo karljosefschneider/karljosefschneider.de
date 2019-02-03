@@ -1,0 +1,1288 @@
+---
+layout: article
+category: automobiles
+title: 'Zeitmessanlage für den Kartsport des Erler Motor Clubs'
+img: 'automobiles/zeit_titel.jpg'
+order: 7
+---
+
+<ul class="toc">
+  <li> <a href="#anfang"> Vorgeschichte</a></li>
+  <li> <a href="#neu"> Die neue Zeitmessanlage</a></li>
+  <li> <a href="#hard"> Die Hardware der Messanlage</a></li>
+  <li> <a href="#tablet"> Der Tablet PC</a></li>
+  <li> <a href="#transponder"> Die Transponderbox</a></li>
+  <li> <a href="#ampel"> Die Ampelanlage mit Zeit- und Rundenanzeige</a></li>
+  <li> <a href="#soft"> Die Software der Messanlage</a></li>
+  <li> <a href="#code1"> Quellcode der Visual Basic Software</a></li>
+  <li> <a href="#code2"> Quellcode der Arduino Sendersoftware</a></li>
+  <li> <a href="#code3"> Quellcode der Arduino Empfängersoftware</a></li>
+</ul>
+
+<h2><a name="anfang"></a>Vorgeschichte</h2>
+
+<p>
+Der Erler Motor Club (EMC)
+<a href="http://www.erler-motor-club.de"
+  style="text-decoration: underline; color: blue;">
+  http://www.erler-motor-club.de</a>
+betreibt seit 1972 eine Kartbahn in der Erler Heide
+im südlichen Landkreis Borken. Hier werden seither Rennen ausgetragen mit selbst
+gebauten Karts auf Basis der aus den 50-Jahren stammenden Goggomobilen, einem
+typischen Nachkriegs-Kleinwagen dieser Zeit. Diese Tradition hat sich bis heute
+erhalten, die Technik wurde immer weiterentwickelt und die Fahrzeuge liefern
+heute mehr als das doppelte ihrer Serienleistung.
+</p>
+
+<P>
+Mitte der 90-er Jahre hat der Verein durch die Einführung einer Kart-Klasse dem
+Nachwuchs Rechnung getragen. Diese neuen Fahrzeuge entsprachen von ihrem Aufbau
+und der Motorisierung den Karts, wie sie zu dieser Zeit auch offiziell bei
+Meisterschaften eingesetzt wurden. Bei den Motoren handelte es sich einheitlich
+um 160 ccm Honda-Viertaktaggregate mit 5,5 PS Basisleistung. Für Junioren und
+Senioren wurde dadurch der Einstieg in den Motorsport leicht gemacht und die
+neue Kart-Klasse hat das Vereinsleben und die Renntage bereichert.
+</p>
+
+<P>
+In den Anfangsjahren standen für die Zeitnahme keine besonderen technischen
+Hilfsmittel zur Verfügung. Rundenzeiten konnten wie im professionellen Rennsport
+nur mittels Stoppuhr gemessen werden. Für die Ermittlung der Sieger wurden bei
+den einzelnen Rennen die Runden mit Strichlisten gezählt. Der Rennverlauf musste
+genau beobachtet werden, um anschließend die Zieldurchfahrt zu dokumentieren und
+den Sieger und die weiteren Platzierungen zu ermitteln.
+</p>
+
+<P>
+Eine exakte Erfassung der schnellsten Rundenzeiten war natürlich schon früh von
+Interesse. Zur Messung dieser Zeiten hat man sich in den 80-er Jahren einer
+Lichtschranke bedient. Diese Messapparatur wurde von einem ortsansässigen
+Radio-/Fernsehgeschäft ausgeliehen und auf der Bahn eingesetzt. Da eine
+Selektierung der Fahrzeuge im Rennbetrieb mit dieser Technik nicht möglich war,
+konnten sich die Fahrer zur Ermittlung der schnellsten Runden zu Einzelläufen
+anmelden, d.h. zwischen einer Einführungsrunde und einer Auslauf¬runde wurde die
+schnellste Zeit gemessen. Für die schnellste gefahrene Rundenzeit pro Jahr wurde
+ein eigener Preis verliehen.
+</p>
+
+<P>
+Mit der Einführung der neuen Kartklasse musste dann auch im Hinblick auf die
+Zeitmessung und Dokumentation des Rennverlaufes hier eine neuere Technik Einzug
+halten. Durch die Anschaffung einer gebrauchten Zeitmessanlage vom Typ AMB 20
+wurde nun alles viel professioneller. Eine Zeiterfas¬sung war jetzt bis auf die
+tausendstel Sekunde genau möglich, die Daten wurden auf einem Laptop erfasst,
+ausgewertet, angezeigt und konnten auch ausgedruckt werden. Die erforderliche
+Kontaktschleife war fest im Boden bei Start und Ziel eingelassen, der Rest der
+Anlage war transportabel in einer Holzkiste aufgebaut (<b>Bild 1</b> ).
+</p>
+
+{% include figure.html
+  src="/img/automobiles/zeit/zeit1_holzkiste.jpg"
+  alt="Erste Zeitmessanlage"
+  caption="<b>Bild 1</b> Erste Zeitmessanlage auf Basis einer AMB 20 "
+%}
+
+<P>
+  Die Fahrzeuge waren mit entsprechenden Transpondern ausgestattet, die bei
+  jeder Zieldurchfahrt die Signale an die Messanlage lieferten. Diese
+  Transponder waren aber auch der Schwachpunkt der Anlage, da die eingebauten
+  Akkus nur eine begrenzte Haltbarkeit hatten und nicht ersetzt werden konnten.
+</p>
+
+<P>
+  Diese Tatsache machte frühzeitig den Ersatz der ersten Messanlage
+  erforderlich. Keiner wollte mehr auf den Komfort und die Genauigkeit einer
+  solchen Einrichtung verzichten und somit wurde im Jahr 2001 von der
+  holländischen Firma AMB das Nachfolgemodell Typ AMB 130 neu angeschafft.
+  Mit über 7500,- DM für die Anlage sowie 20 Transponder war dies eine
+  erhebliche Investition für den Verein.
+</p>
+
+<P>
+  Diese Anlage konnte kompakter aufgebaut werden und zusammen mit einem ITX-PC
+  Board in einem Koffer installiert werden (<b>Bild 2</b>). Die neuen Transponder
+  mussten nicht mehr aufgeladen werden und sollten eine unbegrenzte Haltbarkeit
+  haben. Es zeigte sich aber sehr wohl nach wenigen Jahren eine Grenze, mit und
+  mit traten zunehmend Schwierigkei¬ten mit den Transpondern auf und sie
+  versagten ihren Dienst. In unserem schnelllebigen elektronischen Zeitalter war
+  diese Anlage inzwischen auch nicht mehr up-to-date, wurde nicht mehr
+  hergestellt und es waren keine Ersatzteile mehr verfügbar.
+</p>
+
+{% include figure.html
+  src="/img/automobiles/zeit/zeit2_messkoffer.jpg"
+  alt="Zweite Zeitmessanlage"
+  caption="<b>Bild 2</b> Zweite Zeitmessanlage auf Basis einer AMB 130"
+%}
+
+<h2><a name="neu"></a>Die neue Zeitmessanlage</h2>
+
+<P>
+  In den Bau der vorgenannten Zeitmessanlagen wurde viel Geld und Zeit
+  investiert. Nach den negativen Erfahrungen mit diesen AMB-Anlagen haben wir
+  für eine erforderliche neue Anlage daher nach Alternativen gesucht. Wir haben
+  uns dann für eine Anlage der Firma „Speedtransponder“ entschieden, die
+  Hardware mit Transpondern und Empfängereinheit sowie die Software waren hier
+  für ca. 1200,- € erhältlich.
+  <a href="http://www.speedtransponder.de"
+  style="text-decoration: underline; color: blue;">
+  http://www.speedtransponder</a>
+  Diese Anlage wurde dann zunächst auch in den
+  vorhandenen Koffer eingebaut und betrieben.
+</p>
+
+<P>
+  Für die Stromversorgung des Systems waren in dem Koffer zwei Bleiakkus je
+  12 V mit 7,2 Ah verbaut. Nicht nur das Gewicht dieser Akkus war störend, auch
+  zeigte sich, dass die Akkus die lange Winterpause selten überstanden und daher
+  vor jeder Saison neu angeschafft werden mussten. Als weiterer Nachteil erwies
+  sich die mitgelieferte Software, sie war für den Betrieb von RC-Automodellen
+  konfiguriert und daher für unserer Kartbahn nicht geeignet.
+</p>
+
+<P>
+  Für einen grundlegenden Neuaufbau der Anlage hatte ich mir daher folgende
+  Punkte ins Lastenheft geschrieben:
+</p>
+
+<ul>
+  <li>Tablet-PC als kompakte Basis für die Anlagensteuerung</li>
+  <li>Betrieb der gesamten Anlage über 5V USB-Spannung des PC</li>
+  <li>Ansteuerung der externen Ampel und Rundenanzeige über Funk</li>
+  <li>Einbau der gesamten Hardware in ein kompaktes Gehäuse</li>
+  <li>Einbau der Ampel und Rundenanzeige in ein kompaktes, gut transportables
+      Gehäuse, ebenfalls mit 5 V Betriebsspannung</li>
+  <li>Entwicklung einer auf unsern Verein zugeschnittenen Software</li>
+  <br>
+</ul>
+
+<h2><a name="hard"></a>Die Hardware der Messanlage </h2>
+
+<P>
+  Die Hardware der neuen Messanlage ist als Gesamtansicht in dem folgenden
+  <b>Bild 3</b> dargestellt:
+</p>
+
+{% include figure.html
+  src="/img/automobiles/zeit/zeit3_gesamtanlage.jpg"
+  alt="Gesamtanlage"
+  caption="<b>Bild 3</b> Gesamtansicht der Messanlage mit Tablet-PC und
+  Transponderbox"
+%}
+
+<h2><a name="tablet"></a>Der Tablet PC </h2>
+
+<P>
+  Die Wahl fiel auf einen Terra Pad 1061 Tablet Computer, der mit einem 10.1“
+  Full HD Display 1920 x 1200, eMMC Speicher, 8000 mAh Akku und Windows 10 Pro
+  Betriebssystem beste Voraussetzungen für das Projekt bot. Der Akku war
+  ausreichend dimensioniert, um den PC und die externen Bauteile der
+  Zeitmesseinrichtung über mehrere Stunden mit Strom zu versorgen und somit
+  einen langen Rennnachmittag zu überdauern. Das Problem der Bleiakkus war
+  somit gelöst.
+</p>
+
+<h2><a name="transponder"></a>Die Transponderbox</h2>
+
+<P>
+  Die Transponderbox der Zeitmessanlage bestand aus den folgenden Komponenten:
+</p>
+
+<ul>
+  <li>Speed-Transponder Empfängereinheit</li>
+  <li>Interface für die Ampel und Zeit-/Rundenanzeige auf Basis der Velleman
+      K8055 Karte</li>
+  <li>Arduino Uno Microcontroller mit 433 MHz Funksender zur Ampel</li>
+  <li>USB Hub für die Kabelverbindung zum Tablet PC</li>
+  <br>
+</ul>
+
+<P>
+  Die Zusammenschaltung der Baugruppen ist dem Schaltplan zu entnehmen
+  (<b>Bild 4</b>):
+</p>
+
+{% include figure.html
+  src="/img/automobiles/zeit/zeit4_schaltplan_box.jpg"
+  alt="Schaltplan Transponderbox"
+  caption="<b>Bild 4</b> Zusammenschaltung der Baugruppen in der Transponderbox"
+%}
+
+<h2><a name="ampel"></a>Die Ampelanlage mit Zeit- und Rundenanzeige</h2>
+
+<P>
+Die Startampel sowie die Digitalanzeige für Zeit- oder Rundenanzeige sind in
+einem grauen Kunststoffgehäuse verbaut und werden im Startbereich der
+Rennstrecke auf einem Stativ aufgebaut. Die Ampel wird über eine 5 V 10.000 mAh
+Powerbank mit Strom versorgt und ist in (<b>Bild 5</b>) dargestellt:
+</p>
+
+{% include figure.html
+  src="/img/automobiles/zeit/zeit5_ampelanlage.jpg"
+  alt="Ampelanlage"
+  caption="<b>Bild 5</b> Ampelanlage mit Zeit- und Rundenanzeige"
+%}
+
+<P>
+  Das Ampelgehäuse enthält folgende Komponenten:
+</p>
+
+<ul>
+  <li>Grüne und rote Power LEDs mit Reflektor für Start-/Stop-Anzeige</li>
+  <li>100 mm 7-Segmentanzeigen für Zeit- oder Rundeninformation</li>
+  <li>Ansteuerung für die 7-Segmetanzeigen</li>
+  <li>Arduino Uno Microcontroller mit 433 MHz Funkempfänger</li>
+  <li>5 V 10.000 mAh Powerbank</li>
+  <li>DC 5 V auf DC 8V Step-Up Wandler für den Betrieb der Anzeigen</li>
+  <br>
+</ul>
+
+<P>
+  Die Zusammenschaltung der Baugruppen ist dem Schaltplan zu entnehmen
+  (<b>Bild 6</b>) :
+</p>
+
+{% include figure.html
+  src="/img/automobiles/zeit/zeit6_schaltplan_ampel.jpg"
+  alt="Schaltplan Ampelanlage"
+  caption="<b>Bild 6</b>  Zusammenschaltung der Baugruppen in der Ampelanlage"
+%}
+
+<h2><a name="soft"></a>Die Software der Messanlage </h2>
+
+<P>
+  Die Software der neuen Messanlage ist nach dem Ablaufdiagramm in
+  (<b>Bild 7</b>) aufgebaut:
+</p>
+
+{% include figure.html
+  src="/img/automobiles/zeit/zeit7_ablauf.jpg"
+  alt="Software"
+  caption="<b>Bild 7</b> Ablaufdiagramm für die Software der Zeiterfassung"
+%}
+
+<P>
+  Der Bildschirm für die Bedienung und Visualisierung des Rennablaufes stellt
+  sich wie folgt (<b>Bild 8</b>) dar:
+</p>
+
+{% include figure.html
+  src="/img/automobiles/zeit/zeit8_bildschirm.jpg"
+  alt="Bildschirm"
+  caption="<b>Bild 8</b> Bildschirmdarstellung des Programms"
+%}
+
+<P>
+  Zunächst müssen im oberen Teil des Bildes die Parameter für den Lauf
+  ausgewählt werden. Durch einen Farbumschlag der Schrift in den Eingabefeldern
+  werden die Eingaben bestätigt. Erst nachdem alle Eingaben korrekt vorgenommen
+  wurden erfolgt die Freigabe für den Start. Mit dem Betätigen des Start-Buttons
+  springt die Ampel von rot auf grün um und gibt den Start frei. Immer wenn die
+  Fahrzeuge die Ziellinie passieren werden die Signale der Transponder erfasst
+  und die ermittelten Rundenzeiten zusammen mit den Fahrernamen in der Tabelle
+  angezeigt. Mit jedem neuen Datensatz wird die Tabelle auch automatisch nach
+  Rundenzahl (Rennen) oder Bestzeit (Training) neu sortiert. Parallel dazu
+  werden die verbleibenden Runden (Rennen) oder die Verbleibende Zeit (Training)
+  digital auf der Startampel angezeigt. Nach Ablauf der vorgegebenen Rundenzahl
+  (Rennen) bzw. der vorgegebenen Zeit (Training) springt die Ampel auf rot und
+  beendet den Lauf. Mit dem Neustart des Programms werden die alten Daten
+  automatisch gespeichert und der Ablauf kann erneut erfolgen.
+</p>
+
+<P>
+  In den folgenden Tabellen sind der Quellcode für die Rennsoftware als Visual
+  Basic Programm sowie die Quellcodes für die Programmierung der arduino
+  Microprozessoren für die Funksteuerung der Ampel wiedergegeben.
+</p>
+
+<h2><a name="code1"></a>Quellcode der Visual Basic Software der Messanlage </h2>
+
+<pre>
+<code>
+  'VB 2010 Projekt        EMC Speed Zeiterfassung
+  '========================================================================================================
+  'Anwendung:             Erfassung und Anzeige der Runden und Rundenzeiten für EMC Speed Transponder
+  'Autor:                 Karl-Josef Schneider
+  'erstellt:              30.06.2017
+  'letzte Änderung:       11.05.2018
+  '0----+----1----+----2----+----3----+----4----+----5----+----6----+----7----+----8----+----9----+----1---
+
+  Option Explicit On
+  Public Class Form1
+
+      'Definition der Variablen
+      '====================================================================================================
+
+      'Einstellungsdaten ----------------------------------------------------------------------------------
+      Private Daten As New DataTable                                         'Tabelle für Einstellungsdaten
+      Dim Pfad As String = "C:\Users\Karl-Josef Schneider\Documents\E M C\Zeitnahme\"   'Pfad Datenspeicher
+      Dim Klasse As Integer                                                   'Rennklasse (Goggo oder Kart)
+      Dim Lauf As String                                                                         'Laufindex
+      Dim sort As Integer                                                         'Spalte für das Sortieren
+
+      'Training -------------------------------------------------------------------------------------------
+      Dim Zeitvorgabe As String                                                   'Zeitvorgabe für Training
+      Dim min1 As Integer                                       'Minutenanteil der Zeitvorgabe für Training
+      Dim sec1 As Integer                                      'Sekundenanteil der Zeitvorgabe für Training
+      Dim Laufstart As Date                                             'Zeit für Laufstart im Datumsformat
+      Dim Jetzt As Date                                                      'aktuelle Zeit im Datumsformat
+      Dim Laufzeit As String                                          'abgelaufene Trainingszeit als String
+      Dim min2 As Integer                                                       'Minutenanteil der Laufzeit
+      Dim sec2 As Integer                                                      'Sekundenanteil der Laufzeit
+      Dim Restzeit As String                                             'Restzeit Training als Dezimalzahl
+      Dim Minuten As Integer                                                    'Minutenanteil der Restzeit
+      Dim Sekunden As Integer                                                  'Sekundenanteil der Restzeit
+
+      'Rennen ---------------------------------------------------------------------------------------------
+      Dim Rundenvorgabe As Integer                                                'Rundenvorgabe für Rennen
+
+      'Datenempfang ---------------------------------------------------------------------------------------
+      Dim Port As String                                                                          'COM-Port
+      Dim Application As Object
+
+      Public Event DataReceived As IO.Ports.SerialDataReceivedEventHandler
+      Private ByteIn(255) As Byte                                                    'Bytes im Input Buffer
+      Private count, bytesImBuffer As Integer                                                'Zählvariablen
+      Private angeforderteBytes As Integer = 4                                'Anzahl der zu lesenden Bytes
+
+      Dim Zeit As Double                                           'Zeitinformation aus den seriellen Daten
+      Dim Transponder As Single                                    'Transponder Nr. aus den seriellen Daten
+      Dim Trans As Integer                                    'zugeordnetet tatsächliche Transponder Nummer
+      Dim TRd, T1Rd, T2Rd, T3Rd, T4Rd, T5Rd, T6Rd, T7Rd As Integer             'Runden für Transponder 1- 7
+      Dim T8Rd, T9Rd, T10Rd, T11Rd, T12Rd, T13Rd, T14Rd As Integer             'Runden für Transponder 8-14
+      Dim TZt, T1Zt, T2Zt, T3Zt, T4Zt, T5Zt, T6Zt, T7Zt As Double              'Zeiten für Transponder 1- 7
+      Dim T8Zt, T9Zt, T10Zt, T11Zt, T12Zt, T13Zt, T14Zt As Double              'Zeiten für Transponder 8-14
+      Dim TminZt, T1minZt, T2minZt, T3minZt, T4minZt, T5minZt, T6minZt, T7minZt As Double   'minZt Tr. 1- 7
+      Dim T8minZt, T9minZt, T10minZt, T11minZt, T12minZt, T13minZt, T14minZt As Double  'minZt Transp. 8-14
+      Dim TRow, T1Row, T2Row, T3Row, T4Row, T5Row, T6Row, T7Row As Integer         'Zeilen für Transp. 1- 7
+      Dim T8Row, T9Row, T10Row, T11Row, T12Row, T13Row, T14Row As Integer          'Zeilen für Transp. 8-14
+      Private Laufende As Boolean                                                                 'Laufende
+
+      'Velleman Ampelinterface ----------------------------------------------------------------------------
+      Dim K8055 As Long                                                                 'Name für Interface
+      Dim Einer As Integer                                             'Einer-Stelle für die Digitalanzeige
+      Dim Zehner As Integer                                           'Zehner-Stelle für die Dogitalanzeige
+      Private Declare Function OpenDevice Lib "k8055d.dll" (ByVal CardAddress As Integer) As Integer
+      Private Declare Sub CloseDevice Lib "k8055d.dll" ()
+      Private Declare Sub ClearAllAnalog Lib "k8055d.dll" ()
+      Private Declare Sub SetAnalogChannel Lib "k8055d.dll" (ByVal Channel As Integer)
+      Private Declare Sub ClearDigitalChannel Lib "k8055d.dll" (ByVal Channel As Integer)
+      Private Declare Sub ClearAllDigital Lib "k8055d.dll" ()
+      Private Declare Sub SetDigitalChannel Lib "k8055d.dll" (ByVal Channel As Integer)
+
+      '====================================================================================================
+
+      'Design für Form1 definieren ------------------------------------------------------------------------
+      Private Sub Form1_load(ByVal sender As System.Object, ByVal e As System.EventArgs) _
+          Handles MyBase.Load
+
+          Me.WindowState = FormWindowState.Maximized          'Form auf maximale Bildschirmgröße ausrichten
+          Dim maxB As Integer                                                    'maximale Bildschirmbreite
+          Dim maxH As Integer                                                      'maximale Bildschirmhöhe
+          With Screen.PrimaryScreen.WorkingArea
+              maxB = .Width                                                'max. Bildschirmbreite ermitteln
+              maxH = .Height                                                 'max. Bildschirmhöhe ermitteln
+          End With
+
+          'GroupBox1 --------------------------------------------------------------------------------------
+          GroupBox1.Width = maxB * 0.27 : GroupBox1.Height = maxH * 0.2                    'Größe Groupbox1
+          GroupBox1.Location = New Point(maxB * 0.01, maxH * 0.01)                      'Position Groupbox1
+          GroupBox1.Font = New Font("MicrosoftSansSerif", 12)                              'Schrift & Größe
+          Goggo.Width = maxB * 0.08 : Goggo.Height = maxH * 0.05                        'Größe Goggo-Button
+          Goggo.Location = New Point(maxB * 0.02, maxH * 0.05)                       'Position Goggo-Button
+          Goggo.Font = New Font("MicrosoftSansSerif", 14)                                  'Schrift & Größe
+          Kart.Width = maxB * 0.08 : Kart.Height = maxH * 0.05                           'Größe Kart-Button
+          Kart.Location = New Point(maxB * 0.02, maxH * 0.12)                         'Position Kart-Button
+          Kart.Font = New Font("MicrosoftSansSerif", 14)                                   'Schrift & Größe
+          Bild_EMC.Width = maxB * 0.13 : Bild_EMC.Height = maxH * 0.14                      'Größe Bild_EMC
+          Bild_EMC.Location = New Point(maxB * 0.12, maxH * 0.03)                        'Position Bild_EMC
+          Bild_Goggo.Width = maxB * 0.13 : Bild_Goggo.Height = maxH * 0.14                'Größe Bild_Goggo
+          Bild_Goggo.Location = New Point(maxB * 0.12, maxH * 0.03)                    'Position Bild_Goggo
+          Bild_Kart.Width = maxB * 0.13 : Bild_Kart.Height = maxH * 0.14                   'Größe Bild_Kart
+          Bild_Kart.Location = New Point(maxB * 0.12, maxH * 0.03)                      'Position Bild_Kart
+          GroupBox1.ForeColor = Color.Red                               'Textfarbe Groupbox1 auf rot setzen
+          GroupBox1.Text = "Bitte die Rennklasse auswählen!"                           'Eingabeaufforderung
+          Bild_EMC.Visible = True                                                      'Bild_EMC einblenden
+
+          'GroupBox2 --------------------------------------------------------------------------------------
+          GroupBox2.Width = maxB * 0.22 : GroupBox2.Height = maxH * 0.2                    'Größe Groupbox2
+          GroupBox2.Location = New Point(maxB * 0.3, maxH * 0.01)                       'Position Groupbox2
+          GroupBox2.Font = New Font("MicrosoftSansSerif", 12)                              'Schrift & Größe
+          Training.Width = maxB * 0.08 : Training.Height = maxH * 0.05               'Größe Training-Button
+          Training.Location = New Point(maxB * 0.02, maxH * 0.05)                 'Position Training-Button
+          Training.Font = New Font("MicrosoftSansSerif", 14)                               'Schrift & Größe
+          Rennen.Width = maxB * 0.08 : Rennen.Height = maxH * 0.05                       'Größe Kart-Button
+          Rennen.Location = New Point(maxB * 0.02, maxH * 0.12)                       'Position Kart-Button
+          Rennen.Font = New Font("MicrosoftSansSerif", 14)                                 'Schrift & Größe
+          ComboBox1.Width = maxB * 0.04 : ComboBox1.Height = maxH * 0.05                   'Größe Combobox1
+          ComboBox1.Location = New Point(maxB * 0.12, maxH * 0.05)                      'Position Combobox1
+          ComboBox2.Width = maxB * 0.04 : ComboBox2.Height = maxH * 0.05                   'Größe Combobox2
+          ComboBox2.Location = New Point(maxB * 0.12, maxH * 0.12)                      'Position Combobox2
+          Label1.Width = maxB * 0.08 : Label1.Height = maxH * 0.05                            'Größe Label1
+          Label1.Location = New Point(maxB * 0.16, maxH * 0.05)                            'Position Label1
+          Label1.Font = New Font("MicrosoftSansSerif", 12)                                 'Schrift & Größe
+          Label2.Width = maxB * 0.08 : Label2.Height = maxH * 0.05                            'Größe Label2
+          Label2.Location = New Point(maxB * 0.16, maxH * 0.12)                            'Position Label2
+          Label2.Font = New Font("MicrosoftSansSerif", 12)                                 'Schrift & Größe
+          GroupBox2.ForeColor = Color.Red                               'Textfarbe Groupbox2 auf rot setzen
+          GroupBox2.Text = "Bitte Lauf-Parameter auswählen!"                           'Eingabeaufforderung
+
+          'GroupBox3 --------------------------------------------------------------------------------------
+          GroupBox3.Width = maxB * 0.45 : GroupBox3.Height = maxH * 0.2                    'Größe Groupbox3
+          GroupBox3.Location = New Point(maxB * 0.54, maxH * 0.01)                      'Position Groupbox3
+          GroupBox3.Font = New Font("MicrosoftSansSerif", 12)                              'Schrift & Größe
+          Start.Width = maxB * 0.08 : Start.Height = maxH * 0.05                        'Größe Goggo-Button
+          Start.Location = New Point(maxB * 0.02, maxH * 0.05)                       'Position Goggo-Button
+          Start.Font = New Font("MicrosoftSansSerif", 14)                                  'Schrift & Größe
+          Start.Enabled = False                                              '"Start" - Button deaktivieren
+          Ende.Width = maxB * 0.08 : Ende.Height = maxH * 0.05                           'Größe Kart-Button
+          Ende.Location = New Point(maxB * 0.02, maxH * 0.12)                         'Position Kart-Button
+          Ende.Font = New Font("MicrosoftSansSerif", 14)                                   'Schrift & Größe
+          Countdown.Width = maxB * 0.095 : Countdown.Height = maxH * 0.05                  'Größe Countdown
+          Countdown.Location = New Point(maxB * 0.11, maxH * 0.08)                      'Position Countdown
+          Laufinfo.Width = maxB * 0.09 : Laufinfo.Height = maxH * 0.05                      'Größe Laufinfo
+          Laufinfo.Location = New Point(maxB * 0.118, maxH * 0.045)                      'Position Laufinfo
+          Laufanzeige.Width = maxB * 0.09 : Laufinfo.Height = maxH * 0.05                'Größe Laufanzeige
+          Laufanzeige.Location = New Point(maxB * 0.118, maxH * 0.14)                 'Position Laufanzeige
+          Laufanzeige.ForeColor = Color.Red                           'Textfarbe Laufanzeige auf rot setzen
+          AmpelGrünan.Width = maxB * 0.075 : AmpelGrünan.Height = maxH * 0.075           'Größe AmpelGrünan
+          AmpelGrünan.Location = New Point(maxB * 0.22, maxH * 0.035)                 'Position AmpelGrünan
+          AmpelGrünaus.Width = maxB * 0.075 : AmpelGrünaus.Height = maxH * 0.075        'Größe AmpelGrünaus
+          AmpelGrünaus.Location = New Point(maxB * 0.22, maxH * 0.035)               'Position AmpelGrünaus
+          AmpelRotan.Width = maxB * 0.075 : AmpelRotan.Height = maxH * 0.075              'Größe AmpelRotan
+          AmpelRotan.Location = New Point(maxB * 0.22, maxH * 0.12)                    'Position AmpelRotan
+          AmpelRotaus.Width = maxB * 0.075 : AmpelRotaus.Height = maxH * 0.075           'Größe AmpelRotaus
+          AmpelRotaus.Location = New Point(maxB * 0.22, maxH * 0.12)                  'Position AmpelRotaus
+          SchalterGrün.Width = maxB * 0.02 : SchalterGrün.Height = maxH * 0.03          'Größe SchalterGrün
+          SchalterGrün.Location = New Point(maxB * 0.29, maxH * 0.055)               'Position SchalterGrün
+          SchalterRot.Width = maxB * 0.02 : SchalterRot.Height = maxH * 0.03             'Größe SchalterRot
+          SchalterRot.Location = New Point(maxB * 0.29, maxH * 0.135)                 'Position SchalterRot
+          Neustart.Width = maxB * 0.1 : Neustart.Height = maxH * 0.1                        'Größe Neustart
+          Neustart.Location = New Point(maxB * 0.33, maxH * 0.08)                        'Position Neustart
+          Neustart.Font = New Font("MicrosoftSansSerif", 14)                                  'Schriftgröße
+          Neustart.ForeColor = Color.Red                                 'Textfarbe Neustart auf rot setzen
+          Neustart.Visible = False                                               'Neustart-Button verbergen
+
+          'Zwischenzeile ----------------------------------------------------------------------------------
+          Zeitinfo.Width = maxB * 0.27 : Zeitinfo.Height = maxH * 0.04                      'Größe Zeitinfo
+          Zeitinfo.Location = New Point(maxB * 0.01, maxH * 0.23)                        'Position Zeitinfo
+          Zeitinfo.Font = New Font("MicrosoftSansSerif", 20)                               'Schrift & Größe
+          Einstellungen.Width = maxB * 0.15 : Einstellungen.Height = maxH * 0.04       'Größe Einstellungen
+          Einstellungen.Location = New Point(maxB * 0.3, maxH * 0.23)               'Position Einstellungen
+          Einstellungen.Font = New Font("MicrosoftSansSerif", 12)                          'Schrift & Größe
+          Hilfe.Width = maxB * 0.06 : Hilfe.Height = maxH * 0.04                               'Größe Hilfe
+          Hilfe.Location = New Point(maxB * 0.46, maxH * 0.23)                              'Position Hilfe
+          Hilfe.Font = New Font("MicrosoftSansSerif", 12)                                  'Schrift & Größe
+          Label4.Width = maxB * 0.07 : Label4.Height = maxH * 0.04                            'Größe Label4
+          Label4.Location = New Point(maxB * 0.54, maxH * 0.24)                            'Position Label4
+          Label4.Font = New Font("MicrosoftSansSerif", 10)                                 'Schrift & Größe
+          COM.Width = maxB * 0.04 : COM.Height = maxH * 0.04                                     'Größe COM
+          COM.Location = New Point(maxB * 0.63, maxH * 0.24)                                  'Position COM
+          Hex1.Width = maxB * 0.02 : Hex1.Height = maxH * 0.04                                  'Größe Hex1
+          Hex1.Location = New Point(maxB * 0.675, maxH * 0.24)                               'Position Hex1
+          Hex2.Width = maxB * 0.02 : Hex2.Height = maxH * 0.04                                  'Größe Hex2
+          Hex2.Location = New Point(maxB * 0.7, maxH * 0.24)                                 'Position Hex2
+          Hex3.Width = maxB * 0.02 : Hex3.Height = maxH * 0.04                                  'Größe Hex3
+          Hex3.Location = New Point(maxB * 0.725, maxH * 0.24)                               'Position Hex3
+          Hex4.Width = maxB * 0.02 : Hex4.Height = maxH * 0.04                                  'Größe Hex4
+          Hex4.Location = New Point(maxB * 0.75, maxH * 0.24)                                'Position Hex4
+          Card.Location = New Point(maxB * 0.785, maxH * 0.24)                       'Position Card-Anzeige
+          CardText.Location = New Point(maxB * 0.8, maxH * 0.24)                     'Position Card-Anzeige
+          InfoBox.Width = maxB * 0.05 : InfoBox.Height = maxH * 0.04                         'Größe Infobox
+          InfoBox.Location = New Point(maxB * 0.9, maxH * 0.24)                           'Position InfoBox
+
+          'Tabelle für Datenempfang -----------------------------------------------------------------------
+          With Me.DGV
+              .Width = maxB * 0.98                                                          'Tabellenbreite
+              .Height = maxH * 0.605                                                          'Tabellenhöhe
+              .Location = New Point(maxB * 0.01, maxH * 0.3)                           'Position oben links
+              .ScrollBars = ScrollBars.Horizontal      'Scroll-Balken horizontal einfügen
+              .RowTemplate.Height = 30                                                          'Zeilenhöhe
+              .DefaultCellStyle.Font = New Font("Consolas", 15)                            'Schrift & Größe
+              .DefaultCellStyle.ForeColor = Color.Blue                                        'Schriftfarbe
+              .DefaultCellStyle.BackColor = Color.Beige                                   'Hintergrundfarbe
+              .Columns(0).Width = 38                                                       'Breite Spalte 1
+              .Columns(0).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight 'rechtsbünd
+              .Columns(1).Width = 260                                                  'Breite Spalte Namen
+              .Columns(2).Width = 50                                                  'Breite Spalte Runden
+              .Columns(2).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight 'rechtsbünd
+              .Columns(3).Width = 80                                                'Breite Spalte Bestzeit
+              .Columns(3).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight 'rechtsbünd
+              .Columns(4).Width = 50                                                   'Breite Spalte Platz
+              .Columns(4).DefaultCellStyle.Font = New Font("Consolas", 15)                 'Schrift & Größe
+              For i = 5 To 45
+                  .Columns.Add("Rd" & i, "Rd" & i - 4)                       'Spalten für Runden hinzufügen
+                  .Columns(i).Width = 80                                                 'Breite der Spalte
+                  .Columns(i).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight 'rechts
+              Next
+          End With
+          DGV.Visible = True                                           'Tabelle für Datenempfang einblenden
+
+          'Einstellungsfenster ----------------------------------------------------------------------------
+          With Einstellungsfenster '----------------------------- Einstellungsfenster für Programmparameter
+              .Width = maxB * 0.98                                                           'Fensterbreite
+              .Height = maxH * 0.63                                                            'Fensterhöhe
+              .Location = New Point(maxB * 0.01, maxH * 0.3)                  'Position Einstellungsfenster
+          End With
+
+          With Daten ' ------------------------------------- Einstellungsdaten konfigurieren und verknüpfen
+              .TableName = "Fahrernamen"                                                      'Tabellenname
+              .Columns.Add("T-Nr.", GetType(System.String))                                  'Name Spalte 1
+              .Columns.Add("Goggofahrer", GetType(System.String))                            'Name Spalte 2
+              .Columns.Add("Kartfahrer", GetType(System.String))                             'Name Spalte 3
+              .Columns.Add("Sonstiges", GetType(System.String))                              'Name Spalte 3
+              .Columns.Add("Werte", GetType(System.String))                                  'Name Spalte 4
+          End With
+          Menü.DataSource = Daten         'Verknüpfung der Menü-Tabelle mit den Einstellungsdaten erstellen
+
+          With Menü '--------------------------------------------------------- Tabelle für Einstellungsmenü
+              .Width = maxB * 0.7                                                           'Tabellenbreite
+              .Height = maxH * 0.555                                                          'Tabellenhöhe
+              .Location = New Point(maxB * 0.02, maxH * 0.05)                             'Tabellenposition
+              .Columns(0).Width = 60                                                       'Spaltenbreite 1
+              .Columns(1).Width = 200                                                      'Spaltenbreite 2
+              .Columns(1).DefaultCellStyle.BackColor = Color.LightYellow                    'Spaltenfarbe 2
+              .Columns(2).Width = 200                                                      'Spaltenbreite 3
+              .Columns(2).DefaultCellStyle.BackColor = Color.LightPink                      'Spaltenfarbe 3
+          End With
+          Label3.Width = maxB * 0.05 : Label3.Height = maxH * 0.2                             'Größe Label3
+          Label3.Location = New Point(maxB * 0.75, maxH * 0.08)                            'Position Label3
+          Ports.Width = maxB * 0.05 : Ports.Height = maxH * 0.15                               'Größe Ports
+          Ports.Location = New Point(maxB * 0.75, maxH * 0.12)                              'Position Ports
+          Save.Width = maxB * 0.15 : Save.Height = maxH * 0.1                            'Größe Save-Button
+          Save.Location = New Point(maxB * 0.75, maxH * 0.3)                          'Position Save-Button
+
+          Daten.ReadXml(Pfad & "EMC_KJS_Speed_Einstellungsdaten")                           'Daten einlesen
+          Datenübernahme()
+          Einstellungsfenster.Visible = False                        'GroupBox für Einstellungen ausblenden
+          Menü.Visible = False                                          'Tabelle für Fahrerdaten ausblenden
+          Save.Visible = False                                                      'Save-Button ausblenden
+
+          'Velleman K8055 Karte für Ampel und 7-Segmentanzeige initialisieren -----------------------------
+          Card.BackColor = Color.Red                                                     'Kartenanzeige rot
+          K8055 = OpenDevice(3)                                                            'Karte verbinden
+          If K8055 = 3 Then                                                       'wenn Karte verbunden ist
+              Card.BackColor = Color.Yellow                                             'Kartenanzeige gelb
+              CardText.Text = "Ampel verbunden"                                              'Text anzeigen
+              ClearAllDigital()
+          End If
+
+          'Ampeleinstellungen und Startbedingungen --------------------------------------------------------
+          SchalterGrün.BackColor = Color.DarkGreen                        'Farbe für SchalterGrün festlegen
+          SchalterRot.BackColor = Color.DarkRed                            'Farbe für SchalterRot festlegen
+          AmpelGrünaus.Visible = True                                              'grüne Ampel ausschalten
+          AmpelRotaus.Visible = True                                                'rote Ampel ausschalten
+
+          Laufende = True                                                                     'Lauf beendet
+          Laufinfo.ForeColor = Color.Red                                 'Farbe für Laufinfo auf rot setzen
+          Laufinfo.Text = ""                                                      'Laufinfo Textfeld leeren
+          Countdown.ForeColor = Color.Red                               'Farbe für Countdown auf rot setzen
+          Zeitinfo.BackColor = Color.Blue                    'Hintergrundfarbe für Textbox3 auf blau setzen
+          Zeitinfo.ForeColor = Color.Yellow                         'Textfarbe für TextBox3 auf gelb setzen
+          Timer1.Start()                                                        'Datum und Uhrzeit anzeigen
+
+          'Eigenschaften für SerrialPort1 definieren ------------------------------------------------------
+          For Each Port As String In My.Computer.Ports.SerialPortNames
+              COM.Text = Port            'höchsten verfügbaren COM-Port ermitteln und in COM.Text schreiben
+          Next
+          SerialPort1.PortName = COM.Text                                                   'Port festlegen
+          SerialPort1.BaudRate = 9600                                                      'Baudrate = 9600
+          SerialPort1.Parity = IO.Ports.Parity.None                                         'Parität = None
+          SerialPort1.DataBits = 8                                                           'Datenbits = 8
+          SerialPort1.StopBits = IO.Ports.StopBits.One                                        'Stopbits = 1
+          SerialPort1.Handshake = IO.Ports.Handshake.None                                 'Handshake = None
+          SerialPort1.RtsEnable = True
+          On Error GoTo PortFehler                                  'wenn ein Fehler beim COM-Port auftritt
+          SerialPort1.Open()                                                            'SerialPort1 öffnen
+          Exit Sub
+  PortFehler:
+          MessageBox.Show("Keine Speed-Box angeschlossen oder falscher COM-Port ausgewählt!" & vbCrLf & _
+          "Bitte Speed-Box verbinden oder 'Programmeinstellungen' aufrufen" & vbCrLf & _
+          "und COM-Port entsprechend ändern!", "Fehler bei der Verbindung mit der Speed-Box")
+          Einstellungen.PerformClick()                                           'Einstellungsmenü aufrufen
+      End Sub
+
+      'Permanente Anzeige von Datum und Uhrzeit -----------------------------------------------------------
+      Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) _
+          Handles Timer1.Tick
+          Zeitinfo.Text = DateTime.Now.ToString
+      End Sub
+
+      'Einstellungsmenü -----------------------------------------------------------------------------------
+      Private Sub Einstellungen_Click(ByVal sender As Object, ByVal e As EventArgs) Handles Einstellungen.Click
+          If Laufende = True Then                                           'nur wenn kein Lauf stattfindet
+              'Einstellungsmenü einblenden ----------------------------------------------------------------
+              DGV.Visible = False                                      'Tabelle für Datenempfang ausblenden
+              Einstellungsfenster.Visible = True                     'GroupBox für Einstellungen einblenden
+              Menü.Visible = True                                                       'Tabelle einblenden
+              Save.Visible = True                                               'Speicher-Button einblenden
+              Label3.Visible = True                                                      'Label3 einblenden
+              Ports.Visible = True                                                        'Ports einblenden
+              For Each Port As String In My.Computer.Ports.SerialPortNames
+                  Ports.Items.Add(Port)                               'alle verfügbaren COM-Ports auflisten
+              Next
+          Else : MessageBox.Show("Die Läufe müssen erst beendet werden bevor Änderungen" & vbCrLf & _
+      "an den Programmeinstellungen vorgenommen werden können!" _
+     , "Fehler beim Aufruf der Einstellungstabelle")
+          End If
+      End Sub
+
+      'Hilfedatei öffnen-----------------------------------------------------------------------------------
+      Private Sub Hilfe_Click(ByVal sender As Object, ByVal e As EventArgs) Handles Hilfe.Click
+          If Laufende = True Then                                           'nur wenn kein Lauf stattfindet
+              Process.Start(Pfad & "EMC Speed Zeiterfassung_Handbuch.pdf")
+
+          Else : MessageBox.Show("Die Läufe müssen erst beendet werden bevor Änderungen" & vbCrLf & _
+                  "an den Programmeinstellungen vorgenommen werden können!" _
+                 , "Fehler beim Aufruf der Einstellungstabelle")
+          End If
+      End Sub
+      'Programmeinstellungen speichern --------------------------------------------------------------------
+      Private Sub Button1_Click(ByVal sender As Object, ByVal e As EventArgs) Handles Save.Click
+
+          Daten.WriteXml(Pfad & "EMC_KJS_Speed_Einstellungsdaten")                 'Einstellungen speichern
+          Einstellungsfenster.Visible = False                        'GroupBox für Einstellungen ausblenden
+          DGV.Visible = True                                           'Tabelle für Datenempfang einblenden
+      End Sub
+
+      'Übernahme der gespeicherten Daten ------------------------------------------------------------------
+      Sub Datenübernahme()
+          Port = Menü.Rows(0).Cells(4).Value                             'Wert für COM-Port aus der Tabelle
+          COM.Text = Port                                                         'Port in COM-Box anzeigen
+      End Sub
+
+      'Countdownzähler für Training -----------------------------------------------------------------------
+      Private Sub Timer2_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) _
+          Handles Timer2.Tick
+          Jetzt = DateTime.Now                                            'aktuelle Zeit als Date ermitteln
+          Laufzeit = (Jetzt - Laufstart).TotalMinutes.ToString()             'Laufzeit als String ermitteln
+          min2 = CInt(Laufzeit)                                           'Min = Ganzahlanteil der Laufzeit
+          sec2 = CInt((CDbl(Laufzeit) - CInt(Laufzeit)) * 60)  'Sec=(Laufzeit-Ganzzahlteil der Laufzeit)*60
+          Restzeit = CStr((min1 * 60 + sec1) - (min2 * 60 + sec2))          'Restzeit als Dezimalzahl [sec]
+          Minuten = CInt(Int(CDbl(Restzeit) / 60))                                       'Minuten ermitteln
+          Sekunden = CInt(Int(CDbl(Restzeit) - Minuten * 60))                           'Sekunden ermitteln
+          Countdown.Text = (Minuten).ToString("00") & ":" & (Sekunden).ToString("00")          'Zeitanzeige
+          Zehner = Int(Math.Ceiling(Restzeit / 60) / 10)     'Zehneranteil für Digitalanzeige (aufgerundet)
+          Einer = Math.Ceiling(Restzeit / 60) Mod 10          'Eineranteil für Digitalanzeige (aufgerundet)
+          InfoBox.Text = (Zehner).ToString("0") & " " & (Einer).ToString("0")
+          If Countdown.Text = "00:00" Then Laufende_Training() '          wenn Trainingszeit abgelaufen ist
+          Digitalanzeige()                                                      '7-Segmentanzeige ansteuern
+      End Sub
+
+      'Auswahl der Goggofahrer ----------------------------------------------------------------------------
+      Private Sub Goggo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) _
+          Handles Goggo.Click
+          Bild_EMC.Visible = False                                                     'Bild_EMC ausblenden
+          Bild_Kart.Visible = False                                                   'Bild_Kart ausblenden
+          Bild_Goggo.Visible = True                                                  'Bild_Goggo einblenden
+          Klasse = 1                                                                'Goggo-Klasse auswählen
+          GroupBox1.ForeColor = Color.Black : Freigabe()            'Textfarbe Groupbox1 auf schwarz setzen
+          GroupBox1.Text = "Goggo-Klasse gewählt"                                         'Info Klassenwahl
+      End Sub
+      'Auswahl der Kartfahrer -----------------------------------------------------------------------------
+      Private Sub Kart_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) _
+          Handles Kart.Click
+          Bild_EMC.Visible = False                                                     'Bild_EMC ausblenden
+          Bild_Goggo.Visible = False                                                 'Bild Goggo ausblenden
+          Bild_Kart.Visible = True                                                    'Bild Kart einblenden
+          Klasse = 2                                                                 'Kart-Klasse auswählen
+          GroupBox1.ForeColor = Color.Black : Freigabe()            'Textfarbe Groupbox1 auf schwarz setzen
+          GroupBox1.Text = "Kart-Klasse gewählt"                                          'Info Klassenwahl
+      End Sub
+      'Auswahl Training -----------------------------------------------------------------------------------
+      Private Sub Training_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) _
+          Handles Training.Click
+          Lauf = "Tr"                                                   'Laufindex für das Speichern setzen
+          sort = 3                                       'Spalte 3 (Bestzeiten) für das Sortieren auswählen
+          GroupBox2.ForeColor = Color.Black : Freigabe()            'Textfarbe Groupbox2 auf schwarz setzen
+          GroupBox2.Text = "Training gewählt"                                                'Info Laufwahl
+          GroupBox3.Text = "Training"                              'Text "Training" für GroupBox3 festlegen
+          Label1.ForeColor = Color.Red                                     'Textfarbe Label1 auf rot setzen
+      End Sub
+      'Auswahl Rennen -------------------------------------------------------------------------------------
+      Private Sub Rennen_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) _
+          Handles Rennen.Click
+          Lauf = "Re"                                                   'Laufindex für das Speichern setzen
+          sort = 2                                     'Spalte 2 (Rundenanzahl) für das Sortieren auswählen
+          GroupBox2.ForeColor = Color.Black : Freigabe()            'Textfarbe Groupbox2 auf schwarz setzen
+          GroupBox2.Text = "Rennen gewählt"                                                  'Info Laufwahl
+          GroupBox3.Text = "Rennen"                                  'Text "Rennen" für GroupBox3 festlegen
+          Label2.ForeColor = Color.Red                                     'Textfarbe Label2 auf rot setzen
+      End Sub
+      'Zeitauswahl für Training aus ComboBox treffen ------------------------------------------------------
+      Private Sub ComboBox1_SelectedValueChanged(ByVal sender As Object, ByVal e As System.EventArgs) _
+          Handles ComboBox1.SelectedValueChanged
+          Label1.ForeColor = Color.Black                               'Textfarbe Label1 auf schwarz setzen
+          Zeitvorgabe = ComboBox1.Text                                     'Zeitvorgabe = ausgewählter Text
+          min1 = CInt(Int(Zeitvorgabe))                                   'Minuten = Ganzahlanteil der Zeit
+          sec1 = CInt((CDbl(Zeitvorgabe) - min1) * 60)          'Sekunden=(Zeit-Ganzzahlanteil der Zeit)*60
+          Countdown.Text = min1.ToString("00") & ":" & sec1.ToString("00")     'Zeitanzeige im Format 00:00
+          Freigabe()                                                                  'Startfreigabe prüfen
+      End Sub
+
+      'Rundenauswahl für Rennen aus ComboBox treffen ------------------------------------------------------
+      Private Sub ComboBox2_SelectedValueChanged(ByVal sender As Object, ByVal e As System.EventArgs) _
+          Handles ComboBox2.SelectedValueChanged
+          Label2.ForeColor = Color.Black                               'Textfarbe Label2 auf schwarz setzen
+          Rundenvorgabe = CInt(ComboBox2.Text)                                  'Runden = ausgewählter Text
+          Countdown.Text = CStr(Rundenvorgabe)                  'Anzeige der Rundenvorgabe im Countdownfeld
+          Freigabe()                                                                  'Startfreigabe prüfen
+      End Sub
+
+      'Freigabe für Start prüfen --------------------------------------------------------------------------
+      Sub Freigabe()
+          If Klasse > 0 Then                                                 'wenn Rennklasse gewählt wurde
+              If sort > 0 Then                                                     'wenn Lauf gewählt wurde
+                  If Countdown.Text <> "" Then                        'wenn Zeit oder Runden gewählt wurden
+                      Start.Enabled = True                                     '"Start" - Button aktivieren
+                      Start.ForeColor = Color.Red                 'Farbe für "Start" -Button auf rot setzen
+                  End If
+              End If
+          End If
+      End Sub
+
+      'Lauf mit "Start" - Button aktivieren ---------------------------------------------------------------
+      Private Sub Start_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) _
+          Handles Start.Click
+          Start.Enabled = False                                              '"Start" - Button deaktivieren
+          Ende.Enabled = True                                                '"Abbruch" - Button aktivieren
+          Laufende = False                                                     'Laufende auf "False" setzen
+          Laufstart = DateTime.Now                                           'Startzeit als Date festhalten
+          If GroupBox3.Text = "Training" Then
+              Laufinfo.Text = "Training läuft"                                           'Training anzeigen
+              Laufanzeige.Text = "Restzeit [min]"                                        'Restzeit anzeigen
+              Timer2.Start()                                              'Timer für Coutdownzähler starten
+          End If
+
+          If GroupBox3.Text = "Rennen" Then
+              Laufinfo.Text = "Rennen läuft"                                               'Rennen anzeigen
+              Laufanzeige.Text = "  Restrunden"                                        'Restrunden anzeigen
+              Zehner = Int(Countdown.Text / 10)
+              Einer = Countdown.Text Mod 10
+              Digitalanzeige()
+              InfoBox.Text = (Zehner).ToString("0") & " " & (Einer).ToString("0")
+          End If
+          AmpelGrünaus.Visible = False : AmpelGrünan.Visible = True                'grüne Ampel einschalten
+          ClearAllAnalog()                                           'Analogeingänge der Karte zurücksetzen
+          SetAnalogChannel(1)                                                  'Analogeingang 1 einschalten
+      End Sub
+
+      'Lauf mit "Ende" - Button abbrechen -----------------------------------------------------------------
+      Private Sub Ende_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) _
+          Handles Ende.Click
+          Laufende = True                                                       'Laufende auf "True" setzen
+          Start.Enabled = True                                          '"Start" - Button wieder aktivieren
+          Ende.Enabled = False                                                '"Ende" - Button deaktivieren
+          AmpelGrünaus.Visible = True : AmpelGrünan.Visible = False                'grüne Ampel ausschalten
+          AmpelRotaus.Visible = False : AmpelRotan.Visible = True                   'rote Ampel einschalten
+          ClearAllAnalog()                                           'Analogeingänge der Karte zurücksetzen
+          SetAnalogChannel(2)                                                  'Analogeingang 2 einschalten
+          ClearAllDigital()                                                     'Digitalanzeige ausschalten
+          Laufinfo.Text = "Laufabbruch"                                               'Laufabbruch anzeigen
+          Timer2.Stop()                                                  'Timer für Countdownzähler stoppen
+          Neustart.Visible = True                                               'Neustart-Button einblenden
+      End Sub
+
+      'Laufende bei Training ------------------------------------------------------------------------------
+      Sub Laufende_Training()
+          Laufende = True                                                       'Laufende auf "True" setzen
+          Start.Enabled = True                                          '"Start" - Button wieder aktivieren
+          AmpelGrünaus.Visible = True : AmpelGrünan.Visible = False                'grüne Ampel ausschalten
+          AmpelRotaus.Visible = False : AmpelRotan.Visible = True                   'rote Ampel einschalten
+          ClearAllAnalog()                                           'Analogeingänge der Karte zurücksetzen
+          SetAnalogChannel(2)                                                  'Analogeingang 2 einschalten
+          Laufinfo.Text = "Lauf beendet"                                                 'Laufende anzeigen
+          Timer2.Stop()                                                  'Timer für Countdownzähler stoppen
+          Neustart.Visible = True                                               'Neustart-Button einblenden
+      End Sub
+
+      'Laufende bei Rennen --------------------------------------------------------------------------------
+      Sub Laufende_Rennen()
+          Laufende = True                                                       'Laufende auf "True" setzen
+          Start.Enabled = True                                          '"Start" - Button wieder aktivieren
+          AmpelGrünaus.Visible = True : AmpelGrünan.Visible = False                'grüne Ampel ausschalten
+          AmpelRotaus.Visible = False : AmpelRotan.Visible = True                   'rote Ampel einschalten
+          ClearAllAnalog()                                           'Analogeingänge der Karte zurücksetzen
+          SetAnalogChannel(2)                                                  'Analogeingang 2 einschalten
+          Laufinfo.Text = "Lauf beendet"                                                 'Laufende anzeigen
+      End Sub
+
+      'Ampel grün einschalten -----------------------------------------------------------------------------
+      Sub SchalterGrün_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) _
+          Handles SchalterGrün.Click
+          AmpelGrünan.Visible = True : AmpelGrünaus.Visible = False                'grüne Ampel einschalten
+          AmpelRotan.Visible = False : AmpelRotaus.Visible = True                   'rote Ampel ausschalten
+          SchalterGrün.Enabled = False                                '"SchalterGrün" - Button deaktivieren
+          SchalterRot.Enabled = True                                     '"SchalterRot" - Button aktivieren
+          ClearAllAnalog()                                           'Analogeingänge der Karte zurücksetzen
+          SetAnalogChannel(1)                                                  'Analogeingang 1 einschalten
+      End Sub
+
+      'Ampel rot einschalten ------------------------------------------------------------------------------
+      Sub Schalter_rot_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) _
+          Handles SchalterRot.Click
+          AmpelRotan.Visible = True : AmpelRotaus.Visible = False                   'rote Ampel einschalten
+          AmpelGrünan.Visible = False : AmpelGrünaus.Visible = True                'grüne Ampel ausschalten
+          SchalterRot.Enabled = False                                  '"SchalterRot" - Button deaktivieren
+          SchalterGrün.Enabled = True                                   '"SchalterGrün" - Button aktivieren
+          ClearAllAnalog()                                           'Analogeingänge der Karte zurücksetzen
+          SetAnalogChannel(2)                                                  'Analogeingang 2 einschalten
+      End Sub
+
+      'Daten von SerialPort1 empfangen
+      '====================================================================================================
+      Private Sub SerialPort3_DataReceived(ByVal sender As System.Object, _
+                  ByVal e As System.IO.Ports.SerialDataReceivedEventArgs) Handles SerialPort1.DataReceived
+
+          'Die Daten der seriellen Schnittstelle werden bei Empfang in den Eingangspuffer geschrieben.
+          'Werden diese zu schnell abgerufen, kann es vorkommen, dass der Datensatz noch nicht komplett
+          'vorliegt und somit unvolständig verarbeitet wird. Um dies zu verhindern wir vor dem Abruf der
+          'Daten eine kurze Pause eingelegt, die minimale Verzögerung ist im Versuch zu ermitteln.
+
+          Threading.Thread.Sleep(500)                           'Pause von 500 Millisekunden vor Datenabruf
+          bytesImBuffer = SerialPort1.BytesToRead      'Ruft die Anzahl der Datenbytes im Empfangspuffer ab
+          SerialPort1.Read(ByteIn, 0, bytesImBuffer)          'empfangene Bytes in das Byte-Array schreiben
+          If Laufende = False Then                                 'solange der Lauf noch nicht beendet ist
+              Me.Invoke(New EventHandler(AddressOf DoUpdate))    'Schleife für Daten auswerten und anzeigen
+          End If
+      End Sub
+
+      'Endlosschleife für Datenempfang vom COM Port und Anzeige der Werte
+      '====================================================================================================
+      'empfangene Daten in TextBoxen anzeigen -------------------------------------------------------------
+      Public Sub DoUpdate()
+
+          For i As Integer = 0 To angeforderteBytes - 1                'Bytes einlesen und als HEX anzeigen
+              count += 1
+              Dim _str = String.Format("{1:X}", count, ByteIn(i))
+              Hex1.Text = String.Format("{1:X}", count, ByteIn(0))
+              Hex2.Text = String.Format("{1:X}", count, ByteIn(1))
+              Hex3.Text = String.Format("{1:X}", count, ByteIn(2))
+              Hex4.Text = String.Format("{1:X}", count, ByteIn(3))
+          Next
+
+          'Strings in Dezimal umwandeln und Zahlenwerte ermitteln -----------------------------------------
+          Transponder = Val(Val("&H" & Mid$(Hex1.Text, 1, 2)))                             'Transponderwert
+          Zeit = Val(Val("&H" & Mid$(Hex2.Text, 1, 2))) * 60
+          Zeit = Zeit + Val(Val("&H" & Mid$(Hex3.Text, 1, 2)))
+          Zeit = Zeit + Val(Val("&H" & Mid$(Hex4.Text, 1, 2))) * 4 / 1000                 'Zeit in Sekunden
+
+          Select Case Transponder
+
+              Case 143 : Trans = 1 '--------------------------------------------------------Transponder = 1
+                  TRd = T1Rd : TRow = T1Row : TZt = T1Zt : TminZt = T1minZt
+                  Auswertung()
+                  T1Rd = TRd : T1Row = TRow : T1Zt = TZt : T1minZt = TminZt
+              Case 140 : Trans = 2 '--------------------------------------------------------Transponder = 2
+                  TRd = T2Rd : TRow = T2Row : TZt = T2Zt : TminZt = T2minZt
+                  Auswertung()
+                  T2Rd = TRd : T2Row = TRow : T2Zt = TZt : T2minZt = TminZt
+              Case 137 : Trans = 3 '--------------------------------------------------------Transponder = 3
+                  TRd = T3Rd : TRow = T3Row : TZt = T3Zt : TminZt = T3minZt
+                  Auswertung()
+                  T3Rd = TRd : T3Row = TRow : T3Zt = TZt : T3minZt = TminZt
+              Case 134 : Trans = 4 '--------------------------------------------------------Transponder = 4
+                  TRd = T4Rd : TRow = T4Row : TZt = T4Zt : TminZt = T4minZt
+                  Auswertung()
+                  T4Rd = TRd : T4Row = TRow : T4Zt = TZt : T4minZt = TminZt
+              Case 131 : Trans = 5 '--------------------------------------------------------Transponder = 5
+                  TRd = T5Rd : TRow = T5Row : TZt = T5Zt : TminZt = T5minZt
+                  Auswertung()
+                  T5Rd = TRd : T5Row = TRow : T5Zt = TZt : T5minZt = TminZt
+              Case 138 : Trans = 6 '--------------------------------------------------------Transponder = 6
+                  TRd = T6Rd : TRow = T6Row : TZt = T6Zt : TminZt = T6minZt
+                  Auswertung()
+                  T6Rd = TRd : T6Row = TRow : T6Zt = TZt : T6minZt = TminZt
+              Case 142 : Trans = 7 '--------------------------------------------------------Transponder = 7
+                  TRd = T7Rd : TRow = T7Row : TZt = T7Zt : TminZt = T7minZt
+                  Auswertung()
+                  T7Rd = TRd : T7Row = TRow : T7Zt = TZt : T7minZt = TminZt
+              Case 141 : Trans = 8 '--------------------------------------------------------Transponder = 8
+                  TRd = T8Rd : TRow = T8Row : TZt = T8Zt : TminZt = T8minZt
+                  Auswertung()
+                  T8Rd = TRd : T8Row = TRow : T8Zt = TZt : T8minZt = TminZt
+              Case 135 : Trans = 9 '--------------------------------------------------------Transponder = 9
+                  TRd = T9Rd : TRow = T9Row : TZt = T9Zt : TminZt = T9minZt
+                  Auswertung()
+                  T9Rd = TRd : T9Row = TRow : T9Zt = TZt : T9minZt = TminZt
+              Case 132 : Trans = 10 '-------------------------------------------------------Transponder =10
+                  TRd = T10Rd : TRow = T10Row : TZt = T10Zt : TminZt = T10minZt
+                  Auswertung()
+                  T10Rd = TRd : T10Row = TRow : T10Zt = TZt : T10minZt = TminZt
+              Case 130 : Trans = 11 '-------------------------------------------------------Transponder =11
+                  TRd = T11Rd : TRow = T11Row : TZt = T11Zt : TminZt = T11minZt
+                  Auswertung()
+                  T11Rd = TRd : T11Row = TRow : T11Zt = TZt : T11minZt = TminZt
+              Case 139 : Trans = 12 '-------------------------------------------------------Transponder =12
+                  TRd = T12Rd : TRow = T12Row : TZt = T12Zt : TminZt = T12minZt
+                  Auswertung()
+                  T12Rd = TRd : T12Row = TRow : T12Zt = TZt : T12minZt = TminZt
+              Case 136 : Trans = 13 '-------------------------------------------------------Transponder =13
+                  TRd = T13Rd : TRow = T13Row : TZt = T13Zt : TminZt = T13minZt
+                  Auswertung()
+                  T13Rd = TRd : T13Row = TRow : T13Zt = TZt : T13minZt = TminZt
+              Case 133 : Trans = 14 '-------------------------------------------------------Transponder =14
+                  TRd = T14Rd : TRow = T14Row : TZt = T14Zt : TminZt = T14minZt
+                  Auswertung()
+                  T14Rd = TRd : T14Row = TRow : T14Zt = TZt : T14minZt = TminZt
+          End Select
+
+          If GroupBox3.Text = "Rennen" Then                                    'Runden-Countdown bei Rennen
+              Countdown.Text = Rundenvorgabe - DGV.Item(2, 0).Value
+              Zehner = Int(Countdown.Text / 10)
+              Einer = Countdown.Text Mod 10
+              InfoBox.Text = (Zehner).ToString("0") & " " & (Einer).ToString("0")
+              Digitalanzeige()
+              If Countdown.Text = 0 Then Laufende_Rennen()
+          End If
+
+          If GroupBox3.Text = "Training" Then                                  'Zeit-Countdown bei Training
+              If Countdown.Text = "00:00" Then Laufende_Training()
+          End If
+      End Sub
+
+      'Tabelle nach Bestzeiten auswerten ------------------------------------------------------------------
+      Sub Auswertung()                                                                        'Vorlaufrunde
+
+          If TRd = 0 Then
+              DGV.Rows.Add()                                                              'Reihe hinzufügen
+              Dim letzteReihe As Integer = DGV.Rows.Count - 2                       'letzte Reihe ermitteln
+              TRow = letzteReihe                                 'Zeilenposition transponder = letzte Reihe
+              DGV.Item(0, TRow).Style.Font = (New Font("Consolas", 15))                       'Schriftgröße
+              DGV.Rows(TRow).Cells(0).Value = Trans                                      'Transpondernummer
+              DGV.Item(1, TRow).Style.Font = (New Font("Consolas", 15))                       'Schriftgröße
+              DGV.Rows(TRow).Cells(1).Value = (Menü.Item(Klasse, Trans - 1).Value)             'Fahrernamen
+              TZt = Zeit                                                            'Vorlaufzeit festhalten
+              TminZt = 50.0                                                            'Bestzeit hochsetzen
+              DGV.Item(3, TRow).Style.ForeColor = Color.White                               'Textfarbe weiß
+              DGV.Rows(TRow).Cells(3).Value = TminZt                                  'Bestzeit in Spalte 4
+              TRd = TRd + 1
+          Else                                                                    'für alle weiteren Runden
+              TZt = Zeit - TZt                                          'Rundenzeit aus Differenz ermitteln
+              If TZt > 0 Then                                                           '0-Werte verhindern
+                  TminZt = Math.Min(TZt, TminZt)                                     'Minimalzeit ermitteln
+                  For i = 0 To DGV.Rows.Count - 1
+                      If DGV.Rows(i).Cells(0).Value = Trans Then
+                          TRow = i                                     'sucht & setzt Reihe für Transponder
+                      End If
+                  Next
+                  DGV.Item(2 + TRd, TRow).Style.Font = (New Font("Consolas", 15))             'Schriftgröße
+                  DGV.Rows(TRow).Cells(2).Value = TRd                               'Rundenzahl in Spalte 3
+                  DGV.Item(4 + TRd, TRow).Style.Font = (New Font("Consolas", 15))             'Schriftgröße
+                  DGV.Rows(TRow).Cells(4 + TRd).Value = TZt.ToString("F3")            'Zeit in Rundenspalte
+                  DGV.Item(3, TRow).Style.Font = (New Font("Consolas", 15))                   'Schriftgröße
+                  DGV.Item(3, TRow).Style.ForeColor = Color.Red                              'Textfarbe rot
+                  DGV.Item(3, TRow).Style.Format = ("##.000")                           '3 Nachkommastellen
+                  DGV.Rows(TRow).Cells(3).Value = Math.Round(TminZt, 3)               'Bestzeit in Spalte 4
+                  TZt = Zeit                                                          'alte Zeit festhalten
+                  sortieren()                                                            'Tabelle sortieren
+                  TRd = TRd + 1
+              End If
+          End If
+          'TRd = TRd + 1
+      End Sub
+
+      'Tabelle nach Bestzeiten oder Runden sortieren ------------------------------------------------------
+      Sub sortieren()
+          DGV.Columns.Item(sort).SortMode = DataGridViewColumnSortMode.Automatic
+          DGV.Columns(sort).ValueType = GetType(Long)
+          If Lauf = "Tr" Then
+              DGV.Sort(DGV.Columns(sort), System.ComponentModel.ListSortDirection.Ascending)
+          Else
+              DGV.Sort(DGV.Columns(sort), System.ComponentModel.ListSortDirection.Descending)
+          End If
+
+          For i = 0 To DGV.Rows.Count - 1 ' --------------------------------------------------- Platzierung
+              If DGV.Rows(i).Cells(5).Value > 0 Then           'wenn eine Zeit für die erste Runde vorliegt
+                  DGV.Rows(i).Cells(4).Value = i + 1              'Platzierung ermitteln und Platz anzeigen
+              End If
+          Next
+      End Sub
+
+      'Programm nach Laufende oder Laufabruch neu starten -------------------------------------------------
+      Private Sub Neustart_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) _
+          Handles Neustart.Click
+
+          'Aktuellen Lauf vor einem Neustart als Bildschirmkopie speichern --------------------------------
+          Dim Bild As New Bitmap(1920, 1200)                                  'maximale Bildgröße festlegen
+          Dim Grafik As Graphics = Graphics.FromImage(Bild)                  'Grafik aus dem Bild erstellen
+          Grafik.CopyFromScreen(0, 0, 0, 0, Bild.Size)                            'Bildschirmkopie erzeugen
+          Dim Dateiname As String                                                    'Dateinamen definieren
+          If Klasse = 1 Then                    'Rennklasse abfragen und String mit Datum und Zeit erzeugen
+              Dateiname = "Goggo-" & Lauf & Now.ToString("-dd.MM.yyyy_HH.mm") & ".jpg"
+          Else
+              Dateiname = "Kart-" & Lauf & Now.ToString("-dd.MM.yyyy_HH.mm") & ".jpg"
+          End If
+          Bild.Save(Pfad & Dateiname)                                                      'Datei speichern
+
+          MessageBox.Show("Abläufe beim Neustart des Programms:" & vbCrLf & _
+          " - aktueller Lauf wurde gespeichert" & vbCrLf & _
+          " - alle Daten des letzen Laufes werden gelöscht" & vbCrLf & _
+          " - die Rennklasse und der Lauf müssen neu gewählt werden" & vbCrLf & _
+          " - anschließend kann der nächste Lauf gestartet werden", "Neustart des Programms")
+
+          Application.Restart()                                                       'Programm neu starten
+      End Sub
+
+      'Ermittlung und Ansteuerung der Werte für die Digitalanzeige ----------------------------------------
+      Sub Digitalanzeige()
+          Select Case Zehner                   'Zehner über Digitalausgänge: A = D8, B = D7, C = D6, D = D5
+              Case 9                                                                      'Zehnerstelle = 9
+                  SetDigitalChannel(8)                                          'Digital 8 für A aktivieren
+                  ClearDigitalChannel(7)                                      'Digital 7 für B deaktivieren
+                  ClearDigitalChannel(6)                                      'Digital 6 für C deaktivieren
+                  SetDigitalChannel(5)                                          'Digital 5 für D aktivieren
+              Case 8                                                                      'Zehnerstelle = 8
+                  ClearDigitalChannel(8)                                      'Digital 8 für A deaktivieren
+                  ClearDigitalChannel(7)                                      'Digital 7 für B deaktivieren
+                  ClearDigitalChannel(6)                                      'Digital 6 für C deaktivieren
+                  SetDigitalChannel(5)                                          'Digital 5 für D aktivieren
+              Case 7                                                                      'Zehnerstelle = 7
+                  SetDigitalChannel(8)                                          'Digital 8 für A aktivieren
+                  SetDigitalChannel(7)                                          'Digital 7 für B aktivieren
+                  SetDigitalChannel(6)                                          'Digital 6 für C aktivieren
+                  ClearDigitalChannel(5)                                      'Digital 5 für D deaktivieren
+              Case 6                                                                      'Zehnerstelle = 6
+                  ClearDigitalChannel(8)                                      'Digital 8 für A deaktivieren
+                  SetDigitalChannel(7)                                          'Digital 7 für B aktivieren
+                  SetDigitalChannel(6)                                          'Digital 6 für C aktivieren
+                  ClearDigitalChannel(5)                                      'Digital 5 für D deaktivieren
+              Case 5                                                                      'Zehnerstelle = 5
+                  SetDigitalChannel(8)                                          'Digital 8 für A aktivieren
+                  ClearDigitalChannel(7)                                      'Digital 7 für B deaktivieren
+                  SetDigitalChannel(6)                                          'Digital 6 für C aktivieren
+                  ClearDigitalChannel(5)                                      'Digital 5 für D deaktivieren
+              Case 4                                                                      'Zehnerstelle = 4
+                  ClearDigitalChannel(8)                                      'Digital 8 für A deaktivieren
+                  ClearDigitalChannel(7)                                      'Digital 7 für B deaktivieren
+                  SetDigitalChannel(6)                                          'Digital 6 für C aktivieren
+                  ClearDigitalChannel(5)                                      'Digital 5 für D deaktivieren
+              Case 3                                                                      'Zehnerstelle = 3
+                  SetDigitalChannel(8)                                          'Digital 8 für A aktivieren
+                  SetDigitalChannel(7)                                          'Digital 7 für B aktivieren
+                  ClearDigitalChannel(6)                                      'Digital 6 für C deaktivieren
+                  ClearDigitalChannel(5)                                      'Digital 5 für D deaktivieren
+              Case 2                                                                      'Zehnerstelle = 2
+                  ClearDigitalChannel(8)                                      'Digital 8 für A deaktivieren
+                  SetDigitalChannel(7)                                          'Digital 7 für B aktivieren
+                  ClearDigitalChannel(6)                                      'Digital 6 für C deaktivieren
+                  ClearDigitalChannel(5)                                      'Digital 5 für D deaktivieren
+              Case 1                                                                      'Zehnerstelle = 1
+                  SetDigitalChannel(8)                                          'Digital 8 für A aktivieren
+                  ClearDigitalChannel(7)                                      'Digital 7 für B deaktivieren
+                  ClearDigitalChannel(6)                                      'Digital 6 für C deaktivieren
+                  ClearDigitalChannel(5)                                      'Digital 5 für D deaktivieren
+              Case 0                                                                      'Zehnerstelle = 0
+                  SetDigitalChannel(8)                                          'Digital 8 für A aktivieren
+                  SetDigitalChannel(7)                                          'Digital 5 für B aktivieren
+                  SetDigitalChannel(6)                                          'Digital 6 für C aktivieren
+                  SetDigitalChannel(5)                                          'Digital 7 für D aktivieren
+
+          End Select
+          Select Case Einer                     'Einer über Digitalausgänge: A = D8, B = D7, C = D6, D = D5
+              Case 9                                                                      'Zehnerstelle = 9
+                  SetDigitalChannel(4)                                          'Digital 4 für A aktivieren
+                  ClearDigitalChannel(3)                                      'Digital 3 für B deaktivieren
+                  ClearDigitalChannel(2)                                      'Digital 2 für C deaktivieren
+                  SetDigitalChannel(1)                                          'Digital 1 für D aktivieren
+              Case 8                                                                      'Zehnerstelle = 8
+                  ClearDigitalChannel(4)                                      'Digital 4 für A deaktivieren
+                  ClearDigitalChannel(3)                                      'Digital 3 für B deaktivieren
+                  ClearDigitalChannel(2)                                      'Digital 2 für C deaktivieren
+                  SetDigitalChannel(1)                                          'Digital 1 für D aktivieren
+              Case 7                                                                      'Zehnerstelle = 7
+                  SetDigitalChannel(4)                                          'Digital 4 für A aktivieren
+                  SetDigitalChannel(3)                                          'Digital 3 für B aktivieren
+                  SetDigitalChannel(2)                                          'Digital 2 für C aktivieren
+                  ClearDigitalChannel(1)                                      'Digital 1 für D deaktivieren
+              Case 6                                                                      'Zehnerstelle = 6
+                  ClearDigitalChannel(4)                                      'Digital 4 für A deaktivieren
+                  SetDigitalChannel(3)                                          'Digital 3 für B aktivieren
+                  SetDigitalChannel(2)                                          'Digital 2 für C aktivieren
+                  ClearDigitalChannel(1)                                      'Digital 1 für D deaktivieren
+              Case 5                                                                      'Zehnerstelle = 5
+                  SetDigitalChannel(4)                                          'Digital 4 für A aktivieren
+                  ClearDigitalChannel(3)                                      'Digital 3 für B deaktivieren
+                  SetDigitalChannel(2)                                          'Digital 2 für C aktivieren
+                  ClearDigitalChannel(1)                                      'Digital 1 für D deaktivieren
+              Case 4                                                                      'Zehnerstelle = 4
+                  ClearDigitalChannel(4)                                      'Digital 4 für A deaktivieren
+                  ClearDigitalChannel(3)                                      'Digital 3 für B deaktivieren
+                  SetDigitalChannel(2)                                          'Digital 2 für C aktivieren
+                  ClearDigitalChannel(1)                                      'Digital 1 für D deaktivieren
+              Case 3                                                                      'Zehnerstelle = 3
+                  SetDigitalChannel(4)                                          'Digital 4 für A aktivieren
+                  SetDigitalChannel(3)                                          'Digital 3 für B aktivieren
+                  ClearDigitalChannel(2)                                      'Digital 2 für C deaktivieren
+                  ClearDigitalChannel(1)                                      'Digital 1 für D deaktivieren
+              Case 2                                                                      'Zehnerstelle = 2
+                  ClearDigitalChannel(4)                                      'Digital 4 für A deaktivieren
+                  SetDigitalChannel(3)                                          'Digital 3 für B aktivieren
+                  ClearDigitalChannel(2)                                      'Digital 2 für C deaktivieren
+                  ClearDigitalChannel(1)                                      'Digital 1 für D deaktivieren
+              Case 1                                                                      'Zehnerstelle = 1
+                  SetDigitalChannel(4)                                          'Digital 4 für A aktivieren
+                  ClearDigitalChannel(3)                                      'Digital 3 für B deaktivieren
+                  ClearDigitalChannel(2)                                      'Digital 2 für C deaktivieren
+                  ClearDigitalChannel(1)                                      'Digital 1 für D deaktivieren
+              Case 0                                                                      'Zehnerstelle = 0
+                  ClearDigitalChannel(4)                                      'Digital 4 für A deaktivieren
+                  ClearDigitalChannel(3)                                      'Digital 3 für B deaktivieren
+                  ClearDigitalChannel(2)                                      'Digital 2 für C deaktivieren
+                  ClearDigitalChannel(1)                                      'Digital 4 für D deaktivieren
+          End Select
+      End Sub
+  End Class
+</code>
+</pre>
+
+<h2><a name="code2"></a>Quellcode der Arduino Sendersoftware </h2>
+
+<pre>
+<code>
+  // Signale für die EMC Ampel und die 7-Segmentanzeige senden
+  // 433 MHz Sender mit der VirtualWire Library  V 1.27
+  // Karl-Josef Schneider      Version 0.6 vom 08.09.2017
+  //..!....1....!....2....!....3....!....4....!....5....!....6....!....7....!....8....!
+  #include <VirtualWire.h>                    //Libary einbinden
+  #undef int
+  #undef abs
+  #undef double
+  #undef float
+  #undef round
+  int p3;
+  int p4;
+  int p5;
+  int p6;
+  int p7;
+  int p8;
+  int p9;
+  int p10;
+  int p11;
+  int p12;
+  char Array[10];                             //Array definieren
+  void setup() {                              //Start Setup
+    pinMode(3, INPUT);                        //Pin 3 als Input
+    pinMode(4, INPUT);                        //Pin 4 als Input
+    pinMode(5, INPUT);                        //Pin 5 als Input
+    pinMode(6, INPUT);                        //Pin 6 als Input
+    pinMode(7, INPUT);                        //Pin 7 als Input
+    pinMode(8, INPUT);                        //Pin 8 als Input
+    pinMode(9, INPUT);                        //Pin 9 als Input
+    pinMode(10, INPUT);                       //Pin 10 als Input
+    pinMode(11, INPUT);                       //Pin 11 als Input
+    pinMode(13, INPUT);                       //Pin 13 als Input
+    vw_set_ptt_inverted(true);                //erforderlich für RF Link Modul
+    vw_setup(2000);                           //Bits pro Sekunde
+    vw_set_tx_pin(2);                         //Datenleitung auf Pin 2
+  }                                           //Ende Setup
+  void loop(){                                //Start Schleife
+     //digitale Eingänge abfragen und als p3 bis p12 speichern
+     p3=(digitalRead(3));                     //p3 = Zustand von Pin 3
+     p4=(digitalRead(4));                     //p4 = Zustand von Pin 4
+     p5=(digitalRead(5));                     //p5 = Zustand von Pin 5
+     p6=(digitalRead(6));                     //p6 = Zustand von Pin 6
+     p7=(digitalRead(7));                     //p7 = Zustand von Pin 7
+     p8=(digitalRead(8));                     //p8 = Zustand von Pin 8
+     p9=(digitalRead(9));                     //p9 = Zustand von Pin 9
+     p10=(digitalRead(10));                   //p10 = Zustand von Pin 10
+     p11=(digitalRead(11));                   //p11 = Zustand von Pin 11
+     p12=(digitalRead(13));                   //p12 = Zustand von Pin 13
+     //Array aus p3 bis p12 erstellen
+     sprintf(Array, "%i.%i.%i.%i.%i.%i.%i.%i.%i.%i", p3,p4,p5,p6,p7,p8,p9,p10,p11,p12);
+     vw_send((uint8_t*)Array, strlen(Array)); //Array-Nachricht senden
+     vw_wait_tx();                            //warten bis Nachricht komplett ist
+     delay(200);                              //Pause 200 Millisekunden
+  }                                           //Ende Schleife
+</code>
+</pre>
+
+<h2><a name="code3"></a>Quellcode der Arduino Empfängersoftware </h2>
+
+<pre>
+<code>
+  // Signale für die EMC Ampel und die 7-Segmentanzeige per Funk empfangen
+  // 433 MHz Empfänger mit der VirtualWire Library V 1.27
+  // Karl-Josef Schneider      Version 0.6 vom 18.03.2018
+  //..!....1....!....2....!....3....!....4....!....5....!....6....!....7....!....8....!
+  #include <VirtualWire.h>                    //Libary einbinden
+
+  //#undef int
+  //#undef abs
+  //#undef double
+  //#undef float
+  //#undef round
+  void setup() {                              //Start Setup
+    Serial.begin(9600);                       //öffnet den seriellen Monitor
+    pinMode(3, OUTPUT);                       //Pin 3 als Output für B-Zehner
+    pinMode(4, OUTPUT);                       //Pin 4 als Output für C-Zehner
+    pinMode(5, OUTPUT);                       //Pin 5 als Output für D-Zehner
+    pinMode(6, OUTPUT);                       //Pin 6 als Output für A-Zehner
+    pinMode(7, OUTPUT);                       //Pin 7 als Output für B-Einer
+    pinMode(8, OUTPUT);                       //Pin 8 als Output für C-Einer
+    pinMode(9, OUTPUT);                       //Pin 9 als Output für D-Einer
+    pinMode(10, OUTPUT);                      //Pin 10 als Output für A-einer
+    pinMode(11, OUTPUT);                      //Pin 11 als Output für rot
+    pinMode(12, OUTPUT);                      //Pin 12 als Output für rot
+    pinMode(13, OUTPUT);                      //Pin 13 als Output für grün
+    vw_set_ptt_inverted(true);                //erforderlich für RX Link Modul
+    vw_setup(2000);                           //Bits pro Sekunde
+    vw_set_rx_pin(2);                         //Datenleitung auf Pin 2
+    vw_rx_start();                            //Empfänger starten
+  }                                           //Ende Setup
+  void loop() {                               //Start Schleife
+    uint8_t buf[VW_MAX_MESSAGE_LEN];
+    uint8_t buflen = VW_MAX_MESSAGE_LEN;
+    if (vw_get_message(buf, &buflen)) {       //wenn eine Nachricht eingegangen ist
+      //Nur zur Anzeige auf dem seriellen Monitor, kann nach Testphase entfallen
+      int i;
+      for (i=0;i< buflen;i++) {
+        Serial.print((char)buf[i]); }         //Nachricht auf seriell. Monitor ausgeben
+        Serial.println("");                   //Zeilenvorschub
+        Serial.print((char)buf[0]);
+        Serial.print((char)buf[2]);
+        Serial.print((char)buf[4]);
+        Serial.print((char)buf[6]);
+        Serial.print((char)buf[8]);
+        Serial.print((char)buf[10]);
+        Serial.print((char)buf[12]);
+        Serial.print((char)buf[14]);
+        Serial.print((char)buf[16]);
+        Serial.print((char)buf[18]);
+        Serial.println("");
+
+      //Werte aus dem Speicher abfragen und entsprechend die Ausgänge setzen
+      if ((char)buf[0]=='0'){                 //Speicherwert 1 [0] A-Zehner
+        digitalWrite(6,HIGH);}                //wenn Wert = 0 dann Pin 6 = HIGH
+        else {digitalWrite(6,LOW);}           //sonst Pin 6 = LOW
+      if ((char)buf[2]=='0'){                 //Speicherwert 2 [2] B-Zehner
+        digitalWrite(3,HIGH);}                //wenn Wert = 0 dann Pin 3 = HIGH
+        else {digitalWrite(3,LOW);}           //sonst Pin 3 = LOW
+      if ((char)buf[4]=='0'){                 //Speicherwert 3 [4] C-Zehner
+        digitalWrite(4,HIGH);}                //wenn Wert = 0 dann Pin 4 = HIGH
+        else {digitalWrite(4,LOW);}           //sonst Pin 4 = LOW
+      if ((char)buf[6]=='0'){                 //Speicherwert 4 [6] D-Zehner
+        digitalWrite(5,HIGH);}                //wenn Wert = 0 dann Pin 5 = HIGH
+        else {digitalWrite(5,LOW);}           //sonst Pin 5 = LOW
+      if ((char)buf[8]=='0'){                 //Speicherwert 5 [8] A-Einer
+        digitalWrite(10,HIGH);}               //wenn Wert = 0 dann Pin 10 = HIGH
+        else {digitalWrite(10,LOW);}          //sonst Pin 10 = LOW
+      if ((char)buf[10]=='0'){                //Speicherwert 6 [10] B-Einer
+        digitalWrite(7,HIGH);}                //wenn Wert = 0 dann Pin 7 = HIGH
+        else {digitalWrite(7,LOW);}           //sonst Pin 7 = LOW
+      if ((char)buf[12]=='0'){                //Speicherwert 7 [12] C-Einer
+        digitalWrite(8,HIGH);}                //wenn Wert = 0 dann Pin 8 = HIGH
+        else {digitalWrite(8,LOW);}           //sonst Pin 8 = LOW
+      if ((char)buf[14]=='0'){                //Speicherwert 8 [14] D-Einer
+        digitalWrite(9,HIGH);}                //wenn Wert = 0 dann Pin 9 = HIGH
+        else {digitalWrite(9,LOW);}           //sonst Pin 9 = LOW
+      if ((char)buf[16]=='0'){                //Speicherwert 9 [16] rot
+        digitalWrite(12,HIGH);}               //wenn Wert = 0 dann Pin 11 = HIGH
+        else {digitalWrite(12,LOW);}          //sonst Pin 11 = LOW
+      if ((char)buf[18]=='0'){                //Speicherwert 10 [18] grün
+        digitalWrite(13,HIGH);}               //wenn Wert = 0 dann Pin 13 = HIGH
+        else {digitalWrite(13,LOW);}          //sonst Pin 13 = LOW
+    }                                         //Ende If
+  }                                           //Ende Schleife
+</code>
+</pre>
