@@ -1,0 +1,513 @@
+---
+layout: article
+category: haus
+title: 'Schaltuhr für Außenbeleuchtung mit Dämmerungsschalter und Bewegungsmelder'
+img: 'haus/laterne_titel.jpg'
+order: 1
+---
+
+<ul class="toc">
+  <li><a href="#ausgang">Ausganssituation und Aufgabenstellung</a></li>
+  <li><a href="#hardware">Hardware</a></li>
+  <li><a href="#schaltplan">Schaltplan</a></li>
+  <li><a href="#flussdiagramm">Flussdiagramm</a></li>
+  <li><a href="#code">Beschreibung des Codes</a></li>
+</ul>
+
+<h2><a name="ausgang"></a>Ausganssituation und Aufgabenstellung</h2>
+
+<p>
+  Eine Laterne als Beleuchtung des Vorgartens wurde bisher über eine mechanische
+  Zeitschaltuhr gesteuert. Hierbei mussten entsprechend der Jahreszeiten in
+  regelmäßigen Abständen die Schaltzeiten manuell angepasst werden. Ebenso waren
+  die Umschaltungen von Sommer-/Winterzeit manuell vorzunehmen. Auch nach
+  Stromabschaltungen waren die Einstellungen neu zu justieren.
+</p>
+
+<p align="center">
+  <img src="/img/haus/laterne/laterne_aussen.jpg"
+   alt="Laterne Aussenansicht" width="" height="">
+</p>
+
+<p>
+  All diese Nachteile sollten nun beseitigt werden und gleichzeitig weitere
+  Komfortmerkmale hinzugefügt werden:
+</p>
+
+<ul>
+  <li>Steuerung der Anlage über eine Real Time Clock</li>
+  <li>automatische Umschaltung von Sommer-/Winterzeit</li>
+  <li>Dämmerungsschalter für die Abend- und Morgenstunden</li>
+  <li>Bewegungsschalter für die Nachtstunden</li>
+  <br>
+</ul>
+
+<h2><a name="hardware"></a>Hardware</h2>
+
+<p>
+  Die Realisierung des Projektes wurde mit folgenden Komponenten durchgeführt:
+</p>
+
+<ul>
+  <li>Arduino Uno als Steuereinheit</li>
+  <li>Real Time Clock RS3231</li>
+  <li>LCD Display 8 x 2 mit I2C-Konverter für die Anzeige</li>
+  <li>HC-SR501 PIR Bewegungssensor</li>
+  <li>LDR Dämmerungssensor</li>
+  <li>Relaisschaltung mit Transistoren</li>
+  <li>Tastensatz für die Einstellungen</li>
+  <li>230 V / 5 V Netzteil</li>
+  <li>Hutschienengehäuse für die Hauptkomponenten</li>
+  <li>Wassergeschütztes Außengehäuse für die Sensoren</li>
+  <br>
+</ul>
+
+<p align="center">
+  <img src="/img/haus/laterne/laterne_steuereinheit.jpg"
+   alt="Laterne Steuereinheit" width="" height="">
+</p>
+
+<h2><a name="schaltplan"></a>Schaltplan</h2>
+
+<p>
+  Die Zusammenschaltung von Microcontroller, RTC und LCD-Display erfolgte über
+  den I2C-Bus mit nur vier Leitungen, zwei für die Stromversorgung und zwei für
+  den Datentransfer.
+</p>
+
+<p>
+  Die digitalen Ports des Arduino werden fast ausschließlich für die Tastatur
+  und zugehörige LED-Anzeigen sowie eine Relais-Ausgang genutzt, für den
+  Anschluss der Sensoren wird auf die analogen Ports zurückgegriffen.
+</p>
+
+<p>
+  Das Relais wird sowohl vom Dämmerungsschalter als auch vom Bewegungsmelder
+  jeweils über eine PNP-Transistorschaltung angesteuert.
+</p>
+
+<p>
+  Die Komponenten sind auf zwei Platinen in einem Hutschienengehäuse verbaut,
+  die beiden Sensoren sind in einem wassergeschützten Außengehäuse untergebracht
+  und über eine 4-adrige Steuerleitung verbunden.
+</p>
+
+<p align="center">
+  <img src="/img/haus/laterne/laterne_schaltplan.jpg"
+   alt="Laterne Schaltplan" width="" height="">
+</p>
+
+<h2><a name="flussdiagramm"></a>Flussdiagramm</h2>
+
+<p align="center">
+  <img src="/img/haus/laterne/laterne_flussdiagramm.jpg"
+   alt="Laterne Flussdiagramm" width="" height="">
+</p>
+
+<h2><a name="code"></a>Beschreibung des Codes</h2>
+
+<h3><a name="libraries"></a>Libraries</h3>
+
+<p>
+  Der Sketch benötigt folgende Libraries für die I2C-Kommunikation, das
+  LCD-Display, die Real Time Clock und das Arduino interne EEPROM:
+</p>
+
+<pre>
+<code>
+// Libraries hinzufügen -------------------------------------------------------------
+   #include <Wire.h>                           // Lib zur I2C-Kommunikation
+   #include <LiquidCrystal_I2C.h>              // Lib für das LCD-Display über I2C
+   #include "RTClib.h"                         // Lib für die Real Time Clock
+   #include <EEPROM.h>                         // Lib für das interne EEPROM
+</code>
+</pre>
+
+<h3><a name="display und RTC"></a>Setup LCD-Display und RTC</h3>
+
+<p>
+  Das LCD-Display und die Real Time Clock müssen wie folgt definiert werden:
+</p>
+
+<pre>
+<code>
+// Setup LCD-Display ----------------------------------------------------------------
+   LiquidCrystal_I2C lcd(0x27, 8, 2);          // HEX-Adresse 0x27,8 Zeichen,2 Zeilen
+
+// Setup Real Time Clock ------------------------------------------------------------
+   RTC_DS3231 RTC;
+</code>
+</pre>
+
+<h3><a name="variablen"></a>Variablen deklarieren</h3>
+
+<p>
+  Für die diversen Funktionen der Taster und die Werte zum Stellen der Zeiten
+  werden folgende Variablen deklariert:
+</p>
+
+<pre>
+<code>
+// Variablen deklarieren ------------------------------------------------------------
+   // Variablen für Digital-Pins               --------------------------------------
+   #define Taster_OK 13                        // Taster für Bestätigung nach Eingabe
+   #define Taster_Plus 11                      // Taster um Wert zu erhöhen
+   #define Taster_Minus 12                     // Taster um Wert zu erniedrigen
+   const int TastePin[] = {10, 9, 8, 7};       // Nummern der Tast-Pins
+   const int LEDPin[] = {3, 4, 5, 6};          // Nummern der Output-Pins
+   const byte pins = 4;                        // Anzahl der Pins
+   int OK = 1;                                 // OK-Pin auf 1 setzen
+   int Stunden, Minuten;                       // Zeitvariablen für Taster
+   int Ein_Stunde, Ein_Minute;                 // Einschaltzeit
+   int Aus_Stunde, Aus_Minute;                 // Ausschaltzeit
+   int Uhr_h, Uhr_m, Uhr_s;                    // Variablen für Uhrzeit
+   int Sommer;                                 // Sommerzeit true/false
+   const int LDR = A0;                         // Pin für LDR Eingang
+   const int Relais = 2;                       // Pin für Relais Ausgang
+   int LDR_Wert = 0;                           // Wert für LDR = 0
+   const int PIR = A1;                         // Pin für Bewegungsmelder
+   // Zeit-Variablen                           --------------------------------------
+   bool dunkel = false;                        // Merker Schwellwertunterschreitung
+   bool action = false;                        // Merker für ausgelöste Aktion
+   unsigned long dunkel_Start = 0;             // Merker für Begin der Dunkelphase
+</code>
+</pre>
+
+<h3><a name="setup"></a>Setup</h3>
+
+<p>
+  In der Startroutine werden zunächst die Ports als INPUT (ggfls. mit PullUp)
+  oder OUTPUT definiert. Das LCD-Display und die RTC werden gestartet. Der Start
+  des seriellen Monitors ist nur für die Entwicklungsphase erforderlich, dieser
+  kann ebenso wie alle Ausgaben auf dem seriellen Monitor später gelöscht werden.
+</p>
+
+<p>
+  IDie Uhrzeit kann über die Systemuhr des PC gesetzt werden, auch die Ein- und
+  Ausschaltzeiten im EEPROM. Diese Zeilen müssen anschließend auskommentiert
+  werden, die Zeiten werden dann beim Setup von der RTC oder aus dem EEPROM
+  eingelesen. Eine Änderung der Zeitdaten ist später im Programmablauf über
+  Tasteneingabe möglich.
+</p>
+
+<pre>
+<code>
+// Startroutine ---------------------------------------------------------------------
+   void setup(){
+   Serial.begin(9600);                         // Seriellen Monitor starten
+   for (byte i = 0; i < pins; i++)   {
+     pinMode(TastePin[i], INPUT_PULLUP);       // Pins = Inputs mit PullUp
+     pinMode(LEDPin[i], OUTPUT);     }         // Pins = Outputs
+   digitalWrite(LEDPin[0], HIGH);              // Pin 6 = HIGH nach Booten
+   lcd.init();                                 // LCD starten
+   lcd.backlight();                            // Hintergrundbeleuchtung einschalten
+   RTC.begin();                                // Uhr starten
+   // Wenn Uhrzeit neu gesetzt werden soll, sonst auskommentieren !!!
+   // RTC.adjust(DateTime(__DATE__, __TIME__));   // Zeit vom PC einlesen
+   //EEPROM.update(0, 7);EEPROM.update(1, 15);
+   //EEPROM.update(2, 1);EEPROM.update(3, 10);
+   Ein_Stunde = EEPROM.read(0);                // Einschaltzeit Stunde einlesen
+   Ein_Minute = EEPROM.read(1);                // Einschaltzeit Minute einlesen
+   Aus_Stunde = EEPROM.read(2);                // Ausschaltzeit Stunde einlesen
+   Aus_Minute = EEPROM.read(3);                // Ausschaltzeit Minute einlesen
+   pinMode(Taster_OK, INPUT_PULLUP);           // Pin = Input mit PullUp
+   pinMode(Taster_Plus, INPUT_PULLUP);         // Pin = Input mit PullUp
+   pinMode(Taster_Minus, INPUT_PULLUP);        // Pin = Input mit Pullup
+   pinMode(Relais, OUTPUT);                    // Pin = Output
+   digitalWrite(Relais, HIGH);                 // Relais Output bei Start HIGH
+   pinMode(PIR, INPUT);                        // Pin = Input Bewegungsmelder
+   pinMode(A2,OUTPUT);                         // Pin = Output Bewegungsmelder
+   digitalWrite(A2, HIGH);                     // Bewegungsmelder bei Start HIGH
+   } // Ende Startroutine -----------------------------------------------------------
+</code>
+</pre>
+
+<h3><a name="loop"></a>Hauptroutine</h3>
+
+<p>
+  Hier wird zunächst die Uhrzeit aus der RTC eingelesen und falls erforderlich
+  über die Abfrage der Sommerzeit korrigiert.
+</p>
+
+<p>
+  Im weiteren Ablauf der Schleife wird das Zeitfenster ermittelt. Tagsüber ist
+  der Dämmerungsschalter aktiv, d.h. bei einsetzender Dämmerung soll die Lampe
+  eingeschaltet werden. Hierzu ist der LDR als Spannungsteiler auf einen
+  analogen Eingang geschaltet, durch Division durch 10,23 ergibt sich hier ein
+  Signalwert in [%]. Bei Dunkelheit fällt dieser Wert ab, hier wird 30 % als
+  Schwellwert gewählt. Dieser Wert ist im Versuch zu ermitteln kann individuell
+  den örtlichen Gegebenheiten angepasst werden. Um beim Einsetzen der Dunkelheit
+  ein sauberes Umschalten zu gewährleisten, wird geprüft, wie lange die
+  Dunkelphase schon läuft und dann wird erst nach einer bestimmten Zeit
+  (z.B. 60 Sekunden) umgeschaltet. Somit werden auch Helligkeitsstörungen
+  während der Tag-Phase eliminiert.
+</p>
+
+<p>
+  Zu einer bestimmten Nachtzeit (Ausschaltzeit z.B. 1 Uhr) soll die Lampe nicht
+   mehr permanent leuchten sondern nur bei Bedarf über einen Bewegungsmelder
+   eingeschaltet werden. Nur in dieser Phase ist der Bewegungsmelder aktiv und
+   der Dämmerungsschalter deaktiviert. Ab einer bestimmten Tageszeit
+   (Einschaltzeit z.B. 7 Uhr) wird dieses Verhältnis wieder umgekehrt. Im Sommer
+   ist es zu dieser Zeit schon hell und es ist keine Aktivität erforderlich, bei
+   Dunkelheit im Winter schaltet sich die Beleuchtung über den Dämmerungsschalter
+   wieder ein und bei einsetzender Helligkeit wieder aus.
+</p>
+
+<p>
+  In der Hauptschleife werden ständig die Taster für den Betriebsmodus abgefragt.
+  Falls einer dieser Taster betätigt wird erfolgt eine Anzeige über die
+  entsprechende LED im Taster und das Programm verzweigt in die Subroutine für
+  die Einstellung der gewählten Operation. Hier erfolgt dann eine Neueinstellung
+  der Zeiten.
+</p>
+
+<pre>
+<code>
+// Hauptroutine =====================================================================
+   void loop() {                               // Schleife starten
+   Sommer = Sommerzeit();                      // Abfrage Sommerzeit
+   // Schaltungslogik                          --------------------------------------
+   // Der Schalter soll bei einsetzender Dunkelheit die Lampe einschalten, jedoch nur
+   // bis zu einer bestimmten Nachtzeit (Ausschaltzeit) aktiv bleiben. Nach Pause bis
+   // zur zu einer bestimmten Tageszeit (Einschaltzeit) wird das System wieder aktiv.
+   // In der Pausenzeit wird der Bewegungsmelder aktiviert.
+
+   DateTime now = RTC.now();                   // Datum und Zeit ermitteln
+   if (int(now.hour()) > Aus_Stunde &&
+       int(now.minute()) > Aus_Minute &&
+       int(now.hour()) < Ein_Stunde &&
+       int(now.minute()) < Ein_Minute)      {  // Bewegungsmelder  ------------------                         --------------------------------------
+   if (digitalRead(PIR) == HIGH)         {     // wenn Bewegung erkannt wurde
+      digitalWrite(A2, LOW);             }     // Relaisausgang = LOW > Relais EIN
+   else                                  {     // wenn keine Bewegung erkannt wurde
+      digitalWrite(A2, HIGH);            }  }  // Relaisausgang = HIGH > Relais AUS
+
+   else    {                                   // Dämmerungsschalter ----------------
+   Serial.print(dunkel_Start);Serial.print("  ");
+   Serial.println(millis()-dunkel_Start);
+   LDR_Wert = analogRead(LDR)/10.23;           // LDR-Wert in % abfragen
+   if (LDR_Wert < 30)                       {  // wenn der Wert < 30 (Dunkelheit)
+      if (!dunkel)        {                    // ja, gerade eben unterschritten?
+         dunkel_Start = millis();              // Startzeit für Dunkelphase merken
+         dunkel = true;   }                    // Merker dass es Dunkel ist setzen
+      else                                 {   // wenn die Dunkelphase schon läuft
+      if (millis() - dunkel_Start > 60000){    // schon seit 60 Sekunden dunkel?
+         if (!action)             {            // Aktion bereits ausgeführt?
+            digitalWrite(Relais, LOW);         // Relaisausgang = LOW > Relais EIN
+            action = true;        }        }}} // Merker setzen, Action ausgeführt
+   else                                    {   // Schwellwert nicht unterschritten
+      if (action)                    {         // ist Aktion gestartet?
+         digitalWrite(Relais, HIGH);           // Relaisausgang = HIGH > Relais AUS
+         action = false;                       // Merker für Aktion zurücksetzen
+      if (dunkel)                       {      // ist Dunkelphase gestartet?
+         dunkel = false;                }  }}  // Merker für Dunkelphase zurücksetzen
+   }
+
+   // Betriebsmodus über Taster abfragen --------------------------------------------
+   for (byte i = 0; i < pins; i++)           {
+     if (!digitalRead(TastePin[i]))         {  // invers, weil mit Pullups betrieben
+        Serial.print(i); Serial.println(F(" pressed"));
+        for (byte j = 0; j < pins; j++)    {
+        Serial.print(j);
+        if (i == j)                       {    // Einschalten des gedrückten Pins
+          digitalWrite(LEDPin[j], HIGH);
+          Serial.println(F("--> HIGH"));  }
+        else                              {    // Ausschalten der übrigen Pins
+          digitalWrite(LEDPin[j], LOW);
+          Serial.println(F("--> LOW"));   }}}}
+   // Normalbetrieb -----------------------------------------------------------------
+   if (digitalRead(LEDPin[0]) == HIGH)     {   // Normalbetrieb
+      Uhrzeit();                           }   // Uhrzeit anzeigen
+   // Uhrzeit einstellen ------------------------------------------------------------
+   if (digitalRead(LEDPin[1]) == HIGH)     {   // Modus Uhrzeit einstellen
+      lcd.setCursor(0,1);lcd.print("Uhr-Zeit");// Display Anzeige Einschaltzeit
+      digitalWrite(LEDPin[0],LOW);             // LEDPin Betrieb auf LOW
+      UhrStellen();                        }   // Uhrzeit einstellen
+      digitalWrite(LEDPin[1],LOW);             // LEDPin UhrStellen wieder auf LOW
+      digitalWrite(LEDPin[0],HIGH);            // LEDPin Betrieb wieder auf HIGH
+   // Einschaltzeit einstellen ------------------------------------------------------
+   if (digitalRead(LEDPin[2]) == HIGH)     {   // Modus Einschaltzeit einstellen
+      lcd.setCursor(0,0);lcd.print("  ");      // Cursor 1. Zeile
+      if (Ein_Stunde <10){ lcd.print("0");}    // führende 0 anzeigen
+      lcd.print(Ein_Stunde);lcd.print(":");    // Stunden anzeigen
+      if (Ein_Minute <10){ lcd.print("0");}    // führende 0 anzeigen
+      lcd.print(Ein_Minute); lcd.print("   "); // Minuten anzeigen
+      lcd.setCursor(0,1);lcd.print("Ein-Zeit");// Display Anzeige Einschaltzeit
+      digitalWrite(LEDPin[0],LOW);             // LEDPin Betrieb auf LOW
+      Einschaltzeit();                     }   // Einschaltzeit einstellen
+</code>
+</pre>
+
+<h3><a name="uhrzeit"></a>Subroutine Uhrzeit</h3>
+
+<p>
+  Die Uhrzeit wird aus der RTC gelesen. Nach Prüfung auf Sommerzeit wird ggfls.
+  eine Stunde addiert. Bei dieser Logik muss die Uhr immer auf Winterzeit
+  eingestellt werden, bei Einstellung über die PC-Uhr im Sommer muss also
+  manuell korrigiert werden! Für die Anzeige auf dem LCD-Display wird die Zeit
+  entsprechend konfiguriert indem bei einstelligen Ziffern die führende „0“ mit
+  ausgegeben wird.
+</p>
+
+<pre>
+<code>
+// Subroutine Uhrzeit ---------------------------------------------------------------
+   void Uhrzeit() {
+   DateTime now = RTC.now();                   // Datum und Zeit ermitteln
+   Uhr_h = int(now.hour());                    // Stunden ermitteln
+   if (Sommer == true)              {          // bei Sommerzeit
+       Uhr_h = int(now.hour()+1);   }          // 1 Stunde addieren
+   lcd.setCursor(0, 0);                        // Cursor Position=0, Zeile=0
+   if (Uhr_h <10){ lcd.print("0");}            // führende 0 anzeigen
+   lcd.print(Uhr_h);                           // Stunden anzeigen
+   lcd.print(":");
+   Uhr_m = int(now.minute());                  // Minuten ermitteln
+   if (Uhr_m <10){ lcd.print("0");}            // führende 0 anzeigen
+   lcd.print(Uhr_m);                           // Stunden anzeigen
+   lcd.print(":");
+   Uhr_s = int(now.second());                  // Sekunden ermitteln
+   if (Uhr_s <10){ lcd.print("0");}            // führende 0 anzeigen
+   lcd.print(Uhr_s);                           // Stunden anzeigen
+   lcd.setCursor(0,1);                         // Cursor Position=0, Zeile=1
+   lcd.print("Betrieb ");                      // Uhrzeit
+   } // Ende Uhrzeit ----------------------------------------------------------------
+</code>
+</pre>
+
+<h3><a name="sommerzeit"></a>Subroutine Sommerzeit</h3>
+
+<p>
+  Für die Abfrage der Sommerzeit habe ich auf den folgenden, im Netz verfügbaren
+  Algorithmus zurückgegriffen:
+</p>
+
+<pre>
+<code>
+// Subroutine Sommerzeit ermitteln --------------------------------------------------
+   boolean Sommerzeit()   {
+   DateTime now = RTC.now();
+   if (now.month()<3 || now.month()>10) return false;  // keine Sommerzeit Jan - Dez
+   if (now.month()>3 && now.month()<10) return true;   // Sommerzeit Apr bis Sep
+   if (now.month()==3 && now.day()<25) return false;   // keine Sommerzeit bis 25.März
+   if (now.month()==10 && now.day()<25) return true;   // Sommerzeit bis 25.Okt.
+   if (now.month()==3 && (now.hour() + 24 * now.day())
+       >=(1 + 24*(31 - (5 * now.year() /4 + 4) % 7))
+      || now.month()==10 && (now.hour() + 24 * now.day())
+      <(1 + 24*(31 - (5 * now.year() /4 + 1) % 7)))
+     return true;
+   else
+     return false;
+   } // Ende Sommerzeit -------------------------------------------------------------
+</code>
+</pre>
+
+<h3><a name="zeiteinstellungen"></a>Subroutinen für die Zeiteinstellungen</h3>
+
+<p>
+  Die Uhrzeit sowie die Ein- und Ausschaltzeit können manuell eingestellt werden.
+  Hierzu werden in der Hauptroutine ständig die Taster für den Betriebsmodus
+  abgefragt. Bei einer neuen Zeiteinstellung wird zunächst die alte Zeit
+  ermittelt und dann über eine weitere Tastatur mit „+“, „-„ und „OK“ Taste
+  verändert. Die neue Zeit wird dann als neue Uhrzeit in die RTC oder als neue
+  Schaltzeit in das EEPROM übernommen.
+</p>
+
+<pre>
+<code>
+// Subroutine Uhr stellen -----------------------------------------------------------
+   void UhrStellen(){
+   DateTime now = RTC.now();                   // Datum und Zeit auslesen
+   Stunden = int(now.hour());                  // Stunden ermitteln
+   Minuten = int(now.minute());                // Minuten ermitteln
+   Taster();                                   // Abfrage Taster
+   RTC.adjust(DateTime(now.year(),now.month(),now.day(),Stunden, Minuten,0));
+   } // Ende Uhr stellen ------------------------------------------------------------
+
+// Subroutine Einschaltzeit einstellen ----------------------------------------------
+   void Einschaltzeit(){
+   Stunden = Ein_Stunde;                       // Stunden übernehmen
+   Minuten = Ein_Minute;                       // Minuten übernehmen
+   Taster();                                   // Abfrage Taster
+   Ein_Stunde = Stunden;                       // neue Stunden übernehmen
+   Ein_Minute = Minuten;                       // neue Minute übernehmen
+   EEPROM.update(0, Ein_Stunde);               // neue Stunden ins EEPROM schreiben
+   EEPROM.update(1, Ein_Minute);               // neue Minuten ins EEPROM schreiben
+   Serial.print ("Einschaltzeit ");
+   Serial.print (Ein_Stunde); Serial.print (":");
+   Serial.println (Ein_Minute);
+   } // Ende Einschaltzeit ----------------------------------------------------------
+
+// Subroutine Ausschaltzeit einstellen ----------------------------------------------
+   void Ausschaltzeit(){
+   Stunden = Aus_Stunde;                       // Stunden übernehmen
+   Minuten = Aus_Minute;                       // Minuten übernehmen
+   Taster();                                   // Abfrage Taster
+   Aus_Stunde = Stunden;                       // neue Stunden übernehmen
+   Aus_Minute = Minuten;                       // neue Minute übernehmen
+   EEPROM.update(2, Aus_Stunde);               // neue Stunden ins EEPROM schreiben
+   EEPROM.update(3, Aus_Minute);               // neue Minuten ins EEPROM schreiben
+   Serial.print ("Ausschaltzeit ");
+   Serial.print (Aus_Stunde); Serial.print (":");
+   Serial.println (Aus_Minute);
+   } // Ende Einschaltzeit ----------------------------------------------------------
+</code>
+</pre>
+
+<h3><a name="taster"></a>Subroutine Taster für die Zeiteinstellung</h3>
+
+<p>
+  Diese Routine wird für alle Zeiteinstellungen genutzt. Der Cursor springt
+  zunächst auf die Stundenanzeige, diese kann dann über die „+“ oder „-„ Taste
+  verändert werden. Nach Bestätigung mit „OK“ wiederholt sich der gleiche
+  Vorgang für die Einstellung der Minuten. Nach einer weiteren Betätigung der
+  „OK“ Taste erfolgt der Rücksprung ins Hauptmenü.
+</p>
+
+<pre>
+<code>
+// Subroutine Taster abfragen -------------------------------------------------------
+   void Taster()  {
+   lcd.setCursor(0,0);lcd.print(">> ");        // Display Anzeige setzen
+   if (Stunden <10){ lcd.print("0");}          // führende 0 anzeigen
+   lcd.print(Stunden);lcd.print(":");          // Stunden anzeigen
+   if (Minuten <10){ lcd.print("0");}          // führende 0 anzeigen
+   lcd.print(Minuten);                         // Minuten anzeigen
+   OK = 1;                                     // OK auf 1 setzen
+   while(OK == 1)                          {   // solange OK = 1
+     delay(200);                               // Pause
+     if (digitalRead(Taster_Plus) == LOW)  {   // wenn Taster "+" gedrückt wird
+       delay(200);                             // Pause
+       if(Stunden>22) Stunden =0;              // um 23 Uhr auf 0 setzen
+       else Stunden ++;                    }   // sonst 1 Stunde addieren
+     if (digitalRead(Taster_Minus) == LOW) {   // wenn Taster "-" gedrückt wird
+       delay(200);                             // Pause
+       if(Stunden<=0) Stunden =23;             // um 0 Uhr auf 23 setzen
+       else Stunden --;                    }   // sonst 1 Stunde subtrahieren
+     OK = digitalRead(Taster_OK);              // Taste "OK" abfragen
+     lcd.setCursor(3, 0);                      // Cursor Position=0, Zeile=0
+     if (Stunden <10){ lcd.print("0");}        // führende 0 anzeigen
+     lcd.print(Stunden);                   }   // Stunden anzeigen
+   lcd.setCursor(0,0);                         // Display Anzeige Set
+   if (Stunden <10){ lcd.print("0");}          // führende 0 anzeigen
+   lcd.print(Stunden);lcd.print(":");          // Stunden anzeigen
+   if (Minuten <10){ lcd.print("0");}          // führende 0 anzeigen
+   lcd.print(Minuten);lcd.print(" <<");        // Minuten anzeigen
+   OK = 1;                                     // OK auf 1 setzen
+   while(OK == 1)                          {   // solange OK = 1
+     delay(200);                               // Pause
+     if (digitalRead(Taster_Plus) == LOW)  {   // wenn Taster "+" gedrückt wurde
+       delay(200);                             // Pause
+       if(Minuten>59) Minuten =0;              // bei > 59 Minuten auf 0 setzen
+       else Minuten ++;                    }   // sonst 1 Minute addieren
+     if (digitalRead(Taster_Minus) == LOW) {   // wenn Taste "-" gedrückt wurde
+       delay(200);                             // Pause
+       if(Minuten<=0) Minuten =59;             // bei < 0 Minuten auf 59 setzen
+       else Minuten --;                    }   // sonst 1 Minute subtrahieren
+     OK = digitalRead(Taster_OK);              // Taste "OK" abfragen
+     lcd.setCursor(3, 0);                      // Cursor Position=0, Zeile=0
+     if (Minuten <10){ lcd.print("0");}        // führende 0 anzeigen
+     lcd.print(Minuten);                   }   // Minuten anzeigen
+   } // Ende Taster abfragen --------------------------------------------------------
+</code>
+</pre>

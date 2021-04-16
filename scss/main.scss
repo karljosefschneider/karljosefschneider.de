@@ -29,6 +29,7 @@ body {
   color: $color-grey;
   background-color: $color-grey-06;
   font-family: "Calibri", Arial, Helvetica, sans-serif;
+  hyphens: auto;
   @media (min-width: $medium) {
     font-size: 1rem;
   }
