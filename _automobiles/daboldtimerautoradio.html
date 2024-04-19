@@ -1,0 +1,545 @@
+---
+layout: article
+category: automobiles
+title: 'DAB+ Oldtimer-Autoradio'
+img: 'automobiles/daboldtimerautoradio_titel.jpg'
+order: 8
+---
+
+<ul class="toc">
+  <li> <a href="#einleitung"> Einleitung</a></li>
+  <li> <a href="#konzept"> Konzept und Aufbau des DAB+ Oldtimerradios</a></li>
+  <li> <a href="#arduino"> Arduino DUE und Display (Platine oben)</a></li>
+  <li> <a href="#audio"> Tuner, Audiokomponenten und Stromversorgung (Platine unten)</a></li>
+  <li> <a href="#versuch"> Versuchsaufbau und Test des Tuners</a></li>
+</ul>
+
+<h2><a name="einleitung"></a>Einleitung</h2>
+
+<p>
+  In diesem Projekt wurde der Gedanke wieder aufgegriffen, ein altes Autoradio
+  mit neuer Technik auszustatten. Solche Radios im Retro-Design kann man käuflich
+  erwerben, jedoch entspricht das Aussehen nicht den Originalgeräten aus der Zeit
+  und sie sind damit sofort als moderne Nachbauten erkennbar. Oberstes Ziel war
+  also der Erhalt des originalen Gehäuses und der Bedienelemente.
+</p>
+
+<p>
+  Bei früheren Projekten wurden zunächst einige Oldtimer-Autoradios der Marke
+  Blaupunkt Frankfurt Rallye Stereo mit Bluetooth ausgerüstet. Diese Geräte sind
+  in meinen Oldtimern seit Jahren erfolgreich im Einsatz.
+</p>
+
+{% include figure.html
+  src="/img/automobiles/daboldtimerautoradio/1_stufe1.jpg"
+  alt="1. Stufe: Oldtimer Autoradio mit Bluetooth nachgerüstet"
+  caption="<b>Bild 1</b> 1. Stufe: Oldtimer Autoradio mit Bluetooth nachgerüstet"
+%}
+
+<p>
+  Da in absehbarer Zeit der UKW-Bereich nicht mehr verfügbar ist, wurde in einem
+  weiteren Projekt sie Technik eines modernen DAB+ Radios in das alte Gehäuse
+  eines Blaupunkt Frankfurt eingebaut. Die Bedienung konnte komplett auf die
+  alten Drehknöpfe umgestellt werden, das LCD-Display wurde hinter der originalen
+  Skala „versteckt“. Die Funktion des gesamten Systems war somit gegeben,
+  lediglich das Display ließ zu wünschen übrig.
+</p>
+
+{% include figure.html
+  src="/img/automobiles/daboldtimerautoradio/2_stufe2.jpg"
+  alt="2. Stufe: DAB-Technik hinter der Fassade eines Oldtimer Autoradios"
+  caption="<b>Bild 2</b> 2. Stufe: DAB-Technik hinter der Fassade eines Oldtimer Autoradios"
+%}
+
+<p>
+  Im vorliegenden Projekt sollte nun dieser Nachteil ausgeglichen werden und
+  weitere Optionen eingebaut werden. Hieraus ergab sich folgende Aufgabenstellung:
+</p>
+
+<p>
+  <ul>
+    <li>Verwendung eines alten Gehäuses mit den originalen Bedienelementen</li>
+    <li>Einsatz eines DAB+/UKW-Tuners</li>
+    <li>Steuerung des Tuners über einen Arduino Microcontroller</li>
+    <li>Individuell gestaltbares TFT-Display als Skala</li>
+    <li>Bluetooth Modul zum Freisprechen und zur Audio-Übertragung</li>
+    <li>MP3-Modul als interner Musikspeicher</li>
+    <li>Stereo-Endverstärker</li>
+  </ul>
+</p>
+
+<h2><a name="konzept"></a>Konzept und Aufbau des DAB+ Oldtimerradios</h2>
+
+<p>
+  Wie sich aus der Aufgabenstellung erkennen lässt, ergeben sich zwei Schwerpunkte
+  für die Realisierung des Projektes, einmal die Anzeige über TFT-Display und zum
+  anderen der DAB+ Tuner. Für beides wurde auf einen Microcontroller (Arduino DUE)
+  zurückgegriffen, der sowohl für die Ansteuerung des Displays wie auch des Tuners
+  erforderlich war. Die übrigen Audio-Komponenten sind Stand der Technik und
+  mussten „nur“ entsprechend eingebunden werden.
+</p>
+
+<p>
+  Aus dem Zusammenspiel aller Komponenten sowie aus den geometrischen
+  Gegebenheiten des alten Autoradiogehäuses ergab sich ein sinnvoller Aufbau
+  zwei Platinen, die übereinander angeordnet wurden:
+</p>
+
+<p>
+  Platine 1 (oben)
+</p>
+
+<p>
+  Auf dieser oberen Platine wurde der Arduino DUE zusammen mit dem Display
+  untergebracht. Hierbei handelt es sich bei der Platine für das Display um eine
+  separate Platine, die im rechten Winkel mit der Trägerplatine des Arduino
+  verlötet wurde und somit mit dieser eine Einheit darstellte.
+</p>
+
+{% include figure.html
+  src="/img/automobiles/daboldtimerautoradio/3_platineoben.jpg"
+  alt="Platine oben Lötseite"
+  caption="<b>Bild 3</b> Platine oben Lötseite"
+%}
+
+<p>
+  Platine 2 (unten)
+</p>
+
+<p>
+  Die zweite Platine ist auf dem Boden des Radiogehäuses positioniert und bildet
+  die Basisplatine für die Aufnahme der drei Audio-Signalquellen (Tuner,
+  Bluetooth-Modul und MP3-Player) sowie Endverstärker und die erforderliche
+  Stromversorgung.
+</p>
+
+<p>
+  Beide Platinen werden über Steckverbindungen miteinander elektrisch gekoppelt
+  und durch Schraubverbindungen gesichert.
+</p>
+
+{% include figure.html
+  src="/img/automobiles/daboldtimerautoradio/4_platineunten.jpg"
+  alt="Platine unten Bestückungsseite im Chassis"
+  caption="<b>Bild 4</b> Platine unten Bestückungsseite im Chassis"
+%}
+
+<h2><a name="arduino"></a>Arduino DUE und Display (Platine oben)</h2>
+
+<p>
+  Arduino Due
+</p>
+
+<p>
+  Für den vorliegenden Anwendungsfall war ein Microcontroller mit ausreichender
+  Anzahl von Ein- und Ausgängen erforderlich. Somit kamen aus der Arduino-Serie
+  nur der MEGA oder der DUE infrage. Beide sind vom Aufbau, d.h. Abmessungen und
+  Anordnung der Pins, identisch. Die Wahl fiel letztlich auf den DUE, da er den
+  leistungsfähigeren Prozessor enthält und die Betriebsspannung von 3,3 Volt den
+  Erfordernissen der TFT-Displays entspricht.
+</p>
+
+{% include figure.html
+  src="/img/automobiles/daboldtimerautoradio/5_arduinodue.jpg"
+  alt="Arduino Due"
+  caption="<b>Bild 5</b> Arduino Due"
+%}
+
+<p>
+  Gegenüber dem MEGA ist beim DUE zu beachten, dass er kein EEPROM enthält. Da
+  für das Projekt jedoch eine permanente Speicherfunktion erforderlich ist, wurde
+  dieser Mangel durch einen zusätzlichen FRAM-Speicher ausgeglichen. Weiter ist
+  zu beachten, dass manche Exemplare bei Anlegen der Betriebsspannung nicht
+  automatisch starten, es ist erst ein Betätigen des RESET-Tasters erforderlich!
+  Durch einen 10 uF Kondensator zwischen dem RESET-Eingang und Masse konnte
+  jedoch der Autostart hergestellt werden.
+</p>
+
+<p>
+  TFT-Display
+</p>
+
+<p>
+  Wie oben erwähnt war eine möglichst originalgetreue Ansicht der Skala mit
+  optionaler Anzeige der Betriebsmodi bisher problematisch und sollte hier
+  optimiert werden. Das folgende Bild zeigt eine Original-Skala mit den
+  entsprechenden Abmessungen.
+</p>
+
+{% include figure.html
+  src="/img/automobiles/daboldtimerautoradio/6_originalskala.jpg"
+  alt="Abmessungen der Original-Skala"
+  caption="<b>Bild 6</b> Abmessungen der Original-Skala"
+%}
+
+<p>
+  Die Lösung sollte in einem gleichgroßen TFT-Display bestehen. Dies war trotz
+  intensiver Such jedoch nicht zu finden, daher wurde auf 5 kleine Displays
+  zurückgegriffen (0,85 Zoll IPS TFT LCD-Module mit SPI Interface GC9107
+  Display-Treiber)
+</p>
+
+{% include figure.html
+  src="/img/automobiles/daboldtimerautoradio/7_tftdisplay.jpg"
+  alt="0.85 Zoll TFT-Display"
+  caption="<b>Bild 7</b> 0.85 Zoll TFT-Display"
+%}
+
+<p>
+  Als Standardanzeige konnte mit diesen Displays die Original-Skala des
+  Autoradios abgebildet werden:
+</p>
+
+{% include figure.html
+  src="/img/automobiles/daboldtimerautoradio/8_tftskala.jpg"
+  alt="Nachbildung der Original-Skala mit TFT-Displays"
+  caption="<b>Bild 8</b> Nachbildung der Original-Skala mit TFT-Displays"
+%}
+
+<p>
+  Als Nachteil erscheinen natürlich die senkrechten sichtbaren Trennkannten
+  zwischen den Displays. Da jedoch auch eine temporäre Anzeige der Betriebsmodi
+  erfolgen soll, stellen die einzelnen Displays einen Vorteil dar, da diese
+  gezielt angesteuert werden können.
+</p>
+
+<p>
+  Zwischen Arduino und den Displays wurde ein Multiplexer 74HC4051 geschaltet.
+  Dies bietet den Vorteil, dass die TFT-Bibliothek nur einmal verwendet werden
+  muss, da über den Multiplexer das CS-Signal gezielt auf die einzelnen Displays
+  geleitet werden kann. Andererseits können für einen schnellen Bootvorgang über
+  einen Bypass alle Displays gemeinsam angesprochen werden.
+</p>
+
+<p>
+  Schaltplan der oberen Platine
+</p>
+
+<p>
+  Der Schaltplan zeigt den Arduino DUE mit der Ansteuerung der Displays über den
+  Multiplexer sowie den Anschluss des FRAM-Speichers. Ebenso sind die
+  Stiftleisten für die Verbindung zur unteren Platine ersichtlich.
+</p>
+
+{% include figure.html
+  src="/img/automobiles/daboldtimerautoradio/9_schaltplanoben.jpg"
+  alt="Schaltplan der oberen Platine"
+  caption="<b>Bild 9</b> Schaltplan der oberen Platine"
+%}
+
+<h2><a name="audio"></a>Tuner, Audiokomponenten und Stromversorgung (Platine unten)</h2>
+
+<p>
+  Tuner
+</p>
+
+<p>
+  Auf der Suche nach einem Arduino-kompatiblen Tuner bin ich auf die Fa.
+  EXCITRON in Belgien gestoßen. Hier wurde ein Tuner zusammen mit einem Shield
+  für den Arduino Uno angeboten. Ein Beispiel-Sketch für den Arduino Uno wurde
+  ebenfalls zur Verfügung gestellt.
+</p>
+
+<p>
+  Als Tuner wurde der T4A von Keystone Semiconductor gewählt. Er kann DAB+/DAB
+  und UKW empfangen. Es handelt sich um ein Slave-Modul, was bedeutet, dass
+  Befehle an den Tuner gesendet werden müssen. Dies kann mit einem Arduino UNO
+  oder anderen µControllern erfolgen. Diese Kommunikation erfolgt über UART oder
+  I2C. Audio wird über LINE-OUT-Ausgänge bereitgestellt. Der Tuner arbeitet mit
+  3,3 V und 1,2 V.
+</p>
+
+{% include figure.html
+  src="/img/automobiles/daboldtimerautoradio/10_dabtuner.jpg"
+  alt="DAB-Tuner"
+  caption="<b>Bild 10</b> DAB-Tuner"
+%}
+
+<p>
+  Uno Interface
+</p>
+
+<p>
+  Für den Arduino UNO wurde eine Platine entwickelt, auf der die Teile
+  bereitgestellt werden, um den Tuner mit den richtigen Spannungen zu versorgen,
+  und dies zum richtigen Zeitpunkt (eine Spannung muss früher als die andere
+  auftreten). Diese Schnittstelle ist bereits verlötet und mit allen notwendigen
+  Headern und Anschlüssen ausgestattet. Die Schnittstellenplatine kann in den
+  Arduino UNO gesteckt werden. Diese Platine wird als komplettes Set zusammen
+  mit Tuner verkauft..
+</p>
+
+{% include figure.html
+  src="/img/automobiles/daboldtimerautoradio/11_interface.jpg"
+  alt="Arduino UNO Interface für den Tuner"
+  caption="<b>Bild 11</b> Arduino UNO Interface für den Tuner"
+%}
+
+<p>
+  Antenne
+</p>
+
+<p>
+  Der Anschluss der Antenne erfolgt unmittelbar an den Tuner über ein
+  Koaxialkabel mit einer Impedanz von 50 . Es sind 3 verschiedene Arten von
+  Antennen möglich:
+</p>
+
+<p>
+  <ul>
+    <li>Teleskopantenne mit einer Gesamtlänge von 510-750 mm. Für das beste
+      Ergebnis wird eine Länge von 750 mm empfohlen.</li>
+    <li>Wurf-Antenne mit einer Gesamtlänge von 1200-1600 mm. 1274 mm (Mitte
+      des DAB-Bands III) wird empfohlen. Die typische FM-Länge von 1500 mm ist OK.</li>
+    <li>Antennendipol mit den Abmessungen L: 1500 mm und D = 300 mm</li>
+  </ul>
+</p>
+
+<p>
+  Versuchsaufbau und Test des Tuners
+</p>
+
+<p>
+  Mit wenigen externen Komponenten (4 × 40 LCD und 4 Tastern) sowie dem Arduino
+  UNO Board mit dem Tuner lässt sich zu Testzwecken folgender Versuch aufbauen.
+</p>
+
+{% include figure.html
+  src="/img/automobiles/daboldtimerautoradio/12_versuchsaufbau.jpg"
+  alt="Versuchsaufbau des DAB+ Gerätes"
+  caption="<b>Bild 12</b> Versuchsaufbau des DAB+ Gerätes"
+%}
+
+<p>
+  Die Baudrate muss auf 115200 eingestellt werden und die Tasten wie folgt
+  verbunden werden:
+</p>
+
+<p>
+  ONOFF auf Pin 3, MODUS auf Pin 8, ENTER auf Pin 9, UNTEN auf Pin 10
+</p>
+
+<p>
+  Die mitgelieferte Software bezieht sich auf diesen Versuchsaufbau.
+</p>
+
+<p>
+  Mit Betätigung der MODUS-Taste wird der nächste Modus zur Auswahl eingestellt
+  und in der zweiten Zeile mit einem M dargestellt. Nach dem M wird der Code für
+  die verschiedenen Modi angezeigt. Der Modus ist nach Betätigung der
+  ENTER-Taste aktiv:
+</p>
+
+<p>
+  <ul>
+    <li>T = TUNE Auswahl eines anderen Senders</li>
+    <li>V = VOLUME Änderung der Lautstärke</li>
+    <li>E = EQUALIZER Auswählen verschiedener Sounds</li>
+    <li>D = DAB oder UKW</li>
+    <li>S = SEARCH Suche nach DAB-Sendern oder UKW-Sendern. Im DAB-Modus wird
+      der komplette Frequenzbereich gescannt. Im FM-Modus wird bis zum nächsten
+      Sender gesucht.</li>
+    <li>P = PRUNE beschneidet die Senderlisten und entfernt ungültige Sender</li>
+    <li>M = Speicher voreingestellt</li>
+    <li>G = Voreinstellung abrufen</li>
+  </ul>
+</p>
+
+<p>
+  Bluetooth Modul
+</p>
+
+<p>
+  Für die drahtlose Übertragung von Musik sowie für die Freisprechfunktion des
+  Telefons kommt das Mini CSR8645 APTx Hifi Bluetooth 4,0 Modul zum Einsatz.
+</p>
+
+<p>
+  Wenn die Verbindung zum Handy einmal eingerichtet wurde, verbindet sich das
+  Modul bei Anlegen der Betriebsspannung automatisch mit dem in Reichweite
+  befindlichen Telefon. Über entsprechende Tasten können die Wiedergabefunktionen
+  des Handys gesteuert werden.
+</p>
+
+<P>
+  Technische Daten:
+</p>
+
+<ul>
+  <li>Bluetooth Version:	4.0</li>
+  <li>Betriebsspannung: 	3,3 V</li>
+  <li>Arbeitsstrom: 		<=30mA</li>
+  <li>Stand-by-Strom: 	<50uA</li>
+  <li>Drahtlose Reichweite: 	<= 10 m</li>
+  <li>Frequenzbereich: 	2,4 GHZ ~ 2.480 GHZ</li>
+  <br>
+</ul>
+
+{% include figure.html
+  src="/img/automobiles/daboldtimerautoradio/12_bluetoothk.jpg"
+  alt="Bluetooth Modul"
+  caption="<b>Bild 12</b> Bluetooth Modul"
+%}
+
+<P>
+  MP3 Audio Modul
+</p>
+
+<p>
+  Als weitere Audio-Quelle soll ein MP3-Player eingeplant werden. Hierzu werden
+  zahlreiche Module kostengünstig angeboten, die sich jedoch in Ausstattung und
+  Qualität unterscheiden. Für mein Projekt waren folgende Merkmale entscheidend:
+</p>
+
+<p>
+  <ul>
+    <li>Geringe Abmessungen</li>
+    <li>Automatische Wiedergabe</li>
+    <li>Leichte Bedienung über Tasten</li>
+  </ul>
+</p>
+
+<p>
+  Nach Vorversuchen mit verschiedenen Modellen habe ich mich für das folgende
+  MP3 Audio Modul entschieden, welches mit SD-Karten Slot und USB-Port
+  ausgestattet ist. Leider lagen die Abmessungen mit 45 x 36 mm über dem Limit,
+  da jedoch der Endverstärker, die Klinkenbuchse und die Tasten auf der Platine
+  überflüssig waren, konnte ein erheblicher Teil der Platine abgetrennt werden
+  und somit die Maße auf 30 x 36 mm reduziert werden. Mit dem MP3 Audio Modul
+  können MP3-Dateien per USB-Stick (bis 32 GB) oder Micro-SD-Karte (bis 16 GB)
+  wiedergegeben werden.
+</p>
+
+<P>
+  Technische Daten:
+</p>
+
+<ul>
+  <li>USB-Port und Micro-SD-Slot</li>
+  <li>Bedienung über 4 Tasten</li>
+  <li>On-Board 2 W Monoverstärker</li>
+  <li>3,5 mm Kopfhörerbuchse </li>
+  <li>Spannungsversorgung 3,7 V – 5,5 V</li>
+  <li>Hauptchip GPD2856C</li>
+  <li>Abmessungen 45 mm x 36 mm</li>
+  <br>
+</ul>
+
+{% include figure.html
+  src="/img/automobiles/daboldtimerautoradio/13_mp3modul.jpg"
+  alt="MP3 Modul"
+  caption="<b>Bild 13</b> MP3 Modul"
+%}
+
+<p>
+  Die Wiedergabe der MP3-Dateien erfolgt automatisch beim Anlegen der
+  Betriebsspannung. Beim Abspielen blinkt die rote LED. Hierbei hat die
+  Micro-SD-Karte Vorrang, wenn diese nicht vorhanden ist, werden automatisch
+  die Dateien des USB-Sticks wiedergegeben. Wenn beide Karten vorhanden sind,
+  kann manuell das Quellgerät ausgewählt werden.
+</p>
+
+<P>
+  Die Bedienung erfolgt über 4 Tasten, die kurz oder lang (ca. 2 Sekunden)
+  betätigt werden.
+</p>
+
+{% include figure.html
+  src="/img/automobiles/daboldtimerautoradio/14_mp3schaltplan.jpg"
+  alt="MP3 Schaltplan"
+  caption="<b>Bild 14</b> MP3 Schaltplan"
+%}
+
+<P>
+  Audio-Signalquellenumschaltung
+</p>
+
+<P>
+  Die Umschaltung der drei Signalquellen sollte durch Tastendruck hintereinander
+  erfolgen. Beim Einschalten des Systems sollte immer zunächst der Tuner aktiv
+  sein, beim ersten Betätigen der Taste die Bluetooth-Verbindung, beim zweiten
+  Betätigen der Taste der MP3-Player und anschließend wieder der Tuner. Dieser
+  Vorgang wurde durch eine elektronische Schaltung mit 3 IC`s realisiert:
+</p>
+
+<P>
+  Zunächst kommt der Dekaden Zähler CD4017 zum Einsatz. Der 4017 hat 10 Ausgänge.
+  Es ist immer nur ein Ausgang 0 / Low, alle anderen sind 1 / High. Bei einer
+  steigenden Flanke (Takt von Low nach High) am Eingang Pin 14 wird auf den
+  jeweils nächsten Ausgang weiter geschaltet, bis alle 10 durch sind. Der Enable
+  -Eingang (ENA) muss dabei auf Low sein, sonst wird kein Takt durchgelassen.
+  Wird der Reset-Eingang (RST) auf High gelegt, wird der erste Ausgang Low, alle
+  anderen High, d.h. der Zähler startet wieder am Ausgangspunkt. Wird der Reset-
+  Eingang an einen Ausgang angeschlossen, wird nicht bis zehn hochgezählt sondern
+  der Zählvorgang wird an der gewünschten Stelle abgebrochen und neu gestartet.
+  Da im vorliegenden Fall nur 3 Zählvorgänge erforderlich sind, wird der Reset-
+  Eingang also mit Pin 7 (Out3) verbunden.
+</p>
+
+{% include figure.html
+  src="/img/automobiles/daboldtimerautoradio/15_cd4017.jpg"
+  alt="CD 4017"
+  caption="<b>Bild 15</b> MP3 Schaltplan"
+%}
+
+<p>
+  Die 3 Ausgänge des CD 4017 werden nun auf die Eingänge zwei bilateraler
+  Schalter CD 4066 geführt. In jedem IC befinden sich insgesamt 4 Analogschalter,
+  die komplett voneinander unabhängig arbeiten. Für jede Signalquelle sind bei
+  Stereobetrieb zwei Analogschalter erforderlich, es müssen also 2 ICs zum
+  Einsatz kommen, wobei beim zweiten IC nur zwei Analogschalter Verwendung finden.
+</p>
+
+<p>
+  Die Schaltung der kompletten Signalquellenumschaltung wird aus dem später
+  aufgeführten Gesamtschaltplan der Audio-Platine ersichtlich.
+</p>
+
+<P>
+  Endverstärker
+</p>
+
+<P>
+  Als Endverstärker wurde ein Bluetooth Verstärker Platinen Modul gewählt.
+  Dieser Verstärker kann mit 5 - 27 Volt betrieben werden und leistet maximal
+  2 x 50 Watt. Bei 12 V Bordspannung im Auto beträgt die Leistung 2 x 20 Watt.
+  Leider konnte das integrierte Bluetooth-Modul nicht genutzt werden, da keine
+  Umschaltmöglichkeit zwischen Bluetooth-Betrieb und dem vorhandenen Audio-Eingang
+  gegeben war. Daher wurde die komplette Eingangsstufe abgetrennt und die
+  Signalquellenumschaltung wie oben beschrieben realisiert.
+</p>
+
+{% include figure.html
+  src="/img/automobiles/daboldtimerautoradio/16_endverstaerker.jpg"
+  alt="Endverstärker"
+  caption="<b>Bild 16</b> Endverstärker"
+%}
+
+<P>
+  Schaltplan der unteren Platine
+</p>
+
+<P>
+Der Schaltplan zeigt die Audio-Komponenten (Tuner, Bluetooth-Modul, MP3-Modul
+und den Endverstärker) sowie die Signalquellenumschaltung und die
+Spannungsversorgungen. Ebenso sind die Stiftleisten für die Verbindung zur
+unteren Platine ersichtlich.
+</p>
+
+{% include figure.html
+  src="/img/automobiles/daboldtimerautoradio/17_schaltplanunten.jpg"
+  alt="Schaltplan der unteren Platine"
+  caption="<b>Bild 17</b> Schaltplan der unteren Platine"
+%}
+
+<h2><a name="fertig"></a>Ansicht und Bedienung des fertigen Gerätes</h2>
+
+<p>
+  Im folgenden Bild wird das fertige Gerät mit den Bedienungselementen gezeigt.
+</p>
+
+{% include figure.html
+  src="/img/automobiles/daboldtimerautoradio/18_fertigradio.jpg"
+  alt="Fertiges Radio"
+  caption="<b>Bild 17</b> Ansicht und Bedienung des fertigen Gerätes"
+%}
