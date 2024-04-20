@@ -1,0 +1,769 @@
+---
+layout: article
+category: haus
+title: 'Steuerung eines Treppenliftes über WLAN'
+img: 'haus/treppenlift_titel.jpg'
+order: 1
+---
+
+<ul class="toc">
+  <li><a href="#aufgabe">Problematik und Aufgabenstellung</a></li>
+  <li><a href="#hardware">Hardware</a></li>
+  <li><a href="#software">Software</a></li>
+</ul>
+
+<h2><a name="aufgabe"></a>Problematik und Aufgabenstellung</h2>
+
+<p>
+  Wenn man die Bewegungsfähigkeit im Einfamilienhaus über mehrere Etagen auch im
+  Alter aufrechterhalten möchte, stellt sich irgendwann die Frage nach der
+  Anschaffung eines Treppenliftes. Nach Vergleich verschiedener Systeme wurde
+  also ein solcher Treppenlift angeschafft und installiert.
+</p>
+
+<p>
+  Das System brachte eine erhebliche Erleichterung und ließ sich bequem über
+  Joystick in der Armlehne oder über Fernsteuerung bedienen. Diese Bedienung über
+  Tastenbetätigung ist bei allen Systemen gleich, hat aber einen grundsätzlichen
+  Nachteil. Aus Sicherheitsgründen muss die entsprechende Taste während der
+  gesamten Fahrzeit gedrückt gehalten bleiben. Dieses Prinzip ist als
+  „Totmannschalter“ bei Schienenfahrzeugen bekannt.
+</p>
+
+<p>
+  Möchte man bei der Fahrt mit dem Treppenlift irgendwelche Gegenstände mitnehmen,
+  so hat man nur eine Hand zur Verfügung, da mit der anderen Hand der Joystick
+  festgehalten werden muss. Auch wenn man den Lift per Fernbedienung z.B. über
+  mehrere Etagen schicken will, muss über einige Minuten die Taste der
+  Fernbedienung gehalten werden. Diese Bedienung hat sich sehr schnell als lästig
+  erwiesen, warum gibt es also nicht eine Steuerung wie sie bei normalen Aufzügen
+  vorzufinden ist?
+</p>
+
+<p>
+  Somit war die Aufgabenstellung klar, es galt eine aufzugähnliche Steuerung zu
+  bauen. Ein Eingriff in das vorhandene System kam nicht infrage, da einerseits
+  die Steuerungstechnik nicht bekannt war und andererseits verbot sich dies auch
+  aus Garantiegründen.
+</p>
+
+<p>
+  Hier lag der Gedanke nahe, über einen Microcontroller (z.B. Arduino) eine
+  parallele Steuerung aufzubauen und in das WLAN-Netz des Hauses einzubinden.
+</p>
+
+<h2><a name="hardware"></a>Hardware</h2>
+
+<p>
+  Als WLAN-fähiger Microcontroller wurde die ESP8266 NodeMCU gewählt, welche mit
+  der Arduino IDE programmiert werden kann. Die Stromversorgung erfolgte über
+  ein 5 V Netzteil.
+</p>
+
+<p>
+  Der Microcontroller liefert als Ausgangssignale die Befehle für AUF und AB.
+  Diese steuern jeweils über eine Transistorschaltung ein Relais an. Die
+  Tastkontakte einer Fernbedienung wurden durch Kabel herausgeführt und an die
+  Schaltausgänge der Relais gelegt. Somit war die Tastenbedienung durch Schalter
+  ersetzt worden.
+</p>
+
+<p>
+  Für eine Aufzugsteuerung ist die Information über den jeweiligen Standort
+  erforderlich. Hierzu wurden auf jeder Etage Endschalter installiert, die die
+  Parkposition des Treppenliftes anzeigen. Die Signale der Endschalter wurden
+  durch dünne Kabel zur Steuereinheit geführt. Diese Kabel konnten fast
+  unsichtbar unterhalb des Treppengeländers verlegt werden. Durch diese
+  Kabelverbindung fängt man sich jedoch Störsignale ein, die zu einer falschen
+  und wechselnden Positionsanzeige führen. Durch jeweils einen externen Pullup
+  von 1 kOhm und einen Kondensator von 10 uF gegen GND kann dieser Effekt
+  sicher verhindert werden.
+</p>
+
+{% include figure.html
+  src="/img/haus/treppenlift/schaltplan.jpg"
+  alt="Treppenlift Schaltplan"
+  caption="<b>Bild 1</b> Treppenlift Schaltplan"
+%}
+
+{% include figure.html
+  src="/img/haus/treppenlift/bedienung.jpg"
+  alt="Treppenlift Bedienungsoberfläche"
+  caption="<b>Bild 2</b> Treppenlift Bedienungsoberfläche"
+%}
+
+<h2><a name="software"></a>Software</h2>
+
+<p>
+  Die ESP8266 NodeMCU wird mit der Arduino IDE programmiert. Hierzu muss das
+  Add-On ESP8266 installiert sein. Weiterhin sind verschiedene Bibliotheken
+  einzubinden:
+</p>
+
+<p>
+  <ul>
+    <li><ESP8266WebServer.h>	// Lib für den Webserver</li>
+    <li><ESP8266WiFi.h>		// Lib für das WLAN</li>
+    <li><time.h>			// Lib für die Uhrzeit über NPT-Server</li>
+    <li>"FS.h"				// Lib für das SPIFFS-Filesystem</li>
+  </ul>
+</p>
+
+<p>
+  Der HTML-Code zum Erstellen der Webseite wird im ESP8266-Dateisystem (SPIFFS)
+  gespeichert. Um die HTML-Datei in den ESP8266-Flash-Speicher hochzuladen,
+  wird ein Plug-in für die Arduino DIE, der Dateisystem-Uploader verwendet.
+  Zunächst wird ein Ordner namens Data erstellt, in diesem Ordner wird die zuvor
+  erstellte HTML-Datei gespeichert. Anschließend wird die HTML-Datei in das
+  ESP8266-Dateisystem über Tools > ESP8266 Data Sketch Upload hochgeladen.
+</p>
+
+<p>
+  Das komplette Programm ist in dem folgenden Hauptsketch enthalten und
+  ausführlich dokumentiert, lediglich der Sketch zur Verbindung mit dem WLAN
+  wurde als Connect-Sketch ausgelagert und wird im Haupt-Tab aufgerufen. Dies
+  hat sich für mich als praktisch erwiesen, da ich den Connect-Sketch somit
+  auch für andere Programme unverändert kopieren und verwenden kann.
+</p>
+
+<p>
+  Hauptsketch
+</p>
+
+<pre>
+<code>
+  // Projekt:        KJS Treppenlift
+  // Datei:          KJS_Node_Treppenlift
+  // Thema:          Befehle zur Bedienung des Treppenlifts vom Smartphone per WLAN
+  //                 senden und empfangen
+  // Hardware:       NodeMCU 8266, Boardauswahl > Node MCU 1.0
+  // Autor:          Karl-Josef Schneider
+  // Bearbeitung:    erstellt am 24.03.2022, letzte Änderungen am 27.12.2022
+  //..!....1....!....2....!....3....!....4....!....5....!....6....!....7....!....8....!
+
+  // Libraries hinzufügen -------------------------------------------------------------
+     #include "FS.h"                               // Lib für das Filesystem
+     #include <ESP8266WebServer.h>                 // Lib für den Webserver
+     #include <ESP8266WiFi.h>                      // Lib für den Internetzugang
+     #include <time.h>                             // Lib für die Uhrzeit
+
+  // Variablen deklarieren ------------------------------------------------------------
+     int EndDach     = D1;                         // Endschalter Dach an D1
+     int EndEtage    = D2;                         // Endschalter Etage an D2
+     int EndParterre = D3;                         // Endschalter Paterre an D3
+     int EndKeller   = D4;                         // Endschalter Keller an D4
+     int Auf = D5;                                 // Ausgang für aufwärts = D7
+     int Ab =  D6;                                 // Ausgang für abwärts = D8
+     int dach=1,etage=1,parterre=1,keller=1;       // Status der Etage-Tasten
+     int auf=1,stopp=1,ab=1;                       // Status der AUF-STOPP-AB-Tasten
+     int enddach,endetage,endparterre,endkeller;   // Status der Endschalter
+     int Std, Min, Sek;                            // Variablen für Uhrzeit
+     int Sekunde;                                  // Fahrzeit
+     #define MY_NTP_SERVER "at.pool.ntp.org"       // NTP-Server
+     #define MY_TZ"CET-1CEST,M3.5.0/02,M10.5.0/03" // Sommer-/Winterzeit
+     time_t now;                                   // Zeitinformation
+     tm tm;                                        // Struktur tm für Zeitinformation
+     uint32_t altzeit;                             // alte Zeit
+     float Flag = 0;                               // Flag für Timer
+     unsigned long Startzeit = 0;                  // Startzeit für Timer
+     int Fahrzeit = 0;                             // Fahrzeit in millisec
+     int Fahrtende;
+     int Start;                                    // Startposition des Lifts
+     ESP8266WebServer server(80);                  // Server Instanz erstellen
+
+  // Startfunktion --------------------------------------------------------------------
+     void setup() {
+     Serial.begin(115200);                         // Start des seriellen Monitors
+     connect();                                    // Tab zum Verbinden mit dem WLAN
+     SPIFFS.begin();                               // Filesystem starten
+     FSzeigen();                                   // Info anzeigen
+     configTime(MY_TZ, MY_NTP_SERVER);             // Zeitkonfiguration
+     server.serveStatic("/", SPIFFS, "/");         // Server einrichten
+     server.on("/daten", sendeDaten);              // sende Daten
+     server.on("/btnclick", getDaten);             // empfange Daten
+     pinMode(EndDach,     INPUT_PULLUP);           // Endschalter Dachgeschoß Input
+     pinMode(EndEtage,    INPUT_PULLUP);           // Endschalter 1.Etage Input
+     pinMode(EndParterre, INPUT_PULLUP);           // Endschalter Parterre Input
+     pinMode(EndKeller,   INPUT_PULLUP);           // Endschalter Keller Input
+     pinMode(Auf,OUTPUT);digitalWrite(Auf,HIGH);   // Aufwärts Output auf HIGH
+     pinMode(Ab,OUTPUT);digitalWrite(Ab,HIGH);     // Abwärts Output auf HIGH
+     } // Ende Startfunktion -----------------------------------------------------------
+
+  // Hauptfunktion =====================================================================
+     void loop(void) {
+     server.handleClient();
+     time(&now);                                   // aktuelle Zeit lesen
+     localtime_r(&now, &tm);                       // Zeit-Update der tm-Struktur
+     if (millis() - altzeit >= 1000)     {         // im Sekundentakt
+       altzeit = millis();                         // Zeit zurücksetzen
+       Std = tm.tm_hour;                           // Stunden
+       Min = tm.tm_min;                            // Minute
+       Sek = tm.tm_sec;                  }         // Sekunden
+     Endschalter();                                // Abfrage der Endschalter
+
+     // Fahrt zum Dach .................................................................
+     if (dach == 0)                           {    // Taste "Dach" gedrückt
+       if (Start == 2)                   {         // Startposition = Etage
+         Fahrzeit = 110000; Flag = 1;              // Fahrzeit Etage/Dach = 110sec
+         digitalWrite(Auf, LOW);         }         // Fahrt aufwärts
+       if (Start == 3)                   {         // Startposition = Parterre
+         Fahrzeit = 105000; Flag = 1;              // Fahrzeit Parterre/Etage = 105sec
+         digitalWrite(Auf, LOW);         }         // Fahrt aufwärts
+       if (Start == 4)                   {         // Startposition = Keller
+         Fahrzeit = 80000; Flag = 1;               // Fahrzeit Keller/Parterre = 80sec
+         digitalWrite(Auf, LOW);         }    }    // Fahrt aufwärts
+
+     // Fahrt zur Etage ................................................................
+     if (etage == 0)                          {    // Taste "Etage" gedrückt
+       if (Start == 1)                    {        // Startposition = Dach
+         Fahrzeit = 110000; Flag = 1;              // Fahrzeit Dach/Etage = 110sec
+         digitalWrite(Ab, LOW);           }        // Fahrt abwärts
+       if (Start == 4)                    {        // Startposition = Keller
+         Fahrzeit = 80000; Flag = 1;               // Fahrzeit Keller/Parterre = 80sec
+         digitalWrite(Auf, LOW);          }        // Fahrt aufwärts
+       if (Start == 3)                    {        // Startposition = Parterre
+         Fahrzeit = 105000; Flag = 1;              // Fahrzeit Parterre/Etage = 105sec
+         digitalWrite(Auf, LOW);          }   }    // Fahrt aufwärts
+
+     // Fahrt nach Parterre ............................................................
+     if (parterre == 0)                       {    // Taste "Parterre" gedrückt
+       if (Start == 1)                    {        // Startposition = Dach
+         Fahrzeit = 110000; Flag = 1;              // Fahrzeit Dach/Etage = 110sec
+         digitalWrite(Ab, LOW);           }        // Fahrt abwärts
+       if (Start == 2)                    {        // Startposition = Etage
+         Fahrzeit = 105000; Flag = 1;              // Fahrzeit Etage/Parterre = 105sec
+         digitalWrite(Ab, LOW);           }        // Fahrt abwärts
+       if (Start == 4)                    {        // Startposition = Keller
+         Fahrzeit = 80000; Flag = 1;               // Fahrzeit Keller/Parterre = 80sec
+         digitalWrite(Auf, LOW);          }   }    // Fahrt aufwärts
+
+     // Fahrt zum Keller ...............................................................
+     if (keller == 0)                         {    // Taste "Keller" gedrückt
+       if (Start == 1)                    {        // Startposition = Dach
+         Fahrzeit = 110000; Flag = 1;              // Fahrzeit Dach/Etage = 110sec
+         digitalWrite(Ab, LOW);           }        // Fahrt abwärts
+       if (Start == 2)                    {        // Startposition = Etage
+         Fahrzeit = 105000; Flag = 1;              // Fahrzeit Etage/Parterre = 105sec
+         digitalWrite(Ab, LOW);           }        // Fahrt abwärts
+       if (Start == 3)                    {        // Startposition = Parterre
+         Fahrzeit = 80000; Flag = 1;               // Fahrzeit Parterre/Keller = 80sec
+         digitalWrite(Ab, LOW);           }   }    // Fahrt abwärts
+
+     // Fahrt aufwärts .................................................................
+     if (auf == 0)                       {         // Taste aufwärts gedrückt
+       Fahrzeit = 110000; Flag = 1;                // max. Fahrzeit = 110sec
+       digitalWrite(Auf, LOW);           }         // Fahrt aufwärts
+     // Fahrt abwärts ..................................................................
+     if (ab == 0)                        {         // Taste abwärts gedrückt
+       Fahrzeit = 110000; Flag = 1;                // max. Fahrzeit = 110sec
+       digitalWrite(Ab, LOW);            }         // Fahrt abwärts
+
+     if (Flag == 1) {Timer();}                     // Timer starten
+     } // Ende Hauptfunktion ===========================================================
+
+  // Abfrage Endschalter ---------------------------------------------------------------
+     void Endschalter()  {
+     enddach = digitalRead(EndDach);               // Abfrage Endschalter Dach
+     endetage = digitalRead(EndEtage);             // Abfrage Endschalter Etage
+     endparterre = digitalRead(EndParterre);       // Abfrage Endschalter Parterre
+     endkeller = digitalRead(EndKeller);           // Abfrage Endschalter Keller
+     } // Ende Endschalter -------------------------------------------------------------
+
+  // Fahrt-Timer -----------------------------------------------------------------------
+     void Timer()  {
+     if (millis() <= (Startzeit + Fahrzeit))    {  // solange Fahrzeit nicht erreicht
+       Sekunde = ((millis()-Startzeit)/1000);   }  // Sekunden zählen
+     if (millis() > (Startzeit + Fahrzeit))     {  // wenn Fahrzeit erreicht
+       digitalWrite(Auf, HIGH);                    // Fahrt aufwärts stoppen
+       digitalWrite(Ab, HIGH);                     // Fahrt abwärts stoppen
+       Serial.print("Stop nach ");Serial.print(Fahrzeit/1000); Serial.println(" sec Fahrzeit");
+       Flag = 0; delay(1000);                      // Ende Timer, kurze Schaltpause
+      // Fahrtende = 1; Fahrzeit = 0;
+       if (enddach == 0) dach = 1;                 // End-Dach     = 0 > Status = 1
+       if (endetage == 0) etage = 1;               // End-Etage    = 0 > Status = 1
+       if (endparterre == 0) parterre = 1;         // End-Parterre = 0 > Status = 1
+       if (endkeller == 0) keller = 1;             // End-Keller   = 0 > Status = 1
+       if (keller == 0)                         {  // wenn Keller angewählt
+         if (Start == 1)                    {      // wenn 1. Startposition = Dach
+         Start = 2; Startzeit = millis();   }      // 2. Startposition = Etage
+         if (Start == 2)                       {   // wenn 2. Startposition = Etage
+           if (endparterre == 0)              {    // wenn Endschalter Parterre = 0
+             Start = 3; Startzeit = millis(); }} } // 3. Startposition = Parterre
+       if (parterre == 0)                       {  // wenn Parterre angewählt
+         if (Start == 1)                    {      // wenn 1. Startposition = Dach
+         Start = 2; Startzeit = millis();   }   }  // 2. Startposition = Etage
+       if (etage == 0)                          {  // wenn Etage angewählt
+         if (Start == 4)                    {      // wenn 1. Startposition = Keller
+         Start = 3; Startzeit = millis();   }   }  // 2. Startposition = Parterre
+       if (dach == 0)                           {  // wenn Dach angewählt
+         if (Start == 4)                    {      // wenn 1. Startposition = Keller
+         Start = 3; Startzeit = millis();   }      // 2. Startposition = Parterre
+         if (Start == 3)                       {   // wenn 2. Startposition = Parterre
+           if (endetage == 0)                 {    // wenn Endschalter Etage = 0
+           Start = 2; Startzeit = millis();   }} } // 3. Startposition = Etage
+
+       Serial.print("dach = ");Serial.println(dach);
+       Serial.print("etage = ");Serial.println(etage);
+       Serial.print("parterre = ");Serial.println(parterre);
+       Serial.print("keller = ");Serial.println(keller);
+       Serial.print("Fahrzeit = ");Serial.println(Fahrzeit);
+       Serial.print("Startposition = ");Serial.println(Start);
+       if (auf == 0) {auf = 1;}
+       if (ab == 0) {ab = 1;}                   }  // Status AUF-AB-Tasten setzen
+     } // Ende Fahrt-Timer -------------------------------------------------------------
+
+  // Stop ------------------------------------------------------------------------------
+     void Stop()  {
+     dach=1; etage=1; parterre=1; keller=1;        // Status der Etage-Tasten setzen
+     auf = 1; ab = 1;                              // Status AUF-STOPP-AB-Tasten setzen
+     digitalWrite(Auf, HIGH);                      // Fahrt aufwärts stoppen
+     digitalWrite(Ab, HIGH);                       // Fahrt abwärts stoppen
+     Fahrzeit = 0; Sekunde=0;
+     } // Ende Stop --------------------------------------------------------------------
+
+  // Funktion Daten ins WLAN senden ----------------------------------------------------
+     void sendeDaten() {
+     char sendbuffer[50];
+     sprintf(sendbuffer, "[\"%1u\",\"%1u\",\"%1u\",\"%1u\",\"%1u\",\"%1u\",\"%1u\",\"%1u\",\"%1u\",\"%1u\",\"%1u\",\"%1u\",\"%1u\",\"%1u\",\"%1u\"]",
+     Std,Min,Sek,dach,etage,parterre,keller,auf,stopp,ab,enddach,endetage,endparterre,endkeller,Sekunde);
+     server.send(200, "application/json", sendbuffer);
+     //Serial.println(sendbuffer);
+     //Serial.println(strlen(sendbuffer));
+     } // Ende Daten senden ------------------------------------------------------------
+
+  // Daten empfangen und antworten -----------------------------------------------------
+     void getDaten() {
+     char state[] = {"0"};
+     Serial.print("gedrückte Taste "); Serial.print(server.arg(0));
+     if (server.arg(0)=="1")                {      // Taste mit Id 1 wurde gedrückt
+       dach=0; Startzeit = millis();        }      // Fahrt zum Dach
+     if (server.arg(0)=="2")                {      // Taste mit Id 2 wurde gedrückt
+       etage=0; Startzeit = millis();       }      // Fahrt zur Etage
+     if (server.arg(0)=="3")                {      // Taste mit Id 3 wurde gedrückt
+       parterre=0; Startzeit = millis();    }      // Fahrt nach Parterre
+     if (server.arg(0)=="4")                {      // Taste mit Id 4 wurde gedrückt
+       keller=0; Startzeit = millis();      }      // Fahrt zum Keller
+     if (server.arg(0)=="5")                {      // Taste mit Id 5 wurde gedrückt
+       auf = 0; Startzeit = millis();       }      // Fahrt aufwärts
+     if (server.arg(0)=="6") {Stop();}             // Taste mit Id 6 wurde gedrückt
+     if (server.arg(0)=="7")                {      // Taste mit Id 7 wurde gedrückt
+       ab = 0; Startzeit = millis();        }      // Fahrt abwärts
+     if (enddach == 0)     {Start=1;}              // Startposition = Dach
+     if (endetage == 0)    {Start=2;}              // Startposition = Etage
+     if (endparterre == 0) {Start=3;}              // Startposition = Parterre
+     if (endkeller == 0)   {Start=4;}              // Startposition = Keller
+     server.send(200, "text/plane", state);        // Antwort senden
+     Serial.print(" Status gesendet "); Serial.println(state);
+     Serial.print("Startposition = ");Serial.println(Start);
+     } // Ende Daten empfangen und antworten -------------------------------------------
+
+  // Filesystem anzeigen ---------------------------------------------------------------
+     void FSzeigen() {
+     FSInfo fs_info;
+     SPIFFS.info(fs_info);
+     float fileTotalKB = fs_info.totalBytes / 1024.0;
+     float fileUsedKB = fs_info.usedBytes / 1024.0;
+     Serial.print("\nFilesystem Total KB "); Serial.print(fileTotalKB);
+     Serial.print(" benutzt KB "); Serial.println(fileUsedKB);
+     Dir dir = SPIFFS.openDir("/");  // Dir ausgeben
+     while (dir.next()) {
+      Serial.print(dir.fileName()); Serial.print("\t");
+      File f = dir.openFile("r");
+      Serial.println(f.size());    }
+     } // Ende Filesystem --------------------------------------------------------------
+</code>
+</pre>
+
+<p>
+  Sketch Connect
+</p>
+
+<pre>
+<code>
+  // Projekt:        KJS Treppenlift
+  // Datei:          Die Version von Connect wird als Tab eingebunden
+  // Bemerkungen:    #include <ESP8266WebServer.h> oder #include <ESP8266WiFi.h>
+  //                 müssen im Haupttab aufgerufen werden, die Funktion "Connect();"
+  //                 muss im Setup eingebunden werden.
+  // Autor:          Karl-Josef Schneider
+  // Bearbeitung:    erstellt am 08.01.2021, letzte Änderungen am 09.01.2021
+  //..!....1....!....2....!....3....!....4....!....5....!....6....!....7....!....8....!
+
+  // Variablen deklarieren ------------------------------------------------------------
+     const char* ssid = "xxxxx";                 // Name des WLAN Netzes
+     const char* password="12345";               // Passwort des WLAN Netzes
+
+  // Funktionsaufruf zur Verbindung mit dem WLAN --------------------------------------
+     void connect() {
+     Serial.print("Verbinde zu ");
+     Serial.println(ssid);                       // Anzeige des WLAN-Netzes
+     WiFi.begin(ssid,password);                  // Aufbau der WLAN Verbindung
+     while (WiFi.status() != WL_CONNECTED)   {   // Solange keine Verbindung besteht
+       delay(500);
+       Serial.print(".");                    }   // Punkte als Kontrollelement ausgeben
+       Serial.println(" ");
+     Serial.println("WiFi verbunden");           // erfolgreiche Verbindung anzeigen
+     server.begin();                             // Server starten
+     Serial.println ("Server wartet auf ESP8266");
+     delay(5000);                                // 5 Sekunden Zeit für Initialisierung
+     Serial.println();
+     Serial.println("Die IP-Adresse des Webservers lautet ");
+     Serial.println(WiFi.localIP());             // localIP ausgegeben
+     }
+</code>
+</pre>
+
+<p>
+  HTML-code
+</p>
+
+<pre>
+<code>
+  <!DOCTYPE HTML>
+<html lang="de">
+<head>
+	<meta name="viewport" content= "width=device-width, user-scalable=no">
+	<meta charset="UTF-8">
+	<link rel="manifest" href="/manifest.json">
+	<title>Treppenlift</title>
+
+	<style>
+		:root {
+			--white: #FFFFFF;
+			--green-neon: #06f2a1;
+			--red-darker: #FF6412;
+			--red: #FF955D;
+			--red-lighter: #FDCFB6;
+			--blue-dark: #0E1329;
+			--blue: #0326D6;
+			--blue-medium: #153CFD;
+			--blue-light: #3C5DFF;
+			--blue-lighter: #5D8DFF;
+			--blue-lightest: #DCE5FA;
+		}
+
+		html {
+			box-sizing: border-box;
+		}
+		*, *:before, *:after {
+			box-sizing: inherit;
+		}
+		input, a, button {
+			transition-property: color, background-color, opacity;
+			transition-duration: .125s;
+			transition-timing-function: ease-in;
+		}
+		body {
+			min-height: 100vh;
+			overflow: hidden;
+			margin: 0;
+			display: flex;
+			align-items: center;
+			flex-direction: column;
+  		font-family: 'Nunito', sans-serif;
+			font-size: 100%;
+			letter-spacing: .05em;
+			color: var(--blue-dark);
+			background-color: var(--blue-light);
+			background: linear-gradient(0deg, var(--blue-lighter) 0%, var(--blue-light) 100%);
+
+		}
+		.header {
+			display: grid;
+			grid-template-columns: 4.5rem 1fr;
+			align-items: center;
+			width: 100%;
+			padding: 2rem 1rem;
+			font-size: .875rem;
+			color: var(--white);
+		}
+		.logo {
+			display: block;
+			width: 3rem;
+			justify-self: center;
+			color: var(--blue-lightest);
+		}
+		.small-data {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: .5rem;
+		}
+		.small-data div {
+			display: flex;
+			flex-wrap: nowrap;
+			align-items: center;
+			justify-content: center;
+			gap: .5rem;
+		}
+		.icon-clock, .icon-turtle {
+			height: 14px;
+			color: var(--blue-lightest);
+		}
+		.time {
+			display: flex;
+			gap: 1px;
+			margin-inline-end: 1rem;
+		}
+		.colon {
+			color: var(--blue-lightest);
+		}
+		.keypad {
+			position: relative;
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+			gap: 2rem;
+			padding: 0 1rem 2rem 1rem;
+		}
+		.keypad:before {
+			content: '';
+			display: block;
+			background: var(--blue-lighter);
+			width: 2px;
+			height: 100vh;
+			position: absolute;
+			left: calc(3.25rem - 1px);
+			top: 2rem;
+		}
+		.floors {
+			flex-grow: 1;
+			display: flex;
+			flex-direction: column;
+			gap: 1rem;
+			align-items: stretch;
+			justify-content: center;
+		}
+		.button-row {
+			position: relative;
+			display: grid;
+			grid-template-columns: 4.5rem 1fr 1fr;
+			justify-items: center;
+			align-items: center;
+		}
+		.button {
+			height: 4rem;
+			padding: 1rem;
+			font-size: 1.5rem;
+			cursor: pointer;
+			border: none;
+			border-radius: 3rem;
+			background-color: var(--white);
+			color: var(--blue-dark);
+			text-align: center;
+		}
+		.button:hover, .button:focus {
+			background-color: var(--white);
+			background-color: #DCFAEE;
+			color: var(--blue-dark);
+		}
+		.button.active {
+			background-color: var(--blue-dark);
+			box-shadow: 0 2px 1rem var(--green-neon);
+			color: var(--white);
+		}
+		.floor {
+			display: grid;
+			grid-template-columns: 4.5rem 1fr;
+			align-items: center;
+		}
+		.floor__input {
+			height: 4.5rem;
+			font-size: 1.25rem;
+			text-transform: uppercase;
+			letter-spacing: .02em;
+		}
+		.floor__light {
+			height: 20px;
+			width: 20px;
+			margin-left: auto;
+			margin-right: auto;
+			border-radius: 50%;
+			position: relative;
+		}
+		.floor__light.active {
+			background-color: #00C6D6;
+			box-shadow:
+				0 2px .25rem rgba(0,0,0,.15),
+				0 2px 1rem #00FFFF;
+		}
+		.floor__light::before {
+			content: '';
+			display: block;;
+			position: absolute;
+			top: 3px;
+			left: 3px;
+			height: 14px;
+			width: 14px;
+			border-radius: 50%;
+			background-color: var(--blue-lighter);
+		}
+		.floor__light.active::before {
+			background-color: #BAFAFF;
+		}
+		.button--circle {
+			width: 5.5rem;
+			height: 5.5rem;
+			border-radius: 5.5rem;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			background-color: var(--blue-light);
+    	color: var(--white);
+		}
+		.button--circle.active,
+		.button--circle:hover, .button--circle:focus {
+			background-color: var(--blue);
+			color: var(--white);
+		}
+		.button--circle svg {
+			width: 2.5rem;
+		}
+		.button--up svg {
+			transform: rotate(180deg);
+		}
+		.button--stop {
+			width: 4.25rem;
+			height: 4.25rem;
+			line-height: 2.5rem;
+			background-color: var(--red);
+			color: var(--white);
+		}
+		.button--stop svg {
+			width: 1.5rem;
+		}
+		.button--stop.active,
+		.button--stop:hover, .button--stop:focus {
+			background-color: var(--red-darker);
+			color: var(--white);
+		}
+	</style>
+
+</head>
+<body>
+
+	<header class="header">
+		<svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
+			<path d="M24,0A24,24,0,1,0,48,24,24,24,0,0,0,24,0ZM17.74,23.43H15.41V11.91h2.33V17l4.7-5.11h3.12L21.23,16.4l4.57,7h-3L19.62,18,17.74,20Zm10.39,11a3.32,3.32,0,0,1-1.56,1.28,6.48,6.48,0,0,1-2.5.42,5,5,0,0,1-3.36-1,4.47,4.47,0,0,1-1.4-2.94l2.26-.22a2.83,2.83,0,0,0,.83,1.68,2.57,2.57,0,0,0,1.69.53,2.61,2.61,0,0,0,1.69-.48,1.42,1.42,0,0,0,.57-1.11,1.06,1.06,0,0,0-.24-.7,2,2,0,0,0-.84-.5c-.27-.09-.89-.26-1.86-.5a6.16,6.16,0,0,1-2.62-1.14,3,3,0,0,1-1.06-2.32,2.91,2.91,0,0,1,.5-1.64,3.14,3.14,0,0,1,1.43-1.17,5.88,5.88,0,0,1,2.27-.4,4.85,4.85,0,0,1,3.27.95,3.37,3.37,0,0,1,1.15,2.54l-2.33.1a2,2,0,0,0-.64-1.28,2.32,2.32,0,0,0-1.47-.39,2.63,2.63,0,0,0-1.59.42.87.87,0,0,0,0,1.41,6,6,0,0,0,2.14.77,11.92,11.92,0,0,1,2.51.83,3.27,3.27,0,0,1,1.27,1.18A3.64,3.64,0,0,1,28.13,34.38ZM32.58,19.2a7.44,7.44,0,0,1-.25,2.2A3.12,3.12,0,0,1,31.11,23a4,4,0,0,1-2.34.61,3.49,3.49,0,0,1-2.63-.95,4,4,0,0,1-.93-2.8l2.2-.25A3,3,0,0,0,27.7,21a1.25,1.25,0,0,0,1.14.62,1.28,1.28,0,0,0,1.1-.45,3.53,3.53,0,0,0,.32-1.84V11.91h2.32Z" style="fill:currentColor"/>
+		</svg>
+		<div class="small-data">
+			<div>
+				<svg xmlns="http://www.w3.org/2000/svg" class="icon-clock" viewBox="0 0 512 512"><path d="M256 512C114.6 512 0 397.4 0 256S114.6 0 256 0S512 114.6 512 256s-114.6 256-256 256zM232 120V256c0 8 4 15.5 10.7 20l96 64c11 7.4 25.9 4.4 33.3-6.7s4.4-25.9-6.7-33.3L280 243.2V120c0-13.3-10.7-24-24-24s-24 10.7-24 24z" style="fill:currentColor"/></svg>
+				<span class="time">
+					<span id="value1">0</span>
+					<span class="colon">:</span>
+					<span id="value2">0</span>
+					<span class="colon">:</span>
+					<span id="value3">0</span>
+				</span>
+			</div>
+			<div>
+				<svg xmlns="http://www.w3.org/2000/svg" class="icon-turtle" viewBox="0 0 576 512"><path d="M384 249.2c0 21.4-17.4 38.8-38.8 38.8H70.8C49.4 288 32 270.6 32 249.2V208c0-97.2 78.8-176 176-176s176 78.8 176 176v41.2zM480 288c-2 0-4-.1-5.9-.3c-16.3 53.3-64.3 92.7-122.1 96V440c0 22.1-17.9 40-40 40H264c-22.1 0-40-17.9-40-40V384H192v56c0 22.1-17.9 40-40 40H104c-22.1 0-40-17.9-40-40V384H32c-17.7 0-32-14.3-32-32s14.3-32 32-32h72 48H264h48 32c39.8 0 72-32.2 72-72V224 192 176c0-35.3 28.7-64 64-64c53 0 96 43 96 96v16c0 35.3-28.7 64-64 64H480zm16-64c8.8 0 16-7.2 16-16s-7.2-16-16-16s-16 7.2-16 16s7.2 16 16 16z"  style="fill:currentColor"/></svg>
+				<span class="duration">
+					<span id="value4">0</span> Sekunden
+				</span>
+			</div>
+		</div>
+	</header>
+
+	<div class="keypad">
+		<div class="floors">
+			<label class="floor">
+				<span class="floor__light" id="8"></span>
+				<input value="Dach" class="button floor__input" type="button" id="1" onclick="btnPressed(id)">
+			</label>
+
+			<label class="floor">
+				<span class="floor__light" id="9"></span>
+				<input value="1. Etage" class="button floor__input" type="button" id="2" onclick="btnPressed(id)">
+			</label>
+
+			<label class="floor">
+				<span class="floor__light" id="10"></span>
+				<input value="Parterre" class="button floor__input" type="button" id="3" onclick="btnPressed(id)">
+			</label>
+
+			<label class="floor">
+				<span class="floor__light" id="11"></span>
+				<input value="Keller" class="button floor__input" type="button" id="4" onclick="btnPressed(id)">
+			</label>
+		</div>
+
+		<div class="button-row">
+			<button class="button button--circle button--stop" id="6" onclick="btnPressed(id)" title="Stop">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 23 23"><path d="M15.74,11.57l6-6A3,3,0,0,0,17.53,1.3l-6,6-6-6A3,3,0,0,0,1.23,5.55l6,6L1.38,17.45A3,3,0,0,0,5.62,21.7l5.88-5.88,5.88,5.88a3,3,0,0,0,4.24-4.25Z" style="fill:currentColor"/></svg>
+			</button>
+			<button class="button button--circle button--up" id="5" onclick="btnPressed(id)" title="Hochfahren">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 39 23"><path d="M37.77,1.3a3,3,0,0,0-4.24,0l-14,14-14-14A3,3,0,0,0,1.23,5.55L17.38,21.7a3,3,0,0,0,4.24,0L37.77,5.55A3,3,0,0,0,37.77,1.3Z" style="fill:currentColor"/></svg>
+			</button>
+			<button class="button button--circle button--down" id="7" onclick="btnPressed(id)" title="Runterfahren">
+				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 39 23"><path d="M37.77,1.3a3,3,0,0,0-4.24,0l-14,14-14-14A3,3,0,0,0,1.23,5.55L17.38,21.7a3,3,0,0,0,4.24,0L37.77,5.55A3,3,0,0,0,37.77,1.3Z" style="fill:currentColor"/></svg>
+			</button>
+		</div>
+	</div>
+
+	<script>
+	setInterval(loadDaten, 500);
+	loadDaten();
+
+	function loadDaten(){
+
+	fetch('/daten')
+		.then( function(response){
+			return response.json();
+			})
+		.then(function(myArr){
+			document.getElementById("value1").innerHTML=myArr[0];
+			document.getElementById("value2").innerHTML=myArr[1];
+			document.getElementById("value3").innerHTML=myArr[2];
+			buttonstate(1,myArr[3]);
+			buttonstate(2,myArr[4]);
+			buttonstate(3,myArr[5]);
+			buttonstate(4,myArr[6]);
+			buttonstate(5,myArr[7]);
+			buttonstate(6,myArr[8]);
+			buttonstate(7,myArr[9]);
+			buttonstate(8,myArr[10]);
+			buttonstate(9,myArr[11]);
+			buttonstate(10,myArr[12]);
+			buttonstate(11,myArr[13]);
+			document.getElementById("value4").innerHTML=myArr[14];
+		});
+	}
+
+	function btnPressed(btnId){
+	fetch('/btnclick?id='+ btnId)
+		.then( function(response){
+			return response.text();
+		})
+	}
+
+	function buttonstate(btnId,text){
+	if (text=="0"){
+			document.getElementById(btnId).classList.add("active");
+			}
+			else{
+			document.getElementById(btnId).classList.remove("active");
+			}
+	}
+
+	</script>
+</body>
+</html>
+
+</code>
+</pre>
+
+
+
+<h2><a name="download"></a>Download des Codes</h2>
+
+<p>
+  Der gesamte Arduino Sketch steht als Github Gist zum Download bereit:
+</p>
+
+<a  class="button"
+    target="_blank"
+    href="https://gist.github.com/karljosefschneider/30731126ce8ccf22f5837baca2ddb0dd">
+  Download .ino
+</a>
