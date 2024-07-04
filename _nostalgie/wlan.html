@@ -5,3 +5,132 @@ year: '2024'
 title: 'Nordmende Othello mit WLAN-Empfänger'
 img: 'nostalgie/wlan_titel.jpg'
 ---
+<ul class="toc">
+  <li> <a href="#aufgabenstellung"> Aufgabenstellung</a></li>
+  <li> <a href="#projektbasis"> Basis für das Projekt</a></li>
+  <li> <a href="#espboard">  ESP32 Development Board</a></li>
+  <li> <a href="#display"> 1.28 " TFT Rund-Display Modul</a></li>
+  <li> <a href="#schaltung"> Zusammenschaltung der Baugruppen</a></li>
+  <li> <a href="#einbau"> Einbau ins Röhrenradio</a></li>
+</ul>
+
+<h2><a name="aufgabenstellung"></a>Aufgabenstellung</h2>
+
+<p>
+  Nachdem inzwischen auch im Kabelnetz nur noch digitaler Radioempfang angeboten
+  wird, sind herkömmliche Radiogeräte nur noch mit einer konventionellen
+  Antennenanlage zu betreiben. In den Geräten eingebaute Antennen oder
+  Zimmerantennen bieten keine ausreichende Qualität. Diese wäre nur mit einer
+  relativ aufwendigen Dach-Antennenanlage zu erreichen.
+</p>
+
+<p>
+  Für den heutigen digitalen Radioempfang, DAB+ oder Webradio werden natürlich
+  Fertiggeräte in einer Vielzahl angeboten. Alternativ kann man z.B. mit der
+  Arduino-Technologie eigene Geräte bauen oder vorhandene alte Geräte umbauen.
+</p>
+
+<p>
+  In dem vorliegenden Projekt sollte ein WLAN-Radioempfänger in ein altes
+  Röhrenradio eingebaut werden. Hierbei sollten die alten Funktionen des
+  Röhrenradios vollkommen erhalten bleiben, ebenso sollte das äußere
+  Erscheinungsbild des Radios nicht verändert werden. Ziel war es, die
+  Empfangsqualität auf ein aktuelles Niveau anzuheben und gleichzeitig den guten
+  Klang des Röhrenverstärkers im Radio zu nutzen.
+</p>
+
+<h2><a name="projektbasis"></a>Basis für das Projekt</h2>
+
+<p>
+  Viele Radiosender können als MP3-Stream über das Internet gehört werden. Das
+  Projekt Webradio realisiert ein Internetradio mit dem ESP32 Development Board.
+  Da der Mikrocontroller ESP32 einerseits WLAN-Fähigkeiten besitzt und
+  andererseits mit zwei eingebauten Digital/Analog-Wandlern den digitalen
+  Datenstrom in ein Analogsignal umwandeln kann, bietet er sich für dieses
+  Projekt als ideale Lösung an.
+</p>
+
+<p>
+  Von der AZ-Delivery wurde neben der Hardware für dieses Projekt auch eine
+  entsprechende Software angeboten. Der Basis-Sketch war prinzipiell
+  funktionsfähig, es trat jedoch der Fehler auf, dass der Prozessor immer wieder
+  neu startete. In den Kommentaren zu diesem Sketch wurde dieser Fehler auch
+  beschrieben. Eine Lösung war, die MDCallback-Funktion
+  (file→RegisterMetadataCB(MDCallback, NULL);) zu löschen bzw. auszukommentieren.
+  Die Fehlerursache oder weitere Lösungen wurden nicht gefunden. Zu dem Basis-
+  Sketch wurden zwei Updates entwickelt, diese boten neben einem 4-zeiligen
+  LCD-Display für die Anzeige zusätzlicher Senderinformationen auch eine
+  Einstellung der WLAN- und Senderdaten über einen Webserver an.
+</p>
+
+<p>
+  Für das hier vorgestellte Projekt wurden die vorgenannten Sketche zugrunde
+  gelegt. Abweichend hievon wurde statt des LCD-Displays ein TFT-Farbdisplay
+  eingesetzt.
+</p>
+
+<h2><a name="espboard"></a>ESP32 Development Board</h2>
+
+<p>
+  Die Details zu diesem Board sind der von AZ-Delivery veröffentlichen
+  Betriebsanleitung zu entnehmen. Hier werden als wesentliche Merkmale das
+  Layout des Boards sowie einige technische Daten wiedergegeben.
+</p>
+
+<p>
+  Layout des Boards
+</p>
+<p align="center">
+  <img src="/img/nostalgie/wlan/espboard.jpg"
+   alt="Layout des Boards" width="" height="">
+</p>
+
+<p>
+  Technische Daten
+</p>
+<table class="spec-table">
+<tr>
+  <th>Gerätename:</th>
+  <th>AZ-Delivery ESP32 DevKitC</th>
+</tr>
+<tr>
+  <th>Modell:</th>
+  <th>V2</th>
+</tr>
+<tr>
+  <th>Prozessor:</th>
+  <th>ESP32-WROOM-32</th>
+</tr>
+<tr>
+  <th>Logiglevel:</th>
+  <th>5 vorgestellte </th>
+</tr>
+<tr>
+  <th>Spannungsversorgung:</th>
+  <th>über USB 5 Volt oder Input-Pins 3,0-3,6 Volt</th>
+</tr>
+<tr>
+  <th>Frequenzbereich:</th>
+  <th>ISM-Band bei 2,4 Ghz: 2,412-2,472 Ghz</th>
+</tr>
+<tr>
+  <th>Schnittstellen:</th>
+  <th>UART/GPIO/ADC/PWM/SPI/I2C</th>
+</tr>
+<tr>
+  <th>I / O Pins:</th>
+  <th>9</th>
+</tr>
+<tr>
+  <th>USB-Schnittstelle:</th>
+  <th>Micro-USB</th>
+</tr>
+<tr>
+  <th>Rastermaß:</th>
+  <th>2,54 mm</th>
+</tr>
+<tr>
+  <th>Abmessungen:</th>
+  <th>L 0 34 mm, B = 26 mm, H = 8 mm</th>
+</tr>
+</table>
