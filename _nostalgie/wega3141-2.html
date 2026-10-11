@@ -7,14 +7,14 @@ img: 'nostalgie/wega3141-2_titel.jpg'
 ---
 
 <ul class="toc">
-  <li> <a href="#beschreibung"> Beschreibung</a></li>
-  <li> <a href="#historie"> Historie</a></li>
+  <li> <a href="#beschreibung"> Aufgabenstellung</a></li>
+  <li> <a href="#hardware"> Hardware</a></li>
   <li> <a href="#restaurierung"> Restaurierung</a></li>
   <li> <a href="#schaltplan"> Schaltplan</a></li>
   <li> <a href="#bilder"> Bilder</a></li>
 </ul>
 
-<h2><a name="beschreibung"></a>Beschreibung</h2>
+<h2><a name="beschreibung"></a>Aufgabenstellung</h2>
 
 <p>
   Nachdem inzwischen auch im Kabelnetz nur noch digitaler Radioempfang 
@@ -32,88 +32,40 @@ img: 'nostalgie/wega3141-2_titel.jpg'
   aus den 70-er Jahren wieder funktionsfähig machen und gleichzeitig mit 
   Bluetooth ausrüsten.
 </p>
+
 <p align="center">
   <img src="/img/nostalgie/wega3141-2/wega3141-2_front.jpg"
-   alt="Othello_Ansicht vorne" width="" height="">
+   alt="wega3141-2_front width="" height="">
 </p>
 
-<table class="spec-table">
-<tr>
-  <th>Hauptprinzip:</th>
-  <th>Superhet allgemein; ZF/IF 460/10700 kHz</th>
-</tr>
-<tr>
-  <th>Anzahl Kreise:</th>
-  <th>10 Kreise AM  13 Kreise FM</th>
-</tr>
-<tr>
-  <th>Wellenbereiche:</th>
-  <th>Langwelle, Mittelwelle, Kurzwelle und UKW</th>
-</tr>
-<tr>
-  <th>Röhren:</th>
-  <th>ECC85, ECH81, 2 x EF89, EM84, EABC80, ECC82, 2 x EL84</th>
-</tr>
-<tr>
-  <th>Lautsprecher:</th>
-  <th>5 Lautsprecher</th>
-</tr>
-<tr>
-  <th>Belastbarkeit/Leistung:</th>
-  <th>12 W (2 x EL 84 im Gegentakt)</th>
-</tr>
-<tr>
-  <th>Material:</th>
-  <th>Gerät mit Holzgehäuse</th>
-</tr>
-<tr>
-  <th>Form:</th>
-  <th>Tischgerät, Tasten oder Druckknöpfe</th>
-</tr>
-<tr>
-  <th>Abmessungen (BHT):</th>
-  <th>680 x 390 x 290 mm</th>
-</tr>
-<tr>
-  <th>Nettogewicht:</th>
-  <th>14,7 kg</th>
-</tr>
-</table>
-
-<h2><a name="historie"></a>Historie</h2>
+<h2><a name="hardware"></a>Hardware</h2>
 
 <p>
-  Ende der 50-er Jahre stellte der Nordmende Othello das HiFi-Gerät im Hause
-  meiner Eltern dar. Mit seiner Ausstattung und dem unverwechselbaren Klang der
-  Röhrenendstufe verbunden mit den fünf Lautsprechern in dem Holzgehäuse konnte
-  das Radiogerät schon begeistern. Über den eingebauten Equalizer (Tastensatz
-  und Drehregler) war der Klang in weiten Bereichen zu beeinflussen.
-  Selbstverständlich war auch ein Plattenspieler angeschlossen und rundete die
-  HiFi-Anlage ab.
+  ESP32 Development Board
 </p>
 
 <p>
-  In den 60-er Jahren kamen dann verstärkt Transistorgeräte als Receiver oder
-  getrennt als Tuner und Verstärker auf den Markt. Die neue moderne Technik war
-  angesagt und irgendwann musste der gute alte Nordmende weichen. Damals gab es
-  noch nicht den Trend zu nostalgischen Dingen, nur zu gerne nutzte ich daher
-  die Gelegenheit das Röhrenradio auszuschlachten. Die zahlreichen Lautsprecher
-  mussten für den Bau von Boxen herhalten und die kraftvolle Endstufe bildete
-  den Grundstein für den Bau eines Verstärkers, Dinge die mit dem Wandel in der
-  Musikszene sehr gefragt waren. So verschwand das Radiogerät meiner Jugend auf
-  Nimmerwiedersehen.
+  Diese Boards werden inzwischen in vielfältigen Varianten angeboten und sind 
+  durch ihre WLAN- und Bluetooth-Funktionen alle für den vorliegenden Einsatz 
+  geeignet. Da das Board in das Metallgehäuse des WEGA-Receivers eingebaut wird, 
+  wurde hier eine Variante mit externer Antenne gewählt. Das Bild zeigt das 
+  Layout des hier verwendeten Boards:
+</p>
+
+<p align="center">
+  <img src="/img/nostalgie/wega3141-2/esp32_board.jpg"
+   alt="esp32_board width="" height="">
 </p>
 
 <p>
-  In den letzten Jahren erinnerte ich mich an diese Zeit, als mir bei eBay
-  diverse Angebote alter Röhrenradios begegneten. Hier habe ich dann gezielt
-  nach dem Nordmende Othello gesucht und habe mehrere Geräte gefunden, die ich
-  dann günstig ersteigern konnte. Günstig hieß natürlich, dass sich die Radios
-  optisch wie auch technisch in einem sehr restaurierungsbedürftigen Zustand
-  befanden, aber das war letztlich der Reiz an der Sache diese alte Technik
-  wiederzubeleben. Zwei Geräte habe ich anschließend in einem
-  Top-Restaurierungszustand verkauft, das dritte Gerät schmückt nun seit einigen
-  Jahren mein Wohnzimmer und kommt auch in regelmäßigen Abständen zum Einsatz.
+  2.0 Zoll Farb-TFT-Display.
+</p>
+
+<p>
+  Für die Anzeige des gewählten Senders, Informationen über das Programm, 
+  Uhrzeit und Datum wurde ein 2.0“ TFT-Display gewählt. Dies fügte sich von 
+  der Größe optimal in das Design des nachzurüstenden Receivers ein. Das 
+  Layout des Displays ist der folgenden Abbildung zu entnehmen.
 </p>
 
 <h2><a name="restaurierung"></a>Restaurierung</h2>
