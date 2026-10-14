@@ -3,15 +3,12 @@ layout: article
 category: nostalgie
 year: '2024'
 title: 'Nordmende Othello mit WLAN-Empfänger'
-img: 'nostalgie/wlan_titel.jpg'
+img: 'nostalgie/othello_wlan_titel.jpg'
 ---
 <ul class="toc">
   <li> <a href="#aufgabenstellung"> Aufgabenstellung</a></li>
-  <li> <a href="#projektbasis"> Basis für das Projekt</a></li>
-  <li> <a href="#espboard">  ESP32 Development Board</a></li>
-  <li> <a href="#display"> 1.28 " TFT Rund-Display Modul</a></li>
-  <li> <a href="#schaltung"> Zusammenschaltung der Baugruppen</a></li>
-  <li> <a href="#einbau"> Einbau in das Röhrenradio</a></li>
+  <li> <a href="#hardware"> Hardware</a></li>
+  <li> <a href="#bedienung"> Bedienungsanleitung</a></li>
 </ul>
 
 <h2><a name="aufgabenstellung"></a>Aufgabenstellung</h2>
@@ -25,12 +22,6 @@ img: 'nostalgie/wlan_titel.jpg'
 </p>
 
 <p>
-  Für den heutigen digitalen Radioempfang, DAB+ oder Webradio werden natürlich
-  Fertiggeräte in einer Vielzahl angeboten. Alternativ kann man z.B. mit der
-  Arduino-Technologie eigene Geräte bauen oder vorhandene alte Geräte umbauen.
-</p>
-
-<p>
   In dem vorliegenden Projekt sollte ein WLAN-Radioempfänger in ein altes
   Röhrenradio eingebaut werden. Hierbei sollten die alten Funktionen des
   Röhrenradios vollkommen erhalten bleiben, ebenso sollte das äußere
@@ -39,158 +30,61 @@ img: 'nostalgie/wlan_titel.jpg'
   Klang des Röhrenverstärkers im Radio zu nutzen.
 </p>
 
-<h2><a name="projektbasis"></a>Basis für das Projekt</h2>
-
-<p>
-  Viele Radiosender können als MP3-Stream über das Internet gehört werden. Das
-  Projekt Webradio realisiert ein Internetradio mit dem ESP32 Development Board.
-  Da der Mikrocontroller ESP32 einerseits WLAN-Fähigkeiten besitzt und
-  andererseits mit zwei eingebauten Digital/Analog-Wandlern den digitalen
-  Datenstrom in ein Analogsignal umwandeln kann, bietet er sich für dieses
-  Projekt als ideale Lösung an.
+<p align="center">
+  <img src="/img/nostalgie/othello_wlan/front.jpg"
+   alt="Einbau in das Röhrenradio" width="" height="">
 </p>
 
-<p>
-  Von der AZ-Delivery wurde neben der Hardware für dieses Projekt auch eine
-  entsprechende Software angeboten. Der Basis-Sketch war prinzipiell
-  funktionsfähig, es trat jedoch der Fehler auf, dass der Prozessor immer wieder
-  neu startete. In den Kommentaren zu diesem Sketch wurde dieser Fehler auch
-  beschrieben. Eine Lösung war, die MDCallback-Funktion
-  (file→RegisterMetadataCB(MDCallback, NULL);) zu löschen bzw. auszukommentieren.
-  Die Fehlerursache oder weitere Lösungen wurden nicht gefunden. Zu dem Basis-
-  Sketch wurden zwei Updates entwickelt, diese boten neben einem 4-zeiligen
-  LCD-Display für die Anzeige zusätzlicher Senderinformationen auch eine
-  Einstellung der WLAN- und Senderdaten über einen Webserver an.
-</p>
+<h2><a name="hardware"></a>Hardware</h2>
+
+<h3><a name="board"></a>ESP32 Development Board</h3>
 
 <p>
-  Für das hier vorgestellte Projekt wurden die vorgenannten Sketche zugrunde
-  gelegt. Abweichend hievon wurde statt des LCD-Displays ein TFT-Farbdisplay
-  eingesetzt.
-</p>
-
-<h2><a name="espboard"></a>ESP32 Development Board</h2>
-
-<p>
-  Die Details zu diesem Board sind der von AZ-Delivery veröffentlichen
-  Betriebsanleitung zu entnehmen. Hier werden als wesentliche Merkmale das
-  Layout des Boards sowie einige technische Daten wiedergegeben.
+  Diese Boards werden inzwischen in vielfältigen Varianten angeboten und sind 
+  durch ihre WLAN- und Bluetooth-Funktionen alle für den vorliegenden Einsatz 
+  geeignet. Das Bild zeigt das Layout des hier verwendeten Boards:
 </p>
 
 <p>
   Layout des Boards
 </p>
 <p align="center">
-  <img src="/img/nostalgie/wlan/espboard.jpg"
+  <img src="/img/nostalgie/othello_wlan/espboard.jpg"
    alt="Layout des Boards" width="" height="">
 </p>
 
-<p>
-  Technische Daten
-</p>
-<table class="spec-table">
-<tr>
-  <th>Gerätename:</th>
-  <th>AZ-Delivery ESP32 DevKitC</th>
-</tr>
-<tr>
-  <th>Modell:</th>
-  <th>V2</th>
-</tr>
-<tr>
-  <th>Prozessor:</th>
-  <th>ESP32-WROOM-32</th>
-</tr>
-<tr>
-  <th>Logiglevel:</th>
-  <th>5 Volt</th>
-</tr>
-<tr>
-  <th>Spannungsversorgung:</th>
-  <th>über USB 5 Volt oder Input-Pins 3,0-3,6 Volt</th>
-</tr>
-<tr>
-  <th>Frequenzbereich:</th>
-  <th>ISM-Band bei 2,4 Ghz: 2,412-2,472 Ghz</th>
-</tr>
-<tr>
-  <th>Schnittstellen:</th>
-  <th>UART/GPIO/ADC/PWM/SPI/I2C</th>
-</tr>
-<tr>
-  <th>I / O Pins:</th>
-  <th>9</th>
-</tr>
-<tr>
-  <th>USB-Schnittstelle:</th>
-  <th>Micro-USB</th>
-</tr>
-<tr>
-  <th>Rastermaß:</th>
-  <th>2,54 mm</th>
-</tr>
-<tr>
-  <th>Abmessungen:</th>
-  <th>L = 34 mm, B = 26 mm, H = 8 mm</th>
-</tr>
-</table>
-
-<h2><a name="display"></a>1.28 " TFT Rund-Display Modul</h2>
+<h3><a name="display"></a>1.28 " TFT Rund-Display Modul</h3>
 
 <p>
   TFT Rund-Displays in der Größe 1,28“ werden in verschiedenen Ausführungen
   angeboten. Allen gemeinsam ist der Chip GC9A01, die Unterschiede beziehen sich
   auf die Bauform. Gegenüber anderen Versionen hat das unten eingesetzte Modul
-  den Vorteil einer 4-Punkt Befestigung und wurde daher hier eingesetzt. Als
-  wesentliche Merkmale werden hier das Layout des Displays sowie einige
-  technische Daten wiedergegeben.
+  den Vorteil einer 4-Punkt Befestigung und wurde daher hier eingesetzt. 
 </p>
 
+<<h3><a name="rotary"></a>Rotary Encoder</h3>
+
 <p>
-  Layout des Boards
+  Für die Bedienung des Webradios kommt ein Rotary-Encoder KY-040 zum Einsatz. 
+  Der Encoder ist mit dem Senderwahlrad des Receivers gekoppelt, so dass sowohl 
+  die Drehfunktion und auch die Druckfunktion mit dem Senderwahlrad vorgenommen 
+  werden kann.
+</p>
+
+<p align="center">
+  <img src="/img/nostalgie/othello_wlan/rotary_encoder.jpg"
+   alt="rotary_encoder" width="" height="">
+
 </p>
 <p align="center">
-  <img src="/img/nostalgie/wlan/display.jpg"
+  <img src="/img/nostalgie/othello_wlan/display.jpg"
    alt="Layout des Displays" width="" height="">
 </p>
 
-<p>
-  Technische Daten
-</p>
-<table class="spec-table">
-<tr>
-  <th>Betriebsspannung:</th>
-  <th>3,3 Volt</th>
-</tr>
-<tr>
-  <th>Stromaufnahme:</th>
-  <th>20 mA</th>
-</tr>
-<tr>
-  <th>LCD-Größe:</th>
-  <th>1.28 Zoll</th>
-</tr>
-<tr>
-  <th>Auflösung:</th>
-  <th>240 x 240 Pixel</th>
-</tr>
-<tr>
-  <th>Aktiver Bereich:</th>
-  <th>Ø 32,4 mm</th>
-</tr>
-<tr>
-  <th>Treiber:</th>
-  <th>GC9A01</th>
-</tr>
-  <th>Abmessungen:</th>
-  <th>36 x 44 x 4,7 mm</th>
-</tr>
-</table>
-
-<h2><a name="schaltung"></a>Zusammenschaltung der Baugruppen</h2>
+<h3><a name="schaltung"></a>Zusammenschaltung der Baugruppen</h3>
 
 <p align="center">
-  <img src="/img/nostalgie/wlan/schaltung.jpg"
+  <img src="/img/nostalgie/othello_wlan/schaltung.jpg"
    alt="Zusammenschaltung der Baugruppen" width="" height="">
 </p>
 
@@ -214,12 +108,190 @@ img: 'nostalgie/wlan_titel.jpg'
   einen Zahnradantrieb verbunden. Die Druckfunktion des Encoders wurde durch
   einen separaten Microschalter realisiert. Diese mechanischen Veränderungen
   stellten eine gewisse Herausforderung dar, ließen sich aber nach einigen
-  Versuchen verwirklichen. Da die Bedingungen für den mechanischen Umbau vom
-  verwendeten Radiogerät abhängen, kann hier keine allgemeingültige Beschreibung
-  gegeben werden, die Details sind im Versuch zu ermitteln.
+  Versuchen verwirklichen.
+</p>
+
+<h2><a name="bedienung"></a>Bedienungsanleitung</h2>
+
+<p>
+  Das Nordmende Othello Röhrenradio blieb in seiner ursprünglichen Form komplett 
+  erhalten und in allen Betriebsarten funktionstüchtig. Lediglich auf den nicht mehr 
+  nutzbaren Langwellenbereich wurde verzichtet, die Taste wurde zugunsten der 
+  Webradio-Funktion genutzt. In dieser Schalterstellung erscheint im früheren
+  Fenster der Peilantenne ein TFT-Runddisplay mit den entsprechenden Anzeigen 
+  für Webradio und Bluetooth. Die komplette Bedienung des Webradios erfolgt über 
+  den vorhandenen rechten großen Drehkranz, mit dem früher die Peilantenne ausgerichtet
+  wurde. Hiermit kann nun der Rotary-Encoder nach links und rechts geschaltet werden 
+  und ebenso die Druckfunktion ausgeführt werden. 
+</p>
+
+<h3><a name="webradio"></a>Bedienung und Funktion des Webradios</h3>
+
+<p>
+  Die beiden wesentlichen Funktionen sind der Webradio- und der Bluetooth-Betrieb. 
+  Voraussetzung für das Webradio ist die Verbindung mit dem WLAN-Netz.
+</p>
+
+<h4><a name="wlan"></a> Verbindung mit dem WLAN-Netz</h4>
+
+<p>
+  Die WLAN-Konfiguration wird im internen Flash-Speicher des Gerätes vorgehalten. 
+  Hier ist immer das zuletzt geöffnete Netz gespeichert. Wenn man sich außerhalb 
+  dieses gespeicherten Netzes befindet, ist keine Verbindung mit diesem Netz 
+  möglich und es öffnet sich ein Boot-Menü:
 </p>
 
 <p align="center">
-  <img src="/img/nostalgie/wlan/einbau.jpg"
-   alt="Einbau in das Röhrenradio" width="" height="">
+  <img src="/img/nostalgie/othello_wlan/boot.jpg"
+   alt="boot" width="" height=""
+   class="mw6">>
 </p>
+
+<p>
+ Hier gibt es 3 Optionen, die per Drehknopf gewählt werden können:
+</p>
+
+<ul>
+  <li>Wiederholung des Verbindungsversuches mit
+      dem gespeicherten Netz</a></li>
+  <li>Setup-Menü für die Verbindung mit einem
+       neuen Netz</a></li>
+  <li>Start Bluetooth ohne WLAN-Netz, wenn man
+      sich außerhalb aller Netze befindet</a></li> 
+</ul>
+
+<p>
+  Für die Verbindung mit einem neuen WLAN-Netz fordert das Gerät mit einer 
+  entsprechenden Meldung zur Eingabe der WLAN-Daten auf. Die Konfiguration 
+  erfolgt über eine Webseite, die am PC oder Handy aufgerufen wird.
+</p>
+
+<p align="center">
+  <img src="/img/nostalgie/othello_wlan/wlan_neu.jpg"
+   alt="wlan_neu" width="" height=""
+   class="mw6">>
+</p>
+
+<p>
+  Das konkrete Vorgehen muss wie folgt genau eingehalten werden:
+</p>
+
+<ul>
+  <li>PC oder Handy auf des WLAN-Netz „WEBRADIO“ einstellen.</a></li>
+  <li>Browser neu starten und die Seite mit http://192.168.4.1 aufrufen.</a></li>
+  <li>Es erscheint die unten gezeigte Eingabemaske, hier werden der Name
+      des WLAN-Netzes und das Passwort eingetragen. Anschließend mit dem
+      Button die Daten speichern.</a></li> 
+</ul>
+
+<p align="center">
+  <img src="/img/nostalgie/othello_wlan/wlan_input.jpg"
+   alt="wlan_input" width="" height="">
+<p>
+
+<p>  
+  ! Bei der Eingabe des WLAN-Namen auf Groß- und Kleinschreibung achten!
+Wenn diese Prozedur einmal durchgeführt wurde, sind die WLAN-Daten gespeichert 
+und das System startet selbstständig. Nur wenn das Gerät wieder in einem andern 
+WLAN-Netz betrieben werden soll, ist der Vorgang zu wiederholen.
+</p>
+
+<p>
+  Anschließend startet das Gerät mit dem zuletzt gewählten und gespeicherten
+  Betriebsmodus.
+</p>
+
+<h3><a name="hf"></a>Betrieb als WEB-Radio</h3>
+
+<h4><a name="sender"></a>Senderwahl</h4>
+
+<p>
+  Für den Betrieb als Webradio ist eine Senderliste mit max. 30 gespeicherten 
+  Sendern vorhanden. Der zuletzt gewählte Sender ist gespeichert und wird 
+  aufgerufen, beim ersten Einschalten ist das der erste Sender auf der Liste. 
+  Durch Betätigen des Drehrades (links/rechts) können die Sender der Liste 
+  angezeigt werden. Wenn der angezeigte Sender aktiviert werden soll, ist dies 
+  durch kurzen Druck auf das Drehrad zu bestätigen.
+</p>
+
+<h4><a name="display"></a>Anzeigen auf dem Display</h4>
+
+<p>
+  Das Display ist in drei Abschnitte geteilt:
+</p>
+
+<p>
+  Im oberen Teil werden ständig die Uhrzeit und das Datum angezeigt. 
+  Zusätzlich zeigt ein Symbol im rechten Teil das WLAN-Symbol und die Empfangsstärke des Signals an.
+
+ Im mittleren Bereich wird der Sendername angezeigt.
+
+ Im unteren Teil erscheinen die Metadaten des Senders, Titel, Interpret usw.
+</p>
+
+<p align="center">
+  <img src="/img/nostalgie/othello_wlan/othello_web_display.jpg"
+   alt="web_display" width="" height="">
+<p>
+
+ <p>
+  Im normalen Betrieb kann die Senderliste über eine Webseite gepflegt werden. 
+  Durch Doppelklick auf das Drehrad kann eine Hilfe-Seite angezeigt werden, 
+  die das Vorgehen zum Aufruf der Webseite beschreibt. Die Hilfe-Seite kann 
+  durch einen weiteren Doppelklick wieder geschlossen werden.
+</p> 
+
+<p align="center">
+  <img src="/img/nostalgie/othello_wlan/othello_senderbearbeitung.jpg"
+   alt="senderbearbeitung" width="" height=""
+   class="mw6">>
+<p>
+
+ <p>
+  Die Liste der hinterlegten Sender kann über die im Display angezeigte Webseite 
+  bearbeitet werden.
+
+  Die oben angezeigte Webseite ist nur ein Beispiel, die tatsächliche Webseite 
+  wird beim Betrieb des Gerätes im jeweiligen Netz ermittelt und dann angezeigt.
+</p>  
+
+<p align="center">
+  <img src="/img/nostalgie/othello_wlan/sender.jpg"
+   alt="sender" width="" height="">
+<p>
+
+<h3><a name="hf"></a>Betrieb als Bluetooth-Empfänger</h3> 
+
+<p>
+Das Umschalten auf den Bluetooth-Betrieb erfolgt im normalen Betriebsmodus durch 
+langen Druck auf das Drehrad. Es ist auch ein Bluetooth „Notbetrieb“ möglich, 
+wenn keinerlei WLAN-Netze erreichbar sind. Diese Option kann im Boot-Menü 
+gewählt werden (sieh oben). Bei diesem „Notbetrieb“ stehen natürlich keine 
+Zeitdaten zur Verfügung.
+Beim ersten Umschalten muss die Verbindung mit dem Handy hergestellt werden, 
+d.h. über die Bluetooth-Einstellung des Handys wird „WEGA-2 Webradio“ eingestellt. 
+Das System merkt sich diese Einstellung, ebenso wie das gewählte Audio-Programm 
+und den letzten Titel.
+</p> 
+
+<p>
+ Die folgende Abbildung zeigt ein Beispiel für die Anzeigen beim 
+ Bluetooth-Betrieb. Der Bildschirm ist in 3 Abschnitte aufgeteilt:
+</p>
+
+ <ul>
+  <li>Oben:		Anzeige von Datum, Uhrzeit und Bluetooth-Symbol</a></li>
+  <li>Mitte:	Anzeige des verbundenen Handys</a></li>
+  <li>Unten:	Anzeige von Titel und Interpret	</a></li> 
+</ul>
+
+<p align="center">
+  <img src="/img/nostalgie/othello_wlan/othello_bluetooth-display.jpg"
+   alt="bluetooth" width="" height="">
+<p>
+
+<p>
+ Die Titelwahl erfolgt durch das Drehrad. Der neu eingestellte Sender muss 
+ durch einen kurzen Druck auf das Drehrad bestätigt werden, anderenfalls 
+ fällt die Anzeige wieder auf den vorher eingestellten Sender zurück.
+</p>  
